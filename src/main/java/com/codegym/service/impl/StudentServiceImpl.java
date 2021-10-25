@@ -27,6 +27,22 @@ public class StudentServiceImpl implements IStudentService {
         }else return null;
     }
 
+    //LamNT saveStudent function
+    @Override
+    public void saveStudent(Student student) {
+        studentRepository.saveStudent(student.isDeleteFlag(), student.getStudentAddress(), student.getStudentDateOfBirth(),
+                student.getStudentEthnicity(), student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(),
+                student.getStudentName(), student.getStudentParentPhone(), student.getStudentReligion());
+    }
+
+    //LamNT editStudent function
+    @Override
+    public void editStudent(Student student) {
+        studentRepository.editStudent(student.getStudentAddress(), student.getStudentDateOfBirth(), student.getStudentEthnicity(),
+                student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(), student.getStudentName(),
+                student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentId());
+    }
+
     //DungNM - Tìm danh sách học sinh theo ID của classroom
     @Override
     public Page<Student> findByClassroom(int classroomId, Pageable pageable) {
