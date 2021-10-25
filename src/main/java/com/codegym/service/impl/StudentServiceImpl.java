@@ -27,6 +27,12 @@ public class StudentServiceImpl implements IStudentService {
         }else return null;
     }
 
+    //DungNM - Tìm danh sách học sinh theo ID của classroom
+    @Override
+    public Page<Student> findByClassroom(int classroomId, Pageable pageable) {
+        return studentRepository.findByClassroomId(classroomId, pageable);
+    }
+    
     //LamNT saveStudent function
     @Override
     public void saveStudent(Student student) {
@@ -43,9 +49,5 @@ public class StudentServiceImpl implements IStudentService {
                 student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentId());
     }
 
-    //DungNM - Tìm danh sách học sinh theo ID của classroom
-    @Override
-    public Page<Student> findByClassroom(int classroomId, Pageable pageable) {
-        return studentRepository.findByClassroomId(classroomId, pageable);
-    }
+
 }
