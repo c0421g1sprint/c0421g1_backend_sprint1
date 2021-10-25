@@ -75,7 +75,7 @@ public class NewsController {
     @PostMapping(value = "/create")
     public ResponseEntity<?> createNews(@Valid @RequestBody NewsDto newsDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
-            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
         }
         News news = new News();
         BeanUtils.copyProperties(newsDto, news);
