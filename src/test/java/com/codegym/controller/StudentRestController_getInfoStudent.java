@@ -3,6 +3,7 @@ package com.codegym.controller;
 
 import com.codegym.entity.about_student.Student;
 import com.codegym.rest_controller.StudentController;
+import com.codegym.rest_controller.TeacherController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,17 @@ import org.springframework.http.ResponseEntity;
 public class StudentRestController_getInfoStudent {
 
 
+//    @Autowired
+//    private StudentController studentController;
+
     @Autowired
-    private StudentController studentController;
+    private TeacherController teacherController;
 
 
     @Test
     public void showListStudentByIdTeacher_5() {
         ResponseEntity<Page<Student>> pageResponseEntity
-                = this.studentController.showListStudentByIdTeacher(PageRequest.of(0, 2), 1);
+                = this.teacherController.showListStudentByIdTeacher(PageRequest.of(0, 2), 1);
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, pageResponseEntity.getStatusCode());
     }
@@ -33,7 +37,7 @@ public class StudentRestController_getInfoStudent {
     @Test
     public void showListStudentByIdTeacher_6() {
         ResponseEntity<Page<Student>> pageResponseEntity
-                = this.studentController.showListStudentByIdTeacher(PageRequest.of(0, 2), 1);
+                = this.teacherController.showListStudentByIdTeacher(PageRequest.of(0, 2), 1);
 
         Assertions.assertEquals(HttpStatus.OK, pageResponseEntity.getStatusCode());
 

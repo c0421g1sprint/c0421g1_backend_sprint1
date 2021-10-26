@@ -18,32 +18,34 @@ import java.util.Optional;
 public class TeacherController {
 
 
-
-
     @Autowired
     private IStudentService iStudentService;
 
+    //PhucNK
     @GetMapping(value = "/list/{id}")
-    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 2) Pageable pageable, @PathVariable Integer id){
-        Page<Student> studentList=iStudentService.getListStudent( pageable,id);
+    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 2) Pageable pageable, @PathVariable Integer id) {
+        Page<Student> studentList = iStudentService.getListStudent(pageable, id);
         if (studentList.isEmpty()) {
 //            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else {
-            return new ResponseEntity<>(studentList,HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(studentList, HttpStatus.OK);
         }
     }
 
+    //PhucNK
     @GetMapping(value = "/detail/{id}")
-    public ResponseEntity<Student> getListStudentDetail(@PathVariable Integer id){
-        Optional<Student> studentList=iStudentService.getListStudentDetail(id);
+    public ResponseEntity<Student> getListStudentDetail(@PathVariable Integer id) {
+        Optional<Student> studentList = iStudentService.getListStudentDetail(id);
         if (studentList.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        else {
-            return new ResponseEntity<>(studentList.get(),HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(studentList.get(), HttpStatus.OK);
         }
     }
 
 }
+//    _________________________________________
+
+
+
