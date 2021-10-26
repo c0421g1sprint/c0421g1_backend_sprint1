@@ -11,7 +11,7 @@ public interface IStudentService{
 
     Student deleteById(int studentId);
     //    Diệp search student ngày 25/10
-    Page<Student> searchstudent(Pageable pageable, String searchstudent);
+    Page<Student> searchStudent(Pageable pageable, String inforStudent);
 
 
     void saveStudent(Student student);
