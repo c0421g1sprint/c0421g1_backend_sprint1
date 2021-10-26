@@ -15,6 +15,11 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
+    //native Query hien thi danh sach - LinhDN
+    @Query(value = "select" +
+            " teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id" +
+            " from teacher where delete_flag = false ", nativeQuery = true, countQuery="select count(*)  from teacher where delete_flag = false;")
+    Page<Teacher> findAllTeacherByQuery(Pageable pageable);
 
 
 
@@ -23,7 +28,24 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
             "from teacher where teacher_id = :id", nativeQuery = true)
     Optional<Teacher> findByIdTeacherByQuery(int id);
 
+    //native Query xoa 1 giao vien (~ update deleteFlag = true) - LinhDN
+    @Modifying
+    @Query(value = "update teacher set delete_flag = true where teacher_id = :id ", nativeQuery = true)
+    void saveDeleteTeacher(int id);
 
+    //native Query hien thi danh sach theo tu khoa nhap vao- LinhDN
+    @Query(value = "select teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id\n" +
+            "from teacher where (delete_flag = false and teacher_name like %:name%)", nativeQuery = true, countQuery="select teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id\n" +
+            "from teacher where (delete_flag = false and teacher_name like %:name%)")
+    Page<Teacher> findAllTeacherByQueryWithKeyword(Pageable pageable, @Param("name") String name);
+
+    //native Query hien thi danh sach theo phong ban- LinhDN
+    @Query(value = "select" +
+            " teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id " +
+            "from teacher where (delete_flag = false and division_id = :id)", nativeQuery = true, countQuery="select" +
+            " teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id " +
+            "from teacher where (delete_flag = false and division_id = :id)")
+    Page<Teacher> findByIdTeacherByDivision(Pageable pageable, int id);
 
     @Modifying
     @Query(value = "INSERT INTO `sprint1`.`teacher` (`delete_flag`, `teacher_address`, `teacher_date_of_birth`, `teacher_email`, `teacher_gender`, `teacher_image`, `teacher_name`, `teacher_phone`, `teacher_university`, `account_id`, `degree_id`, `division_id`) " +

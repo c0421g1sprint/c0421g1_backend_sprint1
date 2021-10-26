@@ -17,7 +17,13 @@ public class TeacherServiceImpl implements ITeacherService {
     private ITeacherRepository teacherRepository;
 
 
-
+    @Override
+    public void delete(Integer id) {
+        Teacher teacher = teacherRepository.findByIdTeacherByQuery(id).orElse(null);
+        if (teacher != null) {
+            teacherRepository.saveDeleteTeacher(teacher.getTeacherId());
+        }
+    }
 
 
     @Override
@@ -33,6 +39,30 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     public void save(Teacher teacher) {
         this.teacherRepository.createNewTeacher(teacher.isDeleteFlag(), teacher.getTeacherAddress(), teacher.getTeacherDateOfBirth(), teacher.getTeacherEmail(), teacher.getTeacherGender(), teacher.getTeacherImage(), teacher.getTeacherName(), teacher.getTeacherPhone(), teacher.getTeacherUniversity(),teacher.getDivision().getDivisionId(), teacher.getDegree().getDegreeId(),teacher.getAccount().getAccountId());
+    }
+
+    @Override
+    public Page<Teacher> findAllTeacherByQuery(Pageable pageable) {
+        return teacherRepository.findAllTeacherByQuery(pageable);
+    }
+
+    @Override
+    public Teacher findTeacherByIdByQuery(int id) {
+        Teacher teacher  = teacherRepository.findByIdTeacherByQuery(id).orElse(null);
+        if (teacher != null) {
+            return teacher;
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Teacher> findAllTeacherByQueryWithName(Pageable pageable, String name) {
+        return teacherRepository.findAllTeacherByQueryWithKeyword(pageable, name);
+    }
+
+    @Override
+    public Page<Teacher> findAllTeacherByQueryWithDivision(Pageable pageable, int id) {
+        return teacherRepository.findByIdTeacherByDivision(pageable,id);
     }
 
 
