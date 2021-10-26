@@ -76,7 +76,7 @@ public class ScheduleController_showScheduleTailByIdClass {
     @Test
     public void showScheduleTailByIdClass_11() {
         ResponseEntity<List<ScheduleDetail>> listResponseEntity
-                = this.scheduleController.showScheduleTailByIdClass(java.util.Optional.of("1"));
+                = this.scheduleController.showScheduleTailByIdClass(java.util.Optional.of(1));
 
         Assertions.assertEquals(HttpStatus.OK, listResponseEntity.getStatusCode());
 

@@ -50,15 +50,14 @@ public class ScheduleController {
 
     // TaiNP 26/10/2021 method return schedule of class_id
     @GetMapping("/schedule-detail/{classId}")
-    public ResponseEntity<List<ScheduleDetail>> showScheduleTailByIdClass(@PathVariable Optional<String> classId) {
+    public ResponseEntity<List<ScheduleDetail>> showScheduleTailByIdClass(@PathVariable(required = false) Optional<Integer> classId) {
         if(classId == null){
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
         }
         if(!classId.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Integer id = Integer.parseInt(classId.get());
-        List<ScheduleDetail> scheduleDetailList = this.scheduleDetailService.findScheduleDetailByClassId(id);
+        List<ScheduleDetail> scheduleDetailList = this.scheduleDetailService.findScheduleDetailByClassId(classId.get());
         if (scheduleDetailList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
