@@ -18,10 +18,11 @@ import java.util.Set;
 @AllArgsConstructor
 public class StudyDayTime {
     @Id
-    private String studyDayTimeId;
+    private Integer studyDayTimeId;
     private String studyDayTimeStudyTime;
     private String studyDayTimeStudyDay;
 
     @OneToMany(mappedBy = "studyDayTime")
+    @JsonBackReference(value = "scheduleDetail_daytime")
     private Set<ScheduleDetail> scheduleDetails;
 }
