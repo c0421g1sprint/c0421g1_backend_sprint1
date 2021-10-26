@@ -82,4 +82,14 @@ public class StudentController {
         studentService.editStudent(student);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
+
+    //HauPT do showDetailStudent function
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Student> showDetailStudent(@PathVariable Integer id) {
+        Student student = studentService.getById(id);
+        if (student == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
 }
