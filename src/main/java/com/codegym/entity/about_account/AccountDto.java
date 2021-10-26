@@ -1,5 +1,6 @@
 package com.codegym.entity.about_account;
 
+import com.codegym.entity.about_teacher.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class AccountDto implements Validator {
     @NotBlank
     private String accountPassword;
     private String accountEmail;
+    private Integer teacherId;
     private boolean activated_flag;
     private boolean lock_flag;
     private boolean delete_flag;

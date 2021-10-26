@@ -3,6 +3,7 @@ package com.codegym.rest_controller;
 
 import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_account.AccountDto;
+import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.IAccountService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,9 @@ public class AccountController {
         Account account = new Account();
         BeanUtils.copyProperties(accountDto, account);
         this.accountService.saveAccount(accountDto.getAccountUsername(),accountDto.getAccountPassword());
+        this.accountService.updateIdAccountTeacher(accountDto.getTeacherId(),accountDto.getAccountId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }
 

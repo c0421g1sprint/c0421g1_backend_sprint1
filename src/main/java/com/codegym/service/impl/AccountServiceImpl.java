@@ -28,4 +28,16 @@ public class AccountServiceImpl implements IAccountService {
     public Optional<Account> findById(Long id) {
         return accountRepository.findByIdQuery(id);
     }
+
+    @Override
+    public void updateIdAccountTeacher(Integer teacherId, Integer accountId) {
+        this.accountRepository.updateIdAccountTeacher(teacherId,accountId);
+    }
+
+    @Override
+    public void findByIdQuery(Long id) {
+        accountRepository.findByIdQuery(id);
+    }
+
+
 }

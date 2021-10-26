@@ -22,7 +22,12 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     @Query(value = "INSERT into account (account_username,account_password,activated_flag,lock_flag,delete_flag) values (?1,?2,0,1,0) ", nativeQuery = true)
     void saveQuery(String accountUsername, String accountPassword);
 
-    @Query(value = "select * from account where account_id = ?1", nativeQuery = true)
+    @Query(value = "select * from account where account.account_id = ?1", nativeQuery = true)
     Optional<Account> findByIdQuery(Long id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE teacher set account_id = ?1 where teacher_id = ?2 ", nativeQuery = true)
+    void updateIdAccountTeacher(Integer teacherId,Integer accountId);
 }
 
