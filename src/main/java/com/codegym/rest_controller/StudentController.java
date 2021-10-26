@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.function.Function;
@@ -55,7 +56,7 @@ public class StudentController {
             if (studentDelete == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             else {
                 StudentDTO studentDTO = new StudentDTO();
-                BeanUtils.copyProperties(studentDelete,studentDTO);
+                BeanUtils.copyProperties(studentDelete, studentDTO);
                 return new ResponseEntity<>(studentDTO, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -63,6 +64,7 @@ public class StudentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
     // Diệp search student ngày 25/10
     @GetMapping("/searchstudent")
     public ResponseEntity<Page<Student>> getsearchStudent(
@@ -73,5 +75,25 @@ public class StudentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(students, HttpStatus.OK);
+    }
+
+
+    //LamNT do createStudent function
+    @PostMapping("/add")
+    public ResponseEntity<Integer> addStudent(@RequestBody @Validated StudentDTO studentDto) {
+        Student student = new Student();
+        BeanUtils.copyProperties(studentDto, student);
+        studentService.saveStudent(student);
+        return new ResponseEntity<>(student.getStudentId(), HttpStatus.CREATED);
+    }
+
+    //LamNT do editStudent function
+    @PatchMapping("/edit")
+    public ResponseEntity<?> editStudent(@RequestBody @Validated StudentDTO studentDto) {
+        Student student = new Student();
+        BeanUtils.copyProperties(studentDto, student);
+        studentService.editStudent(student);
+        return new ResponseEntity<>(student, HttpStatus.OK);
+
     }
 }

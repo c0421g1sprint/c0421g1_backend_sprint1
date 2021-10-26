@@ -12,4 +12,10 @@ public interface IStudentService{
     Student deleteById(int studentId);
     //    Diệp search student ngày 25/10
     Page<Student> searchstudent(Pageable pageable, String searchstudent);
+
+
+    void saveStudent(Student student);
+
+    void editStudent(Student student);
+
 }
