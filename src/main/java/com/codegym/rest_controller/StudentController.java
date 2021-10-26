@@ -63,4 +63,15 @@ public class StudentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    // Diệp search student ngày 25/10
+    @GetMapping("/searchstudent")
+    public ResponseEntity<Page<Student>> getsearchStudent(
+            @PageableDefault(value = 2) Pageable pageable,
+            @RequestParam(required = false) String searchstudent) {
+        Page<Student> students = studentService.searchstudent(pageable, searchstudent);
+        if (!students.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(students, HttpStatus.OK);
+    }
 }

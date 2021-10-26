@@ -32,4 +32,9 @@ public class StudentServiceImpl implements IStudentService {
     public Page<Student> findByClassroom(int classroomId, Pageable pageable) {
         return studentRepository.findByClassroomId(classroomId, pageable);
     }
+    // Diep search student 25/10
+    @Override
+    public Page<Student> searchstudent(Pageable pageable, String searchstudent) {
+        return this.studentRepository.searchstudent(pageable, "%" + searchstudent + "%");
+    }
 }

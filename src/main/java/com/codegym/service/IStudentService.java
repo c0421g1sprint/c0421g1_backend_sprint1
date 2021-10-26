@@ -10,4 +10,6 @@ public interface IStudentService{
     Student getById(int id);
 
     Student deleteById(int studentId);
+    //    Diệp search student ngày 25/10
+    Page<Student> searchstudent(Pageable pageable, String searchstudent);
 }
