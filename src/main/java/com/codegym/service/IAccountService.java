@@ -1,4 +1,4 @@
 package com.codegym.service;
 
-public interface IAccountService {
+public interface IAccountService{
 }

@@ -1,4 +1,4 @@
 package com.codegym.service;
 
-public interface ITeacherService {
+public interface ITeacherService{
 }
