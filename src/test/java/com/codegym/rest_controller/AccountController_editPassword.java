@@ -1,6 +1,6 @@
 package com.codegym.rest_controller;
 
-import com.codegym.dto.AccountDto;
+import com.codegym.dto.EditPasswordAccountDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class AccountController_editPassword {
 
     @Test
     public void editPassword_19() throws Exception {
-        AccountDto accountDto = new AccountDto();
+        EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword(null);
         accountDto.setAccountId(1);
         accountDto.setOldPassword("asd");
@@ -39,7 +39,7 @@ public class AccountController_editPassword {
 
     @Test
     public void editPassword_20() throws Exception {
-        AccountDto accountDto = new AccountDto();
+        EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword("");
         accountDto.setAccountId(1);
         accountDto.setOldPassword("asd");
@@ -52,7 +52,7 @@ public class AccountController_editPassword {
     }
     @Test
     public void editPassword_21() throws Exception {
-        AccountDto accountDto = new AccountDto();
+        EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword("      ");
         accountDto.setAccountId(1);
         accountDto.setOldPassword("asd");
@@ -65,7 +65,7 @@ public class AccountController_editPassword {
     }
     @Test
     public void editPassword_22() throws Exception {
-        AccountDto accountDto = new AccountDto();
+        EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword("aaa");
         accountDto.setAccountId(1);
         accountDto.setOldPassword("asd");
@@ -79,7 +79,7 @@ public class AccountController_editPassword {
 
     @Test
     public void editPassword_23() throws Exception {
-        AccountDto accountDto = new AccountDto();
+        EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword("sadddqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
         accountDto.setAccountId(1);
         accountDto.setOldPassword("asd");
@@ -93,7 +93,7 @@ public class AccountController_editPassword {
 
     @Test
     public void editPassword_24() throws Exception {
-        AccountDto accountDto = new AccountDto();
+        EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword("7777777");
         accountDto.setAccountId(1);
         accountDto.setOldPassword("asd");
