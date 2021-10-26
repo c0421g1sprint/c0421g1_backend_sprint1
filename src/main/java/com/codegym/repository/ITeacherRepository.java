@@ -9,10 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Repository
 @Transactional
 public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
+
     // Diep search teacher 26/10
     //    @Query(value = "select * from teacher\n" +
 //            "where teacher.teacher_id =:teacherId or teacher.teacher_name like :teacherName or " +

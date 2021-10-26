@@ -36,4 +36,5 @@ public class TeacherController {
         }
         return new ResponseEntity<>(teachers, HttpStatus.OK);
     }
+
 }
