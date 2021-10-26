@@ -1,7 +1,11 @@
 package com.codegym.rest_controller;
 
 import com.codegym.dto.StudentDTO;
+import com.codegym.entity.about_classroom.Classroom;
+import com.codegym.entity.about_classroom.Grade;
 import com.codegym.entity.about_student.Student;
+import com.codegym.service.IClassroomService;
+import com.codegym.service.IGradeService;
 import com.codegym.service.IStudentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.function.Function;
 
 @RestController
@@ -21,6 +26,10 @@ import java.util.function.Function;
 public class StudentController {
     @Autowired
     private IStudentService studentService;
+    @Autowired
+    private IGradeService gradeService;
+    @Autowired
+    private IClassroomService classroomService;
 
     //DungNM - Lấy danh sách học sinh của 1 lớp
     @GetMapping("/{classroomId}")
@@ -56,7 +65,7 @@ public class StudentController {
             if (studentDelete == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             else {
                 StudentDTO studentDTO = new StudentDTO();
-                BeanUtils.copyProperties(studentDelete,studentDTO);
+                BeanUtils.copyProperties(studentDelete, studentDTO);
                 return new ResponseEntity<>(studentDTO, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -81,5 +90,21 @@ public class StudentController {
         BeanUtils.copyProperties(studentDto, student);
         studentService.editStudent(student);
         return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
+    //DungNM - 26/10 - lấy toàn bộ danh sách khối có trong DB
+    @GetMapping("get-all-grade")
+    public ResponseEntity<List<Grade>> findAllGrade() {
+        List<Grade> gradeList = gradeService.findAll();
+        return (gradeList.size() == 0) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                : new ResponseEntity<>(gradeList, HttpStatus.OK);
+    }
+
+    //DungNM - 26/10 - lấy toàn bộ danh sách các lớp có trong DB
+    @GetMapping("get-all-classroom")
+    public ResponseEntity<List<Classroom>> findAllClassroom() {
+        List<Classroom> classroomList = classroomService.findAll();
+        return (classroomList.size() == 0) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                : new ResponseEntity<>(classroomList, HttpStatus.OK);
     }
 }
