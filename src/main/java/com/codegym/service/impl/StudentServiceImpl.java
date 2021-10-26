@@ -44,18 +44,7 @@ public class StudentServiceImpl implements IStudentService {
     public Page<Student> findByClassroom(int classroomId, Pageable pageable) {
         return studentRepository.findByClassroomId(classroomId, pageable);
     }
-
-    //creator: HaNTT, date: 23/10/2021
-    @Override
-    public Page<Student> findWhereClassroomIdNull(Pageable pageable) {
-        return studentRepository.findWhereClassroomIdNull(pageable);
-    }
-
-    //creator: HaNTT, date: 23/10/2021
-    @Override
-    public Student findStudentById(Integer id) {
-        return studentRepository.findStudentWhereId(id);
-    }
+    
 
     //Trùng code với Danh dòng 20
 //      creator: HaNTT, date: 23/10/2021

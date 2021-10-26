@@ -17,4 +17,6 @@ public interface IStudentService{
 
     //creator: HaNTT, date: 23/10/2021
     Student findStudentById(Integer id);
+
+    Integer setClassroomForNewStudent(Integer classRoomId, Integer studentId);
 }

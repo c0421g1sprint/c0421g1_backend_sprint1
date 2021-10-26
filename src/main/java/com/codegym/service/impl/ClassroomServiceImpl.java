@@ -15,12 +15,7 @@ public class ClassroomServiceImpl implements IClassroomService {
     @Autowired
     private IClassroomRepository classroomRepository;
 
-<<<<<<< HEAD
-    //creator: HaNTT, date: 23/10/2021  (check class Duplicate)
-    @Override
-    public Classroom findClassByNameAndSchoolYear(String name, String schoolYear) {
-        return this.classroomRepository.findClassByNameAndSchoolYear(name, schoolYear);
-=======
+
     //DanhNT coding 2:00PM - 23-10-2021
     @Override
     public List<Classroom> findAll() {
@@ -56,7 +51,6 @@ public class ClassroomServiceImpl implements IClassroomService {
     @Override
     public void updateClassNameAfterPromote(String newName, Integer classId) {
         this.classroomRepository.updateClassNameAfterPromote(newName, classId);
->>>>>>> 7ce70fb5ff4ffd14dd3bcfdbc4c85f229e0d62af
     }
 
     //creator: HaNTT, date: 23/10/2021  (tạo mới)

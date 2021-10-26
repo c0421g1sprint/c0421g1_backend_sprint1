@@ -54,23 +54,4 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     @Query("select s from Student s where s.classroom.classroomId = :id and s.deleteFlag=false ")
     Page<Student> findByClassroomId(int id, Pageable pageable);
 
-    //creator: HaNTT, date: 23/10/2021 (khi nhấn nút chọn student có sẵn: checkbox)
-    @Query(value="SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity," +
-            " student_father_name, student_gender, student_image, student_mother_name, student_name, " +
-            "student_parent_phone, student_religion, student_status, classroom_id\n" +
-            "FROM sprint1.student\n" +
-            "WHERE classroom_id is null",
-            countQuery="SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id\n" +
-                    "FROM sprint1.student\n" +
-                    "WHERE classroom_id is null;",
-            nativeQuery = true)
-    Page<Student> findWhereClassroomIdNull(Pageable pageable);
-
-    //creator: HaNTT, date: 23/10/2021 (khi nhấn button tạo mới student: find one --> add to list student)
-    @Query(value= "SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, " +
-            "student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id\n" +
-            "FROM sprint1.student\n" +
-            "WHERE student_id = ?;",
-            nativeQuery = true)
-    Student findStudentWhereId(Integer id);
 }

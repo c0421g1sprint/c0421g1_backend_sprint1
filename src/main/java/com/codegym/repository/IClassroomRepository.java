@@ -15,14 +15,6 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface IClassroomRepository extends JpaRepository<Classroom, Integer> {
-<<<<<<< HEAD
-    //creator: HaNTT, date: 23/10/2021  (check class Duplicate)
-    @Query(value="SELECT classroom_id, classroom_name, classroom_school_year, delete_flag, grade_id, teacher_id\n" +
-            "FROM classroom\n" +
-            "WHERE classroom_name = ?1 and classroom_school_year =?2",
-            nativeQuery = true)
-    Classroom findClassByNameAndSchoolYear(String name, String schoolYear);
-=======
 
     // DanhNT coding 5:00PM
     @Modifying
@@ -72,7 +64,6 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
             "set classroom_name = ?1\n" +
             "where classroom_id = ?2" , nativeQuery = true)
     void updateClassNameAfterPromote(String newName, Integer classId);
->>>>>>> 7ce70fb5ff4ffd14dd3bcfdbc4c85f229e0d62af
 
     //creator: HaNTT, date: 23/10/2021  (tạp lớp mới)
     @Modifying
@@ -80,8 +71,4 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
             "values (?1,?2,?3,?4,?5);",
             nativeQuery = true)
     Integer saveClassRoom(String name, String schoolYear, Integer gradeId,Integer teacherId, boolean deleteFlag);
-<<<<<<< HEAD
-
-=======
->>>>>>> 7ce70fb5ff4ffd14dd3bcfdbc4c85f229e0d62af
 }
