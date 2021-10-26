@@ -27,8 +27,7 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
     // DanhNT coding 5:00PM
     @Query(value = "select c.classroom_id, c.classroom_name, c.classroom_school_year, c.delete_flag, c.grade_id, c.teacher_id\n" +
             "from classroom c\n" +
-            "join teacher t on t.teacher_id = c.teacher_id\n" +
-            "where c.delete_flag = false and c.classroom_id = ?1 ;", nativeQuery = true)
+            "where c.delete_flag = false and c.classroom_id = ?1", nativeQuery = true)
     Optional<Classroom> findById(Integer id);
 
     //DanhNT Coding for update class 11:30PM
