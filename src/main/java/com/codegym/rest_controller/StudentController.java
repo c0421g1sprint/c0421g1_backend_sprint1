@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.function.Function;
@@ -62,5 +63,23 @@ public class StudentController {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    //LamNT do createStudent function
+    @PostMapping("/add")
+    public ResponseEntity<Integer> addStudent(@RequestBody @Validated StudentDTO studentDto) {
+        Student student = new Student();
+        BeanUtils.copyProperties(studentDto, student);
+        studentService.saveStudent(student);
+        return new ResponseEntity<>(student.getStudentId(), HttpStatus.CREATED);
+    }
+
+    //LamNT do editStudent function
+    @PatchMapping("/edit")
+    public ResponseEntity<?> editStudent(@RequestBody @Validated StudentDTO studentDto) {
+        Student student = new Student();
+        BeanUtils.copyProperties(studentDto, student);
+        studentService.editStudent(student);
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 }

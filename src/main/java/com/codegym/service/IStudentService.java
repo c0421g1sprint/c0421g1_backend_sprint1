@@ -10,4 +10,9 @@ public interface IStudentService{
     Student getById(int id);
 
     Student deleteById(int studentId);
+
+    void saveStudent(Student student);
+
+    void editStudent(Student student);
+
 }
