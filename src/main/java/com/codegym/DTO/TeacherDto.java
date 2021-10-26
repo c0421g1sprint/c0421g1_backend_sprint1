@@ -11,26 +11,31 @@ public class TeacherDto {
     private Integer teacherId;
     @NotEmpty
     @NotBlank
+    @NotNull
     @Size(max = 30,message = "Tên không được lớn hơn 30 kí tự")
     private String teacherName;
     private Byte teacherGender;
-
+    @NotNull
     @Pattern(regexp = "^([0-2][0-9]|(3)[0-1])(\\/)(((0)[0-9])|((1)[0-2]))(\\/)\\d{4}$",message = "Ngày tháng năm sinh của bạn ko đúng định dạng dd/mm/yyyy")
     private String teacherDateOfBirth;
     @NotBlank(message = "Trường Đại học không được để trống")
     @NotEmpty
+    @NotNull
     private String teacherUniversity;
 
+    @NotNull
     @NotBlank(message = "Địa chỉ không được có khoảng trắng")
     @NotEmpty(message = "Địa chỉ không được trống")
     @Size(max = 30,message = "Địa chỉ không được lớn hơn 30 kí tự")
     @Size(min = 2,message = "Địa chỉ không được nhở  hơn 2 kí tự")
     private String teacherAddress;
-
+    @NotNull
     @NotEmpty(message = "email không được rống")
     @Email(message = "email không đúng định dạng")
     @Size(max = 50,message = "Email không được lớn hơn 50 kí tự")
     @Size(min = 6,message = " Email không được nhở  hơn 6 kí tự")
+
+    @NotNull
     private String teacherEmail;
     @NotEmpty(message = "số điện thoại không được để rỗng")
     @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$",message = "số điện thoại ko đúng định dạng")

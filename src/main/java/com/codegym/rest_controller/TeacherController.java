@@ -88,7 +88,6 @@ public class TeacherController {
     }
 
 
-
      // chức năng  cập nhập  - BaoHG
     @RequestMapping(value = "/update", method = RequestMethod.PATCH)
     public ResponseEntity<?> updateTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult bindingResult) {
@@ -101,6 +100,4 @@ public class TeacherController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
-
-
 }
