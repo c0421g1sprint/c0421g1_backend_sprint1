@@ -1,6 +1,9 @@
 package com.codegym.rest_controller;
 
 
+import com.codegym.entity.about_teacher.Division;
+
+
 import com.codegym.dto.TeacherDto;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.ITeacherService;
@@ -15,6 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -116,5 +123,16 @@ public class TeacherController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
+    }
+
+    @GetMapping("/listDivision/")
+    public ResponseEntity<List<Division>> getDivisionList
+            () {
+        List<Division> divisionList = teacherService.findAllDivisionByQuery();
+        if (divisionList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(divisionList, HttpStatus.OK);
+        }
     }
 }

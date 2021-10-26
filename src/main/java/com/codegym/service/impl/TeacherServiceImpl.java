@@ -1,6 +1,8 @@
 package com.codegym.service.impl;
 
 
+import com.codegym.entity.about_teacher.Division;
+
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.repository.ITeacherRepository;
 import com.codegym.service.ITeacherService;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,6 +50,11 @@ public class TeacherServiceImpl implements ITeacherService {
         teacherRepository.editPersonInfor(teacher.getTeacherPhone(), teacher.getTeacherAddress(), teacher.getTeacherEmail(), teacher.getTeacherId());
     }
 
+
+    @Override
+    public List<Division> findAllDivisionByQuery() {
+        return this.teacherRepository.findAllDivisionByQuery();
+    }
 
     @Override
     public Page<Teacher> findAllTeacherByQuery(Pageable pageable) {

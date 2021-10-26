@@ -1,5 +1,6 @@
 package com.codegym.repository;
 
+import com.codegym.entity.about_teacher.Division;
 import com.codegym.entity.about_teacher.Teacher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -59,11 +61,17 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
             "where (teacher_id = ?13);",nativeQuery = true)
     void updateTeacher(Boolean deleteFlag,String address, String dateOfBirth, String email, Byte gender, String image, String name, String phone, String teacher_university,Integer divisionId, Integer degreeId,Integer accouuntId,Integer teacherId);
 
+
+    //lay ra danh sach cac phong ban - LinhDN
+    @Query(value = "SELECT division_id, division_name FROM teacher_management_sprint1.division;", nativeQuery = true)
+    List<Division> findAllDivisionByQuery();
+
     @Modifying
     @Query(value = "UPDATE teacher as c\n" +
             "SET c.teacher_phone =?1, c.teacher_address = ?2, c.teacher_email = ?3\n" +
             "WHERE teacher_id = ?4 ", nativeQuery = true)
     void editPersonInfor(String phone, String address, String email, Integer id);
+
 
 
 }
