@@ -20,20 +20,26 @@ public class StudentRestController_getSearchStudent {
     // Tham số null
     @Test
     public void  getSearchStudent_7() {
-        ResponseEntity<Page<Student>> pageResponseEntity = this.studentController.searchByName(PageRequest.of(0,1),null,null);
+        ResponseEntity<Page<Student>> pageResponseEntity = this.studentController.searchByName(PageRequest.of(0,3),null,null);
         Assertions.assertEquals(HttpStatus.NO_CONTENT, pageResponseEntity.getStatusCode());
     }
 
     //    Tìm kiếm tương đối nên để rỗng vẫn HttpStatus.Ok
     @Test
     public void  getSearchStudent_8() {
-        ResponseEntity<Page<Student>> pageResponseEntity = this.studentController.searchByName(PageRequest.of(0,1),"","");
+        ResponseEntity<Page<Student>> pageResponseEntity = this.studentController.searchByName(PageRequest.of(0,3),"","");
         Assertions.assertEquals(HttpStatus.OK, pageResponseEntity.getStatusCode());
+        Page<Student> studentPage = pageResponseEntity.getBody();
+
+        Assertions.assertEquals(11, studentPage.getTotalElements());
+        Assertions.assertEquals(4, studentPage.getTotalPages());
+        Assertions.assertEquals("Nguyễn Thu Thủy", studentPage.getContent().get(1).getStudentName());
+        Assertions.assertEquals("Lê Văn Cường", studentPage.getContent().get(0).getStudentName());
     }
     //    Tham số không tồn tại trong DB
     @Test
     public void  getSearchStudent_9() {
-        ResponseEntity<Page<Student>> pageResponseEntity = this.studentController.searchByName(PageRequest.of(0,1),"linh","di choi");
+        ResponseEntity<Page<Student>> pageResponseEntity = this.studentController.searchByName(PageRequest.of(0,3),"linh","di choi");
         Assertions.assertEquals(HttpStatus.NO_CONTENT, pageResponseEntity.getStatusCode());
     }
     //    Tham số tồn tại trong DB và có size=0
@@ -48,14 +54,14 @@ public class StudentRestController_getSearchStudent {
     @Test
     public void getSearchStudent_11() {
         ResponseEntity<Page<Student>> pageResponseEntity
-                = this.studentController.searchByName(PageRequest.of(0, 1),"Cường","Đang học");
+                = this.studentController.searchByName(PageRequest.of(0, 5),"T","Đang học");
         Assertions.assertEquals(HttpStatus.OK, pageResponseEntity.getStatusCode());
 
         Page<Student> studentPage = pageResponseEntity.getBody();
 
-        Assertions.assertEquals(1, studentPage.getTotalElements());
-        Assertions.assertEquals(1, studentPage.getTotalPages());
-        Assertions.assertEquals("Lê Văn Cường", studentPage.getContent().get(0).getStudentName());
+        Assertions.assertEquals(8, studentPage.getTotalElements());
+        Assertions.assertEquals(2, studentPage.getTotalPages());
+        Assertions.assertEquals("Nguyễn Thu Thủy", studentPage.getContent().get(0).getStudentName());
 
     }
 
