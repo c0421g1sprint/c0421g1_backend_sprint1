@@ -30,4 +30,16 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     @Modifying
     @Query(value = "update account set activated_flag = 1 where email = ?1", nativeQuery =true)
     void enableActiveAccount(@Param("email") String email);
+
+    //HauPT do getAccountById function
+    @Query(value = "select " +
+            " account_id, account_email, account_password, account_username, activated_flag, delete_flag, lock_flag" +
+            " from `account` a where a.account_id = :id", nativeQuery = true)
+    Account getAccountById(int id);
+
+    //HauPT do editPassword function
+    @Modifying
+    @Query(value = "update `sprint1`.`account` set account_password = ?2 where (account_id = ?1);", nativeQuery = true)
+    void editPassword(Integer id ,String password);
+
 }

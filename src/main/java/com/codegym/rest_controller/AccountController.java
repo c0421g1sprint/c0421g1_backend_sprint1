@@ -1,6 +1,7 @@
 package com.codegym.rest_controller;
 
 import com.codegym.dto.AccountDto;
+import com.codegym.dto.EditPasswordAccountDto;
 import com.codegym.dto.LoginRequestDto;
 import com.codegym.emailJava.ConfirmService;
 import com.codegym.entity.about_account.Account;
@@ -23,7 +24,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -111,13 +111,25 @@ public class AccountController {
     }
 
     @GetMapping("/confirm")
-    public ResponseEntity<?> confirm(@RequestParam(value = "token") String token){
+    public ResponseEntity<?> confirm(@RequestParam(value = "token") String token) {
         try {
             confirmService.confirmEmailWithToken(token);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Chức mừng bạn đã kích hoạt tài khoản" , HttpStatus.OK);
+        return new ResponseEntity<>("Chức mừng bạn đã kích hoạt tài khoản", HttpStatus.OK);
+    }
+
+    //HauPT do editPassword function
+    @PatchMapping("/editPass")
+    public ResponseEntity<?> editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
+        Account account = accountService.getAccountById(editPasswordAccountDto.getAccountId());
+        if (!account.getAccountPassword().equals(editPasswordAccountDto.getOldPassword()) || bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            accountService.editPassword(editPasswordAccountDto.getAccountId(), editPasswordAccountDto.getAccountPassword());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 }
 
