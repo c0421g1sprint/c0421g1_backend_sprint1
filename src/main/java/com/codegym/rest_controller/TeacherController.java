@@ -1,7 +1,10 @@
 package com.codegym.rest_controller;
 
-import com.codegym.DTO.TeacherDto;
+
 import com.codegym.entity.about_teacher.Division;
+
+
+import com.codegym.dto.TeacherDto;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.BeanUtils;
@@ -16,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +29,8 @@ import java.util.Optional;
 public class TeacherController {
     @Autowired
     private ITeacherService teacherService;
+
+
 
     //chuc nang hien thi danh sach giao vien - LinhDN
     @GetMapping("/list")
@@ -38,9 +44,9 @@ public class TeacherController {
         }
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Optional<Teacher>> findTeacherById(@PathVariable int id) {
-        Optional<Teacher> teacher = teacherService.findById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Teacher> findTeacherById(@PathVariable int id) {
+        Teacher teacher = teacherService.findTeacherByIdByQuery(id);
         if (teacher != null) {
             return new ResponseEntity<>(teacher, HttpStatus.OK);
         } else {
@@ -92,6 +98,19 @@ public class TeacherController {
     }
 
 
+    //    MinhNN 24/10 update infor teacherg
+    @PatchMapping("/updateInFor")
+    public ResponseEntity<?> updateInforTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            Teacher teacher = new Teacher();
+            BeanUtils.copyProperties(teacherDto, teacher);
+            this.teacherService.updateInFor(teacher);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
      // chức năng  cập nhập  - BaoHG
     @RequestMapping(value = "/update", method = RequestMethod.PATCH)
     public ResponseEntity<?> updateTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult bindingResult) {
@@ -103,6 +122,7 @@ public class TeacherController {
             this.teacherService.update(teacher);
             return new ResponseEntity<>(HttpStatus.OK);
         }
+
     }
 
     @GetMapping("/listDivision/")
