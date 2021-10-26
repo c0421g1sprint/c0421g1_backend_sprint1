@@ -1,5 +1,6 @@
 package com.codegym.service.impl;
 
+import com.codegym.entity.about_teacher.Division;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.repository.ITeacherRepository;
 import com.codegym.service.ITeacherService;
@@ -39,6 +40,11 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     public void save(Teacher teacher) {
         this.teacherRepository.createNewTeacher(teacher.isDeleteFlag(), teacher.getTeacherAddress(), teacher.getTeacherDateOfBirth(), teacher.getTeacherEmail(), teacher.getTeacherGender(), teacher.getTeacherImage(), teacher.getTeacherName(), teacher.getTeacherPhone(), teacher.getTeacherUniversity(),teacher.getDivision().getDivisionId(), teacher.getDegree().getDegreeId(),teacher.getAccount().getAccountId());
+    }
+
+    @Override
+    public List<Division> findAllDivisionByQuery() {
+        return this.teacherRepository.findAllDivisionByQuery();
     }
 
     @Override
