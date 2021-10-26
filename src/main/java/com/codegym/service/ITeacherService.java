@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 public interface ITeacherService {
+
+
+
     Page<Teacher> findAllTeacherByQuery(Pageable pageable);
     Teacher findTeacherByIdByQuery(int id);
     Page<Teacher> findAllTeacherByQueryWithName(Pageable pageable, String name);
@@ -14,6 +17,7 @@ public interface ITeacherService {
     void delete(Integer id);
     Optional<Teacher> findById(int id);
     void update(Teacher teacher);
+    void updateInFor(Teacher teacher);
     void save(Teacher teacher);
 
 }

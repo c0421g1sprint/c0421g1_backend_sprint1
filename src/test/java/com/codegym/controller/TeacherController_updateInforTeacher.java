@@ -1,10 +1,10 @@
 package com.codegym.controller;
 
-import com.codegym.DTO.TeacherDto;
+
+import com.codegym.dto.TeacherDto;
 import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_teacher.Degree;
 import com.codegym.entity.about_teacher.Division;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +19,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TeacherController_CreateTeacher {
+public class TeacherController_updateInforTeacher {
+
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
-    public void createTeacher_name_18() throws Exception {
+    public void updateInForTeacher_24() throws Exception {
         TeacherDto teacherDto =new TeacherDto();
 
         teacherDto.setDeleteFlag(false);
         teacherDto.setTeacherAddress("da nang");
         teacherDto.setTeacherDateOfBirth("23/11/2000");
 
-        teacherDto.setTeacherEmail("bao@gmail.com");
+        teacherDto.setTeacherEmail("minh@gmail.com");
         teacherDto.setTeacherImage("anh.png");
-        teacherDto.setTeacherName("bao bao");
+        teacherDto.setTeacherName("minh");
         teacherDto.setTeacherPhone("0905330270");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
@@ -51,24 +53,27 @@ public class TeacherController_CreateTeacher {
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/teachers/new")
+        teacherDto.setTeacherId(6);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
                 .content(this.objectMapper.writeValueAsString(teacherDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
 
+
     @Test
-    public void createTeacher_name_17() throws Exception {
+    public void updateInForTeacher_23() throws Exception {
         TeacherDto teacherDto =new TeacherDto();
 
         teacherDto.setDeleteFlag(false);
         teacherDto.setTeacherAddress("da nang");
         teacherDto.setTeacherDateOfBirth("23/11/2000");
 
-        teacherDto.setTeacherEmail("bao@gmail.com");
+        teacherDto.setTeacherEmail("minh@gmail.com");
         teacherDto.setTeacherImage("anh.png");
-        teacherDto.setTeacherName("bao bao bao bao bao bao bao bao bao bao bao bao bao bao");
+        teacherDto.setTeacherName("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         teacherDto.setTeacherPhone("0905330270");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
@@ -84,7 +89,8 @@ public class TeacherController_CreateTeacher {
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/teachers/new")
+        teacherDto.setTeacherId(1);
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
                 .content(this.objectMapper.writeValueAsString(teacherDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -92,16 +98,16 @@ public class TeacherController_CreateTeacher {
     }
 
     @Test
-    public void createTeacher_name_16() throws Exception {
+    public void updateInForTeacher_22() throws Exception {
         TeacherDto teacherDto =new TeacherDto();
 
         teacherDto.setDeleteFlag(false);
-        teacherDto.setTeacherAddress("d");
-        teacherDto.setTeacherDateOfBirth("23/11/2000");
+        teacherDto.setTeacherAddress("abc");
+        teacherDto.setTeacherDateOfBirth("01/10/2000");
 
-        teacherDto.setTeacherEmail("bao@gmail.com");
+        teacherDto.setTeacherEmail("minh@gmail.com");
         teacherDto.setTeacherImage("anh.png");
-        teacherDto.setTeacherName("bao bao bao bao bao bao bao bao bao bao bao bao bao bao");
+        teacherDto.setTeacherName("minh");
         teacherDto.setTeacherPhone("0905330270");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
@@ -117,7 +123,8 @@ public class TeacherController_CreateTeacher {
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/teachers/new")
+        teacherDto.setTeacherId(1);
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
                 .content(this.objectMapper.writeValueAsString(teacherDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -125,16 +132,16 @@ public class TeacherController_CreateTeacher {
     }
 
     @Test
-    public void createTeacher_name_15() throws Exception {
+    public void updateInForTeacher_21() throws Exception {
         TeacherDto teacherDto =new TeacherDto();
 
         teacherDto.setDeleteFlag(false);
         teacherDto.setTeacherAddress("d");
-        teacherDto.setTeacherDateOfBirth("23/11/2000");
+        teacherDto.setTeacherDateOfBirth("01/10/2000");
 
-        teacherDto.setTeacherEmail("baogmail.com");
+        teacherDto.setTeacherEmail("minhgmail.com");
         teacherDto.setTeacherImage("anh.png");
-        teacherDto.setTeacherName("bao bao bao bao bao bao bao bao bao bao bao bao bao bao");
+        teacherDto.setTeacherName("minh");
         teacherDto.setTeacherPhone("0905330270123456");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
@@ -150,7 +157,8 @@ public class TeacherController_CreateTeacher {
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/teachers/new")
+        teacherDto.setTeacherId(1);
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
                 .content(this.objectMapper.writeValueAsString(teacherDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -158,16 +166,16 @@ public class TeacherController_CreateTeacher {
     }
 
     @Test
-    public void createTeacher_name_14() throws Exception {
+    public void updateInForTeacher_20() throws Exception {
         TeacherDto teacherDto =new TeacherDto();
 
         teacherDto.setDeleteFlag(false);
         teacherDto.setTeacherAddress("");
-        teacherDto.setTeacherDateOfBirth("23/11/2000");
+        teacherDto.setTeacherDateOfBirth("01/10/2000");
 
         teacherDto.setTeacherEmail("");
         teacherDto.setTeacherImage("anh.png");
-        teacherDto.setTeacherName("bao bao bao bao bao bao bao bao bao bao bao bao bao bao");
+        teacherDto.setTeacherName("minh");
         teacherDto.setTeacherPhone("0905330270123456");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
@@ -183,7 +191,9 @@ public class TeacherController_CreateTeacher {
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/teachers/new")
+        teacherDto.setTeacherId(1);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
                 .content(this.objectMapper.writeValueAsString(teacherDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -191,7 +201,7 @@ public class TeacherController_CreateTeacher {
     }
 
     @Test
-    public void createTeacher_name_13() throws Exception {
+    public void updateInForTeacher_19() throws Exception {
         TeacherDto teacherDto =new TeacherDto();
 
         teacherDto.setDeleteFlag(false);
@@ -216,12 +226,11 @@ public class TeacherController_CreateTeacher {
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/teachers/new")
+        teacherDto.setTeacherId(1);
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
                 .content(this.objectMapper.writeValueAsString(teacherDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
-
 }

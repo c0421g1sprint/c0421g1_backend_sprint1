@@ -1,15 +1,13 @@
-package com.codegym.DTO;
+package com.codegym.dto;
 
-import com.codegym.entity.about_account.Account;
-import com.codegym.entity.about_teacher.Degree;
-import com.codegym.entity.about_teacher.Division;
+
 
 import javax.validation.constraints.*;
 
 
 public class TeacherDto {
     private Integer teacherId;
-    @NotEmpty(message = "Tên không được đê trống")
+    @NotEmpty
     @NotBlank
     @NotNull
     @Size(max = 30,message = "Tên không được lớn hơn 30 kí tự")
@@ -43,16 +41,15 @@ public class TeacherDto {
     @NotEmpty(message = "hình ảnh không được để trống")
     private String teacherImage;
 
-    private Degree degree;
-    private Division division;
-    private Account account;
+    private DegreeDto degree;
+    private DivisionDto division;
+    private AccountDto account;
     private boolean deleteFlag;
 
     public TeacherDto() {
     }
 
-    public TeacherDto(Integer teacherId, String teacherName, Byte teacherGender, String teacherDateOfBirth, String teacherUniversity, String teacherAddress, String teacherEmail, String teacherPhone, String teacherImage, Degree degree, Division division, Account account, boolean deleteFlag) {
-        this.teacherId = teacherId;
+    public TeacherDto(String teacherName, Byte teacherGender,String teacherDateOfBirth,String teacherUniversity,String teacherAddress,String teacherEmail, String teacherPhone, String teacherImage, DegreeDto degree, DivisionDto division, AccountDto account, boolean deleteFlag) {
         this.teacherName = teacherName;
         this.teacherGender = teacherGender;
         this.teacherDateOfBirth = teacherDateOfBirth;
@@ -139,27 +136,27 @@ public class TeacherDto {
         this.teacherImage = teacherImage;
     }
 
-    public Degree getDegree() {
+    public DegreeDto getDegree() {
         return degree;
     }
 
-    public void setDegree(Degree degree) {
+    public void setDegree(DegreeDto degree) {
         this.degree = degree;
     }
 
-    public Division getDivision() {
+    public DivisionDto getDivision() {
         return division;
     }
 
-    public void setDivision(Division division) {
+    public void setDivision(DivisionDto division) {
         this.division = division;
     }
 
-    public Account getAccount() {
+    public AccountDto getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(AccountDto account) {
         this.account = account;
     }
 
