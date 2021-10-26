@@ -1,6 +1,9 @@
 package com.codegym.controller;
 
 
+import com.codegym.dto.AccountDto;
+import com.codegym.dto.DegreeDto;
+import com.codegym.dto.DivisionDto;
 import com.codegym.dto.TeacherDto;
 import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_teacher.Degree;
@@ -41,15 +44,15 @@ public class TeacherController_updateInforTeacher {
         teacherDto.setTeacherPhone("0905330270");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
-        Account account = new Account();
+        AccountDto account = new AccountDto();
         account.setAccountId(1);
         teacherDto.setAccount(account);
 
-        Division division = new Division();
+        DivisionDto division = new DivisionDto();
         division.setDivisionId(1);
         teacherDto.setDivision(division);
 
-        Degree degree = new Degree();
+        DegreeDto degree = new DegreeDto();
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
@@ -77,15 +80,15 @@ public class TeacherController_updateInforTeacher {
         teacherDto.setTeacherPhone("0905330270");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
-        Account account = new Account();
+        AccountDto account = new AccountDto();
         account.setAccountId(1);
         teacherDto.setAccount(account);
 
-        Division division = new Division();
+        DivisionDto division = new DivisionDto();
         division.setDivisionId(1);
         teacherDto.setDivision(division);
 
-        Degree degree = new Degree();
+        DegreeDto degree = new DegreeDto();
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
@@ -111,15 +114,15 @@ public class TeacherController_updateInforTeacher {
         teacherDto.setTeacherPhone("0905330270");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
-        Account account = new Account();
+        AccountDto account = new AccountDto();
         account.setAccountId(1);
         teacherDto.setAccount(account);
 
-        Division division = new Division();
+        DivisionDto division = new DivisionDto();
         division.setDivisionId(1);
         teacherDto.setDivision(division);
 
-        Degree degree = new Degree();
+        DegreeDto degree = new DegreeDto();
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
@@ -145,15 +148,15 @@ public class TeacherController_updateInforTeacher {
         teacherDto.setTeacherPhone("0905330270123456");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
-        Account account = new Account();
+        AccountDto account = new AccountDto();
         account.setAccountId(1);
         teacherDto.setAccount(account);
 
-        Division division = new Division();
+        DivisionDto division = new DivisionDto();
         division.setDivisionId(1);
         teacherDto.setDivision(division);
 
-        Degree degree = new Degree();
+        DegreeDto degree = new DegreeDto();
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
@@ -179,15 +182,15 @@ public class TeacherController_updateInforTeacher {
         teacherDto.setTeacherPhone("0905330270123456");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
-        Account account = new Account();
+        AccountDto account = new AccountDto();
         account.setAccountId(1);
         teacherDto.setAccount(account);
 
-        Division division = new Division();
+        DivisionDto division = new DivisionDto();
         division.setDivisionId(1);
         teacherDto.setDivision(division);
 
-        Degree degree = new Degree();
+        DegreeDto degree = new DegreeDto();
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
@@ -214,15 +217,15 @@ public class TeacherController_updateInforTeacher {
         teacherDto.setTeacherPhone("0905330270123456");
         teacherDto.setTeacherUniversity("dai hoc da nang");
 
-        Account account = new Account();
+        AccountDto account = new AccountDto();
         account.setAccountId(1);
         teacherDto.setAccount(account);
 
-        Division division = new Division();
+        DivisionDto division = new DivisionDto();
         division.setDivisionId(1);
         teacherDto.setDivision(division);
 
-        Degree degree = new Degree();
+        DegreeDto degree = new DegreeDto();
         degree.setDegreeId(1);
         teacherDto.setDegree(degree);
 
