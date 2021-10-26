@@ -1,6 +1,7 @@
 package com.codegym.rest_controller;
 
-import com.codegym.dto.TeacherDto;
+
+import com.codegym.DTO.TeacherDto;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;

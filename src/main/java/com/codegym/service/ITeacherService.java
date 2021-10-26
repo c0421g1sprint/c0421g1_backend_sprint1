@@ -1,6 +1,7 @@
 package com.codegym.service;
 
-import com.codegym.dto.TeacherDto;
+import com.codegym.DTO.TeacherDto;
+
 import com.codegym.entity.about_teacher.Teacher;
 
 public interface ITeacherService {
