@@ -20,14 +20,7 @@ public class TeacherController {
     // diep search teacher 25/10
     @GetMapping("/searchteacher")
     public ResponseEntity<Page<Teacher>> getsearchTeacher(@PageableDefault(value = 2) Pageable pageable,
-                                                          @RequestParam(required = false)Integer teacherId,
-                                                          @RequestParam(required = false) String teacherName,
-                                                          @RequestParam(required = false) Byte teacherGender,
-                                                          @RequestParam(required = false) String teacherDateOfBirth,
-                                                          @RequestParam(required = false) String teacherPhone,
-                                                          @RequestParam(required = false)String teacherAddress,
-                                                          @RequestParam(required = false)String search
-    ) {
+                                                          @RequestParam(required = false)String search) {
 //        Page<Teacher> teachers = teacherService.searchTeacher(pageable, teacherId, teacherName, teacherGender, teacherDateOfBirth, teacherPhone, teacherAddress);
         Page<Teacher> teachers = teacherService.searchTeacher(pageable, search);
 
