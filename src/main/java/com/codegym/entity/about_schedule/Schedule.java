@@ -21,13 +21,17 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer scheduleId;
 
-    @OneToOne(cascade = CascadeType.ALL)
     @JsonBackReference
+    @OneToOne(cascade = CascadeType.ALL)
+
+    @JsonManagedReference
+//    @JsonBackReference
     @JoinColumn(name = "classroom_id", referencedColumnName = "classroomId")
     private Classroom classroom;
 
     private boolean deleteFlag;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "schedule")
     private Set<ScheduleDetail> scheduleDetails;
 }

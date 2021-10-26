@@ -49,7 +49,7 @@ public class ScheduleController {
 
 
     // TaiNP 24/10/2021 method return schedule of class_id
-    @GetMapping("/schedule-detail/{classId}")
+    @GetMapping("/schedule-detail/{classroomId}")
     public ResponseEntity<List<ScheduleDetail>> showScheduleTailByIdClass(@PathVariable Optional<Integer> classroomId) {
         if(classroomId == null){
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);

@@ -22,9 +22,12 @@ public class Subject {
     private Integer subjectId;
     private String subjectName;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "subject")
-    private Set<Mark> marks;
 
+    private Set<Mark> marks;
+    
+    @JsonBackReference
     @OneToMany(mappedBy = "subject")
     private Set<ScheduleDetail> scheduleDetails;
 }
