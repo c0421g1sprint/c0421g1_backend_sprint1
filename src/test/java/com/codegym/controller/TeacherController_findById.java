@@ -23,27 +23,29 @@ public class TeacherController_findById {
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(
-                        "/api/teachers/accountId", ""))
+                        "/api/teachers/{id}", ""))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
+
 
     @Test
     public void findById_4() throws Exception {
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(
-                        "/api/teachers/{id}", "1"))
+                        "/api/teachers/{id}", "6"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.teacherName").value("Bùi Tiến Dũng"))
-                .andExpect(jsonPath("$.teacherAddress").value("Bach Dang - Hải Châu - Đà Nẵng"))
-                .andExpect(jsonPath("$.teacherDateOfBirth").value("1988-11-11"))
-                .andExpect(jsonPath("$.teacherEmail").value("dung@gmail.com"))
+                .andExpect(jsonPath("$.teacherName").value("faker minh "))
+                .andExpect(jsonPath("$.teacherAddress").value("da1253124151"))
+                .andExpect(jsonPath("$.teacherDateOfBirth").value("23/11/2000"))
+                .andExpect(jsonPath("$.teacherEmail").value("minh@gmail.com"))
                 .andExpect(jsonPath("$.teacherGender").value(0))
-                .andExpect(jsonPath("$.teacherImage").value("https://toplist.vn/images/800px/studio-huu-tri-317829.jpg"))
-                .andExpect(jsonPath("$.teacherPhone").value("0810000009"))
-                .andExpect(jsonPath("$.teacherUniversity").value("Đại học Sư phạm Đà Nẵng"))
+                .andExpect(jsonPath("$.teacherImage").value("anh.png"))
+                .andExpect(jsonPath("$.teacherPhone").value("0905330298"))
+                .andExpect(jsonPath("$.teacherUniversity").value("đại học sư phạm đà nẵng"))
                 .andExpect(jsonPath("$.degree.degreeId").value(1))
                 .andExpect(jsonPath("$.deleteFlag").value(false))
                 .andExpect(jsonPath("$.division.divisionId").value(1))

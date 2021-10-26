@@ -1,9 +1,10 @@
 package com.codegym.controller;
 
-import com.codegym.dto.AccountDto;
-import com.codegym.dto.DegreeDto;
-import com.codegym.dto.DivisionDto;
+
 import com.codegym.dto.TeacherDto;
+import com.codegym.entity.about_account.Account;
+import com.codegym.entity.about_teacher.Degree;
+import com.codegym.entity.about_teacher.Division;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,71 +28,209 @@ public class TeacherController_updateInforTeacher {
     private ObjectMapper objectMapper;
 
     @Test
-    public void createStudent_name_24() throws Exception {
-        TeacherDto teacherDto = new TeacherDto();
-        teacherDto.setTeacherName("Bùi Tiến Dũng");
+    public void updateInForTeacher_24() throws Exception {
+        TeacherDto teacherDto =new TeacherDto();
 
-        AccountDto accountDto = new AccountDto();
-        accountDto.setAccountId(1);
-        teacherDto.setAccount(accountDto);
-
-        DivisionDto divisionDto = new DivisionDto();
-        divisionDto.setDivisionId(1);
-        teacherDto.setDivision(divisionDto);
-
-        DegreeDto degreeDto = new DegreeDto();
-        degreeDto.setDegreeId(1);
-        teacherDto.setDegree(degreeDto);
-
-        teacherDto.setTeacherAddress("Bach Dang - Hải Châu - Đà Nẵng");
-        teacherDto.setTeacherDateOfBirth("1988-11-11");
-        teacherDto.setTeacherEmail("dung@gmail.com");
-
-        teacherDto.setTeacherImage("https://toplist.vn/images/800px/studio-huu-tri-317829.jpg");
-        teacherDto.setTeacherPhone("0810000009");
-        teacherDto.setTeacherUniversity("Đại học Sư phạm Đà Nẵng");
         teacherDto.setDeleteFlag(false);
-        teacherDto.setTeacherId(1);
+        teacherDto.setTeacherAddress("da nang");
+        teacherDto.setTeacherDateOfBirth("23/11/2000");
 
-        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/update")
+        teacherDto.setTeacherEmail("minh@gmail.com");
+        teacherDto.setTeacherImage("anh.png");
+        teacherDto.setTeacherName("minh");
+        teacherDto.setTeacherPhone("0905330270");
+        teacherDto.setTeacherUniversity("dai hoc da nang");
+
+        Account account = new Account();
+        account.setAccountId(1);
+        teacherDto.setAccount(account);
+
+        Division division = new Division();
+        division.setDivisionId(1);
+        teacherDto.setDivision(division);
+
+        Degree degree = new Degree();
+        degree.setDegreeId(1);
+        teacherDto.setDegree(degree);
+
+        teacherDto.setTeacherId(6);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
                 .content(this.objectMapper.writeValueAsString(teacherDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
 
+
     @Test
-    public void createStudent_name_20() throws Exception {
-        TeacherDto teacherDto = new TeacherDto();
-        teacherDto.setTeacherName("Bùi Tiến Dũng");
+    public void updateInForTeacher_23() throws Exception {
+        TeacherDto teacherDto =new TeacherDto();
 
-        AccountDto accountDto = new AccountDto();
-        accountDto.setAccountId(1);
-        teacherDto.setAccount(accountDto);
-
-        DivisionDto divisionDto = new DivisionDto();
-        divisionDto.setDivisionId(1);
-        teacherDto.setDivision(divisionDto);
-
-        DegreeDto degreeDto = new DegreeDto();
-        degreeDto.setDegreeId(1);
-        teacherDto.setDegree(degreeDto);
-
-        teacherDto.setTeacherAddress("Bach Dang - Hải Châu - Đà Nẵng");
-        teacherDto.setTeacherDateOfBirth("1988-11-11");
-        teacherDto.setTeacherEmail("dung@gmail.com");
-
-        teacherDto.setTeacherImage("https://toplist.vn/images/800px/studio-huu-tri-317829.jpg");
-        teacherDto.setTeacherPhone("0810000009");
-        teacherDto.setTeacherUniversity("Đại học Sư phạm Đà Nẵng");
         teacherDto.setDeleteFlag(false);
-        teacherDto.setTeacherId(1);
+        teacherDto.setTeacherAddress("da nang");
+        teacherDto.setTeacherDateOfBirth("23/11/2000");
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/teachers/update")
+        teacherDto.setTeacherEmail("minh@gmail.com");
+        teacherDto.setTeacherImage("anh.png");
+        teacherDto.setTeacherName("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        teacherDto.setTeacherPhone("0905330270");
+        teacherDto.setTeacherUniversity("dai hoc da nang");
+
+        Account account = new Account();
+        account.setAccountId(1);
+        teacherDto.setAccount(account);
+
+        Division division = new Division();
+        division.setDivisionId(1);
+        teacherDto.setDivision(division);
+
+        Degree degree = new Degree();
+        degree.setDegreeId(1);
+        teacherDto.setDegree(degree);
+
+        teacherDto.setTeacherId(1);
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
                 .content(this.objectMapper.writeValueAsString(teacherDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+    @Test
+    public void updateInForTeacher_22() throws Exception {
+        TeacherDto teacherDto =new TeacherDto();
+
+        teacherDto.setDeleteFlag(false);
+        teacherDto.setTeacherAddress("abc");
+        teacherDto.setTeacherDateOfBirth("01/10/2000");
+
+        teacherDto.setTeacherEmail("minh@gmail.com");
+        teacherDto.setTeacherImage("anh.png");
+        teacherDto.setTeacherName("minh");
+        teacherDto.setTeacherPhone("0905330270");
+        teacherDto.setTeacherUniversity("dai hoc da nang");
+
+        Account account = new Account();
+        account.setAccountId(1);
+        teacherDto.setAccount(account);
+
+        Division division = new Division();
+        division.setDivisionId(1);
+        teacherDto.setDivision(division);
+
+        Degree degree = new Degree();
+        degree.setDegreeId(1);
+        teacherDto.setDegree(degree);
+
+        teacherDto.setTeacherId(1);
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
+                .content(this.objectMapper.writeValueAsString(teacherDto))
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void updateInForTeacher_21() throws Exception {
+        TeacherDto teacherDto =new TeacherDto();
+
+        teacherDto.setDeleteFlag(false);
+        teacherDto.setTeacherAddress("d");
+        teacherDto.setTeacherDateOfBirth("01/10/2000");
+
+        teacherDto.setTeacherEmail("minhgmail.com");
+        teacherDto.setTeacherImage("anh.png");
+        teacherDto.setTeacherName("minh");
+        teacherDto.setTeacherPhone("0905330270123456");
+        teacherDto.setTeacherUniversity("dai hoc da nang");
+
+        Account account = new Account();
+        account.setAccountId(1);
+        teacherDto.setAccount(account);
+
+        Division division = new Division();
+        division.setDivisionId(1);
+        teacherDto.setDivision(division);
+
+        Degree degree = new Degree();
+        degree.setDegreeId(1);
+        teacherDto.setDegree(degree);
+
+        teacherDto.setTeacherId(1);
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
+                .content(this.objectMapper.writeValueAsString(teacherDto))
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void updateInForTeacher_20() throws Exception {
+        TeacherDto teacherDto =new TeacherDto();
+
+        teacherDto.setDeleteFlag(false);
+        teacherDto.setTeacherAddress("");
+        teacherDto.setTeacherDateOfBirth("01/10/2000");
+
+        teacherDto.setTeacherEmail("");
+        teacherDto.setTeacherImage("anh.png");
+        teacherDto.setTeacherName("minh");
+        teacherDto.setTeacherPhone("0905330270123456");
+        teacherDto.setTeacherUniversity("dai hoc da nang");
+
+        Account account = new Account();
+        account.setAccountId(1);
+        teacherDto.setAccount(account);
+
+        Division division = new Division();
+        division.setDivisionId(1);
+        teacherDto.setDivision(division);
+
+        Degree degree = new Degree();
+        degree.setDegreeId(1);
+        teacherDto.setDegree(degree);
+
+        teacherDto.setTeacherId(1);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
+                .content(this.objectMapper.writeValueAsString(teacherDto))
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void updateInForTeacher_19() throws Exception {
+        TeacherDto teacherDto =new TeacherDto();
+
+        teacherDto.setDeleteFlag(false);
+        teacherDto.setTeacherAddress("");
+        teacherDto.setTeacherDateOfBirth("23/11/2000");
+
+        teacherDto.setTeacherEmail("");
+        teacherDto.setTeacherImage("anh.png");
+        teacherDto.setTeacherName(null);
+        teacherDto.setTeacherPhone("0905330270123456");
+        teacherDto.setTeacherUniversity("dai hoc da nang");
+
+        Account account = new Account();
+        account.setAccountId(1);
+        teacherDto.setAccount(account);
+
+        Division division = new Division();
+        division.setDivisionId(1);
+        teacherDto.setDivision(division);
+
+        Degree degree = new Degree();
+        degree.setDegreeId(1);
+        teacherDto.setDegree(degree);
+
+        teacherDto.setTeacherId(1);
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
+                .content(this.objectMapper.writeValueAsString(teacherDto))
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
 }
