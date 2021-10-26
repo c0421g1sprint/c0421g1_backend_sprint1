@@ -14,6 +14,41 @@ public class StudentServiceImpl implements IStudentService {
     private IStudentRepository studentRepository;
 
     @Override
+    public Student getById(int id) {
+        return studentRepository.getStudentById(id);
+    }
+
+    @Override
+    public Student deleteById(int id) {
+        Student student = getById(id);
+        if (student != null) {
+            studentRepository.deleteStudentById(id);
+            return student;
+        }else return null;
+    }
+
+    //DungNM - Tìm danh sách học sinh theo ID của classroom
+    @Override
+    public Page<Student> findByClassroom(int classroomId, Pageable pageable) {
+        return studentRepository.findByClassroomId(classroomId, pageable);
+    }
+    
+    //LamNT saveStudent function
+    @Override
+    public void saveStudent(Student student) {
+        studentRepository.saveStudent(student.isDeleteFlag(), student.getStudentAddress(), student.getStudentDateOfBirth(),
+                student.getStudentEthnicity(), student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(),
+                student.getStudentName(), student.getStudentParentPhone(), student.getStudentReligion());
+    }
+
+    //LamNT editStudent function
+    @Override
+    public void editStudent(Student student) {
+        studentRepository.editStudent(student.getStudentAddress(), student.getStudentDateOfBirth(), student.getStudentEthnicity(),
+                student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(), student.getStudentName(),
+                student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentId());
+    }
+
     //    search Student by Nhật
     public Page<Student> findSearch(Pageable pageable, String name, String status) {
         return studentRepository.findSearch(pageable,"%"+name+"%","%"+status+"%");
