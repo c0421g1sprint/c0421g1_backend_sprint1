@@ -92,6 +92,18 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
+
+    //HauPT do showDetailStudent function
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Student> showDetailStudent(@PathVariable Integer id) {
+        Student student = studentService.getById(id);
+        if (student == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
+
     //DungNM - 26/10 - lấy toàn bộ danh sách khối có trong DB
     @GetMapping("get-all-grade")
     public ResponseEntity<List<Grade>> findAllGrade() {
