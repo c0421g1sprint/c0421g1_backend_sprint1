@@ -3,7 +3,6 @@ package com.codegym.rest_controller;
 import com.codegym.dto.AccountDto;
 import com.codegym.entity.about_account.Account;
 import com.codegym.service.IAccountService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

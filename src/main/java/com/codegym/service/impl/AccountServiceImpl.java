@@ -11,11 +11,13 @@ public class AccountServiceImpl implements IAccountService {
     @Autowired
     private IAccountRepository accountRepository;
 
+    //HauPT do editPassword function
     @Override
     public void editPassword(Integer id , String password ) {
        accountRepository.editPassword(id, password);
     }
 
+    //HauPT do getAccountById function
     @Override
     public Account getAccountById(int id) {
         return accountRepository.getAccountById(id);

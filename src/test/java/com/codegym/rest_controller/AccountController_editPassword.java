@@ -94,7 +94,7 @@ public class AccountController_editPassword {
     @Test
     public void editPassword_24() throws Exception {
         AccountDto accountDto = new AccountDto();
-        accountDto.setAccountPassword("asd123");
+        accountDto.setAccountPassword("7777777");
         accountDto.setAccountId(1);
         accountDto.setOldPassword("asd");
 
