@@ -19,8 +19,7 @@ public class Degree {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer degreeId;
     private String degreeName;
-
-    @JsonBackReference(value = "teacher_degree")
+    @JsonBackReference
     @OneToMany(mappedBy = "degree")
     private Set<Teacher> teachers;
 }
