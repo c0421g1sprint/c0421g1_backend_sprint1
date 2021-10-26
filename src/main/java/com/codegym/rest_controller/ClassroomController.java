@@ -146,39 +146,6 @@ public class ClassroomController {
         return new ResponseEntity<>(classroom, HttpStatus.OK);
     }
 
-    //create: HaNTT, date: 23/10/2021
-    @GetMapping("/find-student") //OK  (checkbox)
-    public ResponseEntity<Page<Student>> getStudentNotHaveClass(@PageableDefault(size = 5) Pageable pageable) {
-        Page<Student> studentList = this.studentService.findWhereClassroomIdNull(pageable);
-
-        if (studentList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(studentList, HttpStatus.OK);
-    }
-
-    //*Note : CẦN CHECK LẠI PHƯƠNG THỨC
-    //create: HaNTT, date: 23/10/2021 (add student to List)
-    @GetMapping("/find-student/{id}") //OK
-    public ResponseEntity<Student> getStudentById(@PathVariable Integer id) {
-        Student student = this.studentService.findStudentById(id);
-        if (student == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(student, HttpStatus.OK);
-    }
-
-    //*Note : CẦN CHECK LẠI PHƯƠNG THỨC
-    //create: HaNTT, date: 23/10/2021 (select-option)
-    @GetMapping("/find-teacher") //OK
-    public ResponseEntity<List<Teacher>> getListTeacherNotHaveChairedClass() {
-        List<Teacher> teacherList = this.teacherService.findTeacherWhereTeacherIdNull();
-
-        if (teacherList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(teacherList, HttpStatus.OK);
-    }
 
     //create: HaNTT, date: 23/10/2021
     @PostMapping("/create") //OK
@@ -193,13 +160,13 @@ public class ClassroomController {
         Set<Student> studentSet = new HashSet<>();
         for (StudentDto item : studentDtoSet) {
             Student student = new Student();
-            BeanUtils.copyProperties(item,student);
+            BeanUtils.copyProperties(item, student);
             studentSet.add(student);
         }
         //lưu class trước (return Integer/void)
         Integer newClassroomStatus = this.classroomService.saveClassRoom(name, schoolYear, 1, teacherId, false);
         //lấy lại classId:
-        Integer classroomId = this.classroomService.findClassByNameAndSchoolYear(name,name, schoolYear).getClassroomId();
+        Integer classroomId = this.classroomService.findClassByNameAndSchoolYear(name, name, schoolYear).getClassroomId();
         System.err.println("classId khi lưu class: " + classroomId);
         //set class cho List student đã chọn
         for (Student student : studentSet) {

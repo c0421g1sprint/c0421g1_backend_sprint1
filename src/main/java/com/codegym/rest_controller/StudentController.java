@@ -21,26 +21,25 @@ public class StudentController {
     @Autowired
     private IStudentService studentService;
 
-    //creator: HaNTT, date: 23/10/2021
-    @GetMapping("/{classroomId}")
-    public ResponseEntity<Page<Student>> getStudentsOfClassroom(@PathVariable String classroomId,
-                                                                @PageableDefault(value = 10) Pageable pageable) {
-        try {
-            int classId = Integer.parseInt(classroomId);
-            Page<Student> students = studentService.findByClassroom(classId, pageable);
-            return new ResponseEntity<>(students, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    //create: HaNTT, date: 23/10/2021
+    @GetMapping("/find-student") //OK  (checkbox)
+    public ResponseEntity<Page<Student>> getStudentNotHaveClass(@PageableDefault(size = 5) Pageable pageable) {
+        Page<Student> studentList = this.studentService.findWhereClassroomIdNull(pageable);
+
+        if (studentList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(studentList, HttpStatus.OK);
     }
 
-    //creator: HaNTT, date: 23/10/2021
-//    @PostMapping("/add")
-//    public ResponseEntity<Integer> addStudent() {
-//        Classroom classroom = new Classroom();
-//        Student student = new Student(1, (byte) 1,"a","a", null,"a","a","a","a","a","a","a",false, classroom, null);
-//        Student newStudent = this.studentService.save(student);
-//        return new ResponseEntity<>(newStudent.getStudentId(), HttpStatus.CREATED);
-//    }
+    //*Note : CẦN CHECK LẠI PHƯƠNG THỨC
+    //create: HaNTT, date: 23/10/2021 (add student to List)
+    @GetMapping("/find-student/{id}") //OK
+    public ResponseEntity<Student> getStudentById(@PathVariable Integer id) {
+        Student student = this.studentService.findStudentById(id);
+        if (student == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
 }
