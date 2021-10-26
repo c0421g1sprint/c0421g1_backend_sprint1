@@ -105,7 +105,7 @@ public class StudentController {
 
 
     //DungNM - 26/10 - lấy toàn bộ danh sách khối có trong DB
-    @GetMapping("get-all-grade")
+    @GetMapping("/get-all-grade")
     public ResponseEntity<List<Grade>> findAllGrade() {
         List<Grade> gradeList = gradeService.findAll();
         return (gradeList.size() == 0) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
@@ -113,7 +113,7 @@ public class StudentController {
     }
 
     //DungNM - 26/10 - lấy toàn bộ danh sách các lớp có trong DB
-    @GetMapping("get-all-classroom")
+    @GetMapping("/get-all-classroom")
     public ResponseEntity<List<Classroom>> findAllClassroom() {
         List<Classroom> classroomList = classroomService.findAll();
         return (classroomList.size() == 0) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
