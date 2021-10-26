@@ -12,6 +12,10 @@ import java.util.List;
 public class TeacherServiceImpl implements ITeacherService {
     @Autowired
     private ITeacherRepository teacherRepository;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7ce70fb5ff4ffd14dd3bcfdbc4c85f229e0d62af
     //creator: HaNTT, date: 23/10/2021  (select-option)
     @Override
     public List<Teacher> findTeacherWhereTeacherIdNull() {

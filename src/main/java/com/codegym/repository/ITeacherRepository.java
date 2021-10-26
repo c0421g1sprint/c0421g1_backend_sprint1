@@ -12,7 +12,11 @@ import java.util.List;
 @Transactional
 public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
     //creator: HaNTT, date: 23/10/2021  (select-option)
+<<<<<<< HEAD
     @Query(value="SELECT teacher_id, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, " +
+=======
+    @Query(value = "SELECT teacher_id, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, " +
+>>>>>>> 7ce70fb5ff4ffd14dd3bcfdbc4c85f229e0d62af
             "teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id," +
             "delete_flag\n" +
             "FROM teacher \n" +
