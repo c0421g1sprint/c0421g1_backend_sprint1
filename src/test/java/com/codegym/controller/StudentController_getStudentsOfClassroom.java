@@ -65,14 +65,14 @@ public class StudentController_getStudentsOfClassroom {
     @Test
     public void getStudentsOfClassroom_11() {
         ResponseEntity<Page<StudentDTO>> pageResponseEntity
-                = this.studentController.getStudentsOfClassroom("1", PageRequest.of(0, 10));
+                = this.studentController.getStudentsOfClassroom("61", PageRequest.of(0, 10));
         Assertions.assertEquals(HttpStatus.OK, pageResponseEntity.getStatusCode());
         Page<StudentDTO> studentPage = pageResponseEntity.getBody();
-        System.out.println(studentPage.getContent().get(6));
-        Assertions.assertEquals(7, studentPage.getTotalElements());
+        System.out.println(studentPage.getContent().get(3));
+        Assertions.assertEquals(4, studentPage.getTotalElements());
         Assertions.assertEquals(1, studentPage.getTotalPages());
-        Assertions.assertEquals("Trương Vô Kỵ", studentPage.getContent().get(6).getStudentName());
-        Assertions.assertEquals(13, studentPage.getContent().get(6).getStudentId());
-        Assertions.assertEquals("2015-09-28", studentPage.getContent().get(6).getStudentDateOfBirth());
+        Assertions.assertEquals("Trương Vô Kỵ", studentPage.getContent().get(3).getStudentName());
+        Assertions.assertEquals(39, studentPage.getContent().get(3).getStudentId());
+        Assertions.assertEquals("2015-09-28", studentPage.getContent().get(3).getStudentDateOfBirth());
     }
 }
