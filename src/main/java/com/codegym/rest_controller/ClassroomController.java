@@ -42,16 +42,18 @@ public class ClassroomController {
     private ITeacherService teacherService;
 
     //DanhNT coding controller show list
+    // check ok 9:00 AM
     @GetMapping
     public ResponseEntity<Page<Classroom>> showList(@PageableDefault(size = 5) Pageable pageable) {
         Page<Classroom> classroomList = this.classroomService.findAllPage(pageable);
         if (classroomList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(classroomList, HttpStatus.OK);
     }
 
     //DanhNT coding controller find by id
+    // check ok 9:00 AM
     @GetMapping("/get/{id}")
     public ResponseEntity<Classroom> findById(@PathVariable Integer id) {
         Classroom classroom = this.classroomService.getById(id);
@@ -62,7 +64,8 @@ public class ClassroomController {
     }
 
     //DanhNT - coding controller for edit class information
-    @PatchMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
+    // check ok
+    @PutMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateClass(@RequestBody Classroom classroom) {
         Set<Student> studentList = classroom.getStudents();
 
@@ -135,6 +138,7 @@ public class ClassroomController {
     }
 
     //create: HaNTT, date: 22/10/2021
+    //check ok
     @GetMapping("/find-class-room")  //OK (check Class duplicate)
     public ResponseEntity<Classroom> isClassDuplicated(@RequestParam(name = "name", required = false) String name,
                                                        @RequestParam(name = "schoolYear", required = false) String schoolYear) {
@@ -148,6 +152,7 @@ public class ClassroomController {
 
 
     //create: HaNTT, date: 23/10/2021
+    //check ok
     @PostMapping("/create") //OK
     public ResponseEntity<Integer> create(@RequestBody ClassroomDto classroomDto) {
         //get field:
