@@ -26,7 +26,7 @@ public class TeacherController {
         }
     }
 
-    //    MinhNN 24/10 update infor teacher
+    //    MinhNN 24/10 update infor teacherg
     @PatchMapping("/update")
     public ResponseEntity<?> updateInforTeacher(@RequestBody TeacherDto teacherDto) {
         iTeacherService.update(teacherDto);
