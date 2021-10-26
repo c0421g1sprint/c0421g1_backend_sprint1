@@ -46,7 +46,7 @@ public class StudentRestController_getDetailStudent {
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(
-                        "/api/students/detail/{id}", "6"))
+                        "/api/students/detail/{id}", "3"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
@@ -57,10 +57,10 @@ public class StudentRestController_getDetailStudent {
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(
-                        "/api/students/list/{id}", "1"))
+                        "/api/teachers/detail/{id}", "2"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.studentName").value("Nhật"))
-                .andExpect(jsonPath("$.studentDateOfBirth").value("2000-07-14"));
+                .andExpect(jsonPath("$.studentName").value("Tuan"))
+                .andExpect(jsonPath("$.studentDateOfBirth").value("2005-10-10"));
     }
 }

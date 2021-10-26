@@ -23,8 +23,11 @@ public class TeacherController {
 
     //PhucNK
     @GetMapping(value = "/list/{id}")
-    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 2) Pageable pageable, @PathVariable Integer id) {
-        Page<Student> studentList = iStudentService.getListStudent(pageable, id);
+    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 2) Pageable pageable, @PathVariable Optional<Integer> id) {
+        if(id == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Page<Student> studentList = iStudentService.getListStudent(pageable, id.get());
         if (studentList.isEmpty()) {
 //            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -35,10 +38,10 @@ public class TeacherController {
 
     //PhucNK
     @GetMapping(value = "/detail/{id}")
-    public ResponseEntity<Student> getListStudentDetail(@PathVariable Integer id) {
+    public ResponseEntity<Student> getListStudentDetail(@PathVariable(required = false) Integer id) {
         Optional<Student> studentList = iStudentService.getListStudentDetail(id);
-        if (studentList.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (!studentList.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(studentList.get(), HttpStatus.OK);
         }
