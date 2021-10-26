@@ -8,5 +8,6 @@ import java.util.List;
 @Service
 public interface IScheduleDetailService {
 
+    //Phuc
     List<ScheduleDetail> getScheduleTeacher(Integer id);
 }

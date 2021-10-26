@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface IScheduleDetailRepository extends JpaRepository<ScheduleDetail,Integer> {
 
+
+
+    //Phuc
     @Query(value="select sd.schedule_detail_id,sd.study_day_time_id,sd.subject_id,sd.schedule_id from schedule_detail sd \n" +
             "join schedule s on sd.schedule_id = s.schedule_id\n" +
             "join classroom cl on s.classroom_id = cl.classroom_id \n" +

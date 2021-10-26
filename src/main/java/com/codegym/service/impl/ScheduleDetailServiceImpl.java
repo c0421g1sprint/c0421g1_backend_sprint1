@@ -9,10 +9,12 @@ import java.util.List;
 
 public class ScheduleDetailServiceImpl  implements IScheduleDetailService {
 
+
+
     @Autowired
     private IScheduleDetailRepository iScheduleDetailRepository;
 
-
+    //Phuc
     @Override
     public List<ScheduleDetail> getScheduleTeacher(Integer id) {
         return iScheduleDetailRepository.getScheduleTeacher(id);

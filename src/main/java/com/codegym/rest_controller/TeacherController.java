@@ -17,7 +17,7 @@ public class TeacherController {
     @Autowired
     private IScheduleDetailService iScheduleDetailService;
 
-
+//Phuc
     @GetMapping("/schedule/{id}")
     public ResponseEntity<List<ScheduleDetail>> showScheduleTeacher(@PathVariable Integer id) {
         List<ScheduleDetail> scheduleDetailList=iScheduleDetailService.getScheduleTeacher(id);
