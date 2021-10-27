@@ -11,10 +11,16 @@ import javax.validation.constraints.*;
 
 public class TeacherDto {
     private Integer teacherId;
+
+    @NotEmpty(message = "Tên không được đê trống")
+    @NotBlank
+    @Size(max = 30,message = "Tên không được lớn hơn 30 kí tự")
+
 //    @NotEmpty
 //    @NotBlank
 //    @NotNull
 //    @Size(max = 30,message = "Tên không được lớn hơn 30 kí tự")
+
     private String teacherName;
     private Byte teacherGender;
 //    @NotNull
