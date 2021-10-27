@@ -1,11 +1,9 @@
 package com.codegym.rest_controller;
-
 import com.codegym.dto.ClassroomDto;
 import com.codegym.dto.StudentDto;
 import com.codegym.entity.about_classroom.Classroom;
 import com.codegym.entity.about_student.Mark;
 import com.codegym.entity.about_student.Student;
-import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.IClassroomService;
 import com.codegym.service.IStudentService;
 import com.codegym.service.ITeacherService;
@@ -15,17 +13,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/classroom")
 public class ClassroomController {
 
@@ -42,9 +38,10 @@ public class ClassroomController {
     private ITeacherService teacherService;
 
     //DanhNT coding controller show list
-    // check ok 9:00 AM
+    //check ok 9:00 AM
+    //check ok : 27/10 - 9:55
     @GetMapping
-    public ResponseEntity<?> showList(@PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity<Page<Classroom>> showList(@PageableDefault(size = 5) Pageable pageable) {
         Page<Classroom> classroomList = this.classroomService.findAllPage(pageable);
         if (classroomList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -53,7 +50,8 @@ public class ClassroomController {
     }
 
     //DanhNT coding controller find by id
-    // check ok 9:00 AM
+    //check ok 9:00 AM - ok
+    //check ok : 27/10 - 9:55
     @GetMapping("/get/{id}")
     public ResponseEntity<Classroom> findById(@PathVariable Integer id) {
         Classroom classroom = this.classroomService.getById(id);
@@ -64,23 +62,32 @@ public class ClassroomController {
     }
 
     //DanhNT - coding controller for edit class information
-    // check ok
-    @PutMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateClass(@RequestBody Classroom classroom) {
+    //check ok
+    //check ok : 27/10 - 9:55
+    @PatchMapping("/edit")
+    public ResponseEntity<?> updateClass(@RequestBody ClassroomDto classroomDto) {
+        Set<Student> studentList = classroomDto.getStudents();
 
-        this.classroomService.updateSchoolYear(classroom.getClassroomSchoolYear(),
-                classroom.getTeacher().getTeacherId(),
-                classroom.getClassroomId());
+        if (classroomDto.getTeacher() != null){
+            this.classroomService.updateSchoolYear(classroomDto.getClassroomSchoolYear(),
+                    classroomDto.getTeacher().getTeacherId(),
+                    classroomDto.getClassroomId());
+        }
 
+        if (studentList != null) {
+            for (Student student : studentList) {
+                this.studentService.updateClassForStudent(classroomDto.getClassroomId(), student.getStudentId());
+            }
+        }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //DanhNT - coding controller for promote
+    //check ok : 27/10 - 9:55
     @PutMapping(value = "/promote")
-    public ResponseEntity<?> promoteClass(@RequestBody Classroom classroom) {
-
-        Classroom newClassroom = this.classroomService.getById(classroom.getClassroomId());
+    public ResponseEntity<?> promoteClass(@RequestBody ClassroomDto classroomDto) {
+        Classroom newClassroom = this.classroomService.getById(classroomDto.getClassroomId());
         if (newClassroom != null) {
             String currentName = newClassroom.getClassroomName();
             String[] promoteName = newClassroom.getClassroomName().split("");
@@ -133,7 +140,8 @@ public class ClassroomController {
     }
 
     //create: HaNTT, date: 22/10/2021
-    //check ok
+    //check ok -- OK
+    //check ok : 27/10 - 9:55
     @GetMapping("/find-class-room")  //OK (check Class duplicate)
     public ResponseEntity<Classroom> isClassDuplicated(@RequestParam(name = "name", required = false) String name,
                                                        @RequestParam(name = "schoolYear", required = false) String schoolYear) {
@@ -148,53 +156,33 @@ public class ClassroomController {
 
     //create: HaNTT, date: 23/10/2021
     //check ok
+    //check ok : 27/10 - 9:55
     @PostMapping("/create") //OK
     public ResponseEntity<Integer> create(@RequestBody ClassroomDto classroomDto) {
         //get field:
         String name = classroomDto.getClassroomName();
         String schoolYear = classroomDto.getClassroomSchoolYear();
         Integer teacherId = classroomDto.getTeacher().getTeacherId();
-        Set<StudentDto> studentDtoSet = classroomDto.getStudents();
+        Set<Student> studentDtoSet = classroomDto.getStudents();
         // angurlar-service: làm sao để add studentSet vào class? -->TS: classroom =  getFormValue --> classroom.setStudents = hashset<Student>?
         //Chuyển StudentDto-> Student
-        Set<Student> studentSet = new HashSet<>();
-        for (StudentDto item : studentDtoSet) {
-            Student student = new Student();
-            BeanUtils.copyProperties(item, student);
-            studentSet.add(student);
-        }
-        //lưu class trước (return Integer/void)
-        Integer newClassroomStatus = this.classroomService.saveClassRoom(name, schoolYear, 1, teacherId, false);
-        //lấy lại classId:
-        Integer classroomId = this.classroomService.findClassByNameAndSchoolYear(name, name, schoolYear).getClassroomId();
-        System.err.println("classId khi lưu class: " + classroomId);
-        //set class cho List student đã chọn
-        for (Student student : studentSet) {
-            this.studentService.updateClassForStudent(classroomId, student.getStudentId());
-        }
-        return new ResponseEntity<>(newClassroomStatus, HttpStatus.OK);
-    }
-
-    //DanhNT
-    @PatchMapping("/delete")
-    public ResponseEntity<?> deleteStudentFromClass(@RequestBody StudentDto studentDto) {
-        if (studentDto != null) {
-            this.studentService.deleteStudentFromClass(studentDto.getStudentId());
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    //DanhNT
-    @PatchMapping("/updateClassForStudent")
-    public ResponseEntity<?> updateClassForStudent(@RequestBody List<StudentDto> studentList, @RequestBody Integer id) {
-        if (studentList != null) {
-            for (StudentDto student : studentList) {
-                this.studentService.updateClassForStudent(id, student.getStudentId());
+        if (studentDtoSet != null){
+            Set<Student> studentSet = new HashSet<>();
+            for (Student item : studentDtoSet) {
+                Student student = new Student();
+                BeanUtils.copyProperties(item, student);
+                studentSet.add(student);
             }
-            return new ResponseEntity<>(HttpStatus.OK);
+            //lưu class trước (return Integer/void)
+            Integer newClassroomStatus = this.classroomService.saveClassRoom(name, schoolYear, 1, teacherId, false);
+            //lấy lại classId:
+            Integer classroomId = this.classroomService.findClassByNameAndSchoolYear(name, name, schoolYear).getClassroomId();
+            System.err.println("classId khi lưu class: " + classroomId);
+            //set class cho List student đã chọn
+            for (Student student : studentSet) {
+                this.studentService.updateClassForStudent(classroomId, student.getStudentId());
+            }
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

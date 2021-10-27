@@ -1,5 +1,9 @@
 package com.codegym.dto;
 
+import com.codegym.entity.about_classroom.Grade;
+import com.codegym.entity.about_schedule.Schedule;
+import com.codegym.entity.about_student.Student;
+import com.codegym.entity.about_teacher.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,13 +26,13 @@ public class ClassroomDto {
 
     private String classroomSchoolYear;
 
-    private GradeDto grade;
+    private Grade grade;
 
     private boolean deleteFlag;
 
-    private TeacherDto teacher;
+    private Teacher teacher;
 
-    private Set<StudentDto> students;
+    private Set<Student> students;
 
-    private ScheduleDto schedule;
+    private Schedule schedule;
 }

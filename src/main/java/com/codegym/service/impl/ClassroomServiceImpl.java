@@ -7,13 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class ClassroomServiceImpl implements IClassroomService {
     @Autowired
     private IClassroomRepository classroomRepository;
+
+    //TaiNP && QuanTA
+    //search method search Classroom exists
+    @Override
+    public List<Classroom> findAllClassroomExist() {
+        return this.classroomRepository.findAllClassroomExist();
+    }
+
 
     //DanhNT coding 2:00PM - 23-10-2021
     @Override
@@ -48,8 +55,8 @@ public class ClassroomServiceImpl implements IClassroomService {
 
     //creator: HaNTT, date: 23/10/2021  (tạo mới)
     @Override
-    public Integer saveClassRoom(String name, String schoolYear, Integer gradeId, Integer teacherId, boolean deleteFlag) {
-        return classroomRepository.saveClassRoom(name, schoolYear, gradeId, teacherId, deleteFlag);
+    public Integer saveClassRoom(String name, String schoolYear, Integer gradeId,Integer teacherId, boolean deleteFlag) {
+        return classroomRepository.saveClassRoom(name, schoolYear, gradeId,teacherId, deleteFlag);
     }
 
 }
