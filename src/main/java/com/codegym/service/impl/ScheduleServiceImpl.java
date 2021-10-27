@@ -24,7 +24,7 @@ public class ScheduleServiceImpl implements IScheduleService {
     }
 
     @Override
-    public void updateSchedule(int updateValue, int idScheduleDetail) {
-        this.scheduleRepository.updateSchedule(updateValue,idScheduleDetail);
+    public void updateSchedule(Integer subjectId, Integer scheduleDId) {
+        this.scheduleRepository.updateSchedule(subjectId,scheduleDId);
     }
 }
