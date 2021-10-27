@@ -1,66 +1,92 @@
 package com.codegym.rest_controller;
 
+import com.codegym.DTO.ScheduleDetailDto;
 import com.codegym.entity.about_classroom.Classroom;
 import com.codegym.entity.about_classroom.Grade;
 import com.codegym.entity.about_schedule.ScheduleDetail;
-import com.codegym.service.*;
+import com.codegym.entity.about_schedule.Subject;
+import com.codegym.service.IClassroomService;
+import com.codegym.service.IGradeService;
+import com.codegym.service.IScheduleService;
+import com.codegym.service.ISubjectService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/schedules")
 public class ScheduleController {
-
-    @Autowired
-    private IScheduleDetailService scheduleDetailService;
-
+    // QuanTA
+    // Tiem Service
     @Autowired
     private IGradeService gradeService;
-
 
     @Autowired
     private IClassroomService classroomService;
 
-    // TaiNP 24/10/2021 method return list grade
+    @Autowired
+    private IScheduleService scheduleService;
+
+    @Autowired
+    private ISubjectService subjectService;
+
+    // // QuanTA 22/10 10h:46 pm api tra ve 1 list  grade
     @GetMapping(value = "/grades")
     public ResponseEntity<List<Grade>> showListGrade() {
-        List<Grade> grades = this.gradeService.findAll();
-        if (grades == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<Grade> gradeList = this.gradeService.findAllGrade();
+        if (gradeList == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-        return new ResponseEntity<>(grades, HttpStatus.OK);
+        return new ResponseEntity<>(gradeList, HttpStatus.ACCEPTED);
     }
 
-    // TaiNP 24/10/2021 method return list  class
-    @GetMapping(value = "/classroom")
-    public ResponseEntity<List<Classroom>> showListClass() {
-        List<Classroom> classrooms = classroomService.findAll();
-        if (classrooms.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //QuanTA 22/10 10h:46 api tra ve 1 list classroom dang ton tai
+    @GetMapping(value = "/classroom-exist")
+    public ResponseEntity<List<Classroom>> showListClassroomExist() {
+        List<Classroom> classroomList = this.classroomService.findAllClassroomExist();
+        if (classroomList == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-        return new ResponseEntity<>(classrooms, HttpStatus.OK);
+        return new ResponseEntity<>(classroomList, HttpStatus.ACCEPTED);
     }
 
+    //QuanTA 22/10 11h:27 api tra ve tkb cua 1 classroom
+    @GetMapping(value = "/schedule-classroom/{id}")
+    public ResponseEntity<List<ScheduleDetail>> scheduleDetailClassroom(@PathVariable(required = false) Integer id) {
+        List<ScheduleDetail> scheduleDetailListOfClassroom = this.scheduleService.findScheduleDetailByClassroomId(id);
+        if (scheduleDetailListOfClassroom.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(scheduleDetailListOfClassroom, HttpStatus.ACCEPTED);
+    }
 
-    // TaiNP 24/10/2021 method return schedule of class_id
-    @GetMapping("/schedule-detail/{classroomId}")
-    public ResponseEntity<List<ScheduleDetail>> showScheduleTailByIdClass(@PathVariable Optional<Integer> classroomId) {
-        if(classroomId == null){
-            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+    //QuanTA 22/10 10h:46 api update schedule detail
+    @PutMapping(value = "/schedule-update")
+    public ResponseEntity<ScheduleDetail> updateScheduleDetail(
+            @RequestBody @Valid ScheduleDetailDto scheduleDetailDto, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-        if(!classroomId.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        ScheduleDetail scheduleDetail = new ScheduleDetail();
+        BeanUtils.copyProperties(scheduleDetailDto, scheduleDetail);
+        this.scheduleService.updateSchedule(scheduleDetail.getSubject().getSubjectId(),
+                scheduleDetail.getScheduleDetailId());
+        return new ResponseEntity<>(scheduleDetail, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping(value = "/subject")
+    public ResponseEntity<List<Subject>> findAllSubject(){
+        List<Subject> subjectList = this.subjectService.findAllSubject();
+        if (subjectList == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-        List<ScheduleDetail> scheduleDetailList = this.scheduleDetailService.findScheduleDetailByClassId(classroomId.get());
-        if (scheduleDetailList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(scheduleDetailList, HttpStatus.OK);
+        return new ResponseEntity<>(subjectList, HttpStatus.ACCEPTED);
     }
 }

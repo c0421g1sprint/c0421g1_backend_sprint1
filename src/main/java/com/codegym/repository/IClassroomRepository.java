@@ -11,9 +11,7 @@ import java.util.List;
 @Repository
 @Transactional
 public interface IClassroomRepository extends JpaRepository<Classroom, Integer> {
-
-    // TaiNP query findALL class
-    @Query(value = "select c.classroom_id, c.classroom_name, c.classroom_school_year, " +
-            "c.delete_flag, c.grade_id, c.teacher_id from classroom c ",  nativeQuery = true)
-    List<Classroom> findAllClass();
+    @Query(value = "select classroom_id,classroom_name,classroom_school_year,delete_flag,grade_id,teacher_id " +
+            "from classroom where delete_flag = false",nativeQuery = true)
+    List<Classroom> findAllClassroomExist();
 }

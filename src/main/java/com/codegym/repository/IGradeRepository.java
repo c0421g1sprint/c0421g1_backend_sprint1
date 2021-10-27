@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface IGradeRepository extends JpaRepository<Grade, Integer> {
-    //TaiNP query find All grade
-    @Query(value = "select g.grade_id, g.grade_name from grade g",nativeQuery = true)
+public interface IGradeRepository extends JpaRepository<Grade,Integer> {
+    @Query(value = "select grade_id,grade_name from grade",nativeQuery = true)
     List<Grade> findAllGrade();
 }

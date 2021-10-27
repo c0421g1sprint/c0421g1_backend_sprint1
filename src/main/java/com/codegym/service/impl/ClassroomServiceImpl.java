@@ -12,10 +12,11 @@ import java.util.List;
 public class ClassroomServiceImpl implements IClassroomService {
     @Autowired
     private IClassroomRepository classroomRepository;
-
+    //search method search Classroom exists
     @Override
-    public List<Classroom> findAll() {
-        return classroomRepository.findAllClass();
+    public List<Classroom> findAllClassroomExist() {
+        return this.classroomRepository.findAllClassroomExist();
     }
+
 
 }

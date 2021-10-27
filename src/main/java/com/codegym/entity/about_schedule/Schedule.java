@@ -31,7 +31,8 @@ public class Schedule {
 
     private boolean deleteFlag;
 
-    @JsonBackReference
+
     @OneToMany(mappedBy = "schedule")
+    @JsonBackReference(value = "scheduleDetail_schedule")
     private Set<ScheduleDetail> scheduleDetails;
 }

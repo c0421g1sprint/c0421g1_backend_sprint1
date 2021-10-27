@@ -21,7 +21,8 @@ public class StudyDayTime {
     private String studyDayTimeStudyTime;
     private String studyDayTimeStudyDay;
 
-    @JsonBackReference
+
     @OneToMany(mappedBy = "studyDayTime")
+    @JsonBackReference(value = "scheduleDetail_daytime")
     private Set<ScheduleDetail> scheduleDetails;
 }
