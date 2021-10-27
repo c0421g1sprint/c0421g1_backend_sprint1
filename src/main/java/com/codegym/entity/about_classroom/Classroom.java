@@ -31,15 +31,16 @@ public class Classroom {
 
     private boolean deleteFlag;
 
-
+    @JsonBackReference(value = "teacher_classroom")
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "teacher_id",referencedColumnName = "teacherId")
+    @JoinColumn(name = "teacher_id", referencedColumnName = "teacherId")
     private Teacher teacher;
 
-
+    @JsonBackReference(value = "student_classroom")
     @OneToMany(mappedBy = "classroom")
     private Set<Student> students;
 
+    @JsonBackReference(value = "schedule_classroom")
     @OneToOne(mappedBy = "classroom")
     private Schedule schedule;
 }

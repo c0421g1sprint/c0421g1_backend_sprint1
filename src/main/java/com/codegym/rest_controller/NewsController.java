@@ -28,8 +28,8 @@ public class NewsController {
     @Autowired
     private ITypeService iTypeService;
 
-    @GetMapping(value = "/list")
-    public ResponseEntity<Page<News>> findAllNews(@PageableDefault(size = 3) Pageable pageable) {
+    @GetMapping
+    public ResponseEntity<Page<News>> findAllNews(@PageableDefault(size = 5) Pageable pageable) {
         Page<News> newsList = this.iNewsService.findAll(pageable);
 
         if (newsList.isEmpty()) {
@@ -42,12 +42,13 @@ public class NewsController {
     @GetMapping(value = "/type-list")
     public ResponseEntity<List<Type>> findAllType() {
         List<Type> typeList = this.iTypeService.findAll();
-
+        System.out.println(typeList);
         if (typeList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(typeList, HttpStatus.OK);
+
     }
 
 

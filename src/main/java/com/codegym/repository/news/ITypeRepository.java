@@ -14,6 +14,6 @@ public interface ITypeRepository extends JpaRepository<Type, Integer> {
 
 
     // Find all
-    @Query(value = "select * from type", nativeQuery = true)
+    @Query(value = "select * from `type`", nativeQuery = true)
     List<Type> getAllType();
 }

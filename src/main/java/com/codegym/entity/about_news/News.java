@@ -14,11 +14,10 @@ public class News {
     private Integer newsId;
     private String newsTitle;
     private String newsBrief;
-    @Column(columnDefinition = "varchar(1024)")
+    @Column(columnDefinition = "varchar(5000)")
     private String newsContent;
     private String imageUrl;
     private Date postDate;
-
 
     @ManyToOne(targetEntity = Type.class)
     @JsonBackReference
