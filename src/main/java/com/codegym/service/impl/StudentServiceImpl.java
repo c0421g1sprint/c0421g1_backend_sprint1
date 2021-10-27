@@ -32,7 +32,7 @@ public class StudentServiceImpl implements IStudentService {
     public Page<Student> findByClassroom(int classroomId, Pageable pageable) {
         return studentRepository.findByClassroomId(classroomId, pageable);
     }
-    
+
     //LamNT saveStudent function
     @Override
     public void saveStudent(Student student) {
