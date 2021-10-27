@@ -103,7 +103,6 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
-
     //DungNM - 26/10 - lấy toàn bộ danh sách khối có trong DB
     @GetMapping("/get-all-grade")
     public ResponseEntity<List<Grade>> findAllGrade() {
