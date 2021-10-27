@@ -18,6 +18,14 @@ import java.util.Optional;
 @Transactional
 public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
 
+    // Diep search teacher 26/10
+    @Query(value = "select * from teacher\n" +
+            "where  teacher.teacher_name like %:search% or " +
+            "teacher.teacher_gender like %:search% or teacher.teacher_date_of_birth like %:search% or " +
+            "teacher.teacher_phone like %:search% or teacher.teacher_address like %:search%",
+            nativeQuery = true)
+    Page<Teacher> searchTeacher(Pageable pageable, @Param("search") String search);
+
     //native Query hien thi danh sach - LinhDN
     @Query(value = "select" +
             " teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id" +
@@ -31,10 +39,6 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
             "from teacher where teacher_id = :id", nativeQuery = true)
     Optional<Teacher> findByIdTeacherByQuery(int id);
 
-    //native Query xoa 1 giao vien (~ update deleteFlag = true) - LinhDN
-    @Modifying
-    @Query(value = "update teacher set delete_flag = true where teacher_id = :id ", nativeQuery = true)
-    void saveDeleteTeacher(int id);
 
     //native Query hien thi danh sach theo tu khoa nhap vao- LinhDN
     @Query(value = "select teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id\n" +
@@ -73,5 +77,8 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
     void editPersonInfor(String phone, String address, String email, Integer id);
 
 
-
+    //native Query xoa 1 giao vien (~ update deleteFlag = true) - LinhDN
+    @Modifying
+    @Query(value = "update teacher set delete_flag = true where teacher_id = :id ", nativeQuery = true)
+    void saveDeleteTeacher(int id);
 }
