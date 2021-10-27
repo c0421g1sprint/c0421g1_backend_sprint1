@@ -23,7 +23,7 @@ public class TeacherController {
 
     //PhucNK
     @GetMapping(value = "/list/{id}")
-    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 2) Pageable pageable, @PathVariable Optional<Integer> id) {
+    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 1) Pageable pageable, @PathVariable Optional<Integer> id) {
         if(id == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
