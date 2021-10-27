@@ -27,7 +27,8 @@ private IScheduleDetailService iScheduleDetailService;
 //        List<ScheduleDetail> scheduleDetailList=iScheduleDetailService.getScheduleTeacher(teacher.getTeacherId());
         List<ScheduleDetail> scheduleDetailList=iScheduleDetailService.getScheduleTeacher(id);
         if(scheduleDetailList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            System.out.println("233346365");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         else {
             return new ResponseEntity<>(scheduleDetailList,HttpStatus.OK);
