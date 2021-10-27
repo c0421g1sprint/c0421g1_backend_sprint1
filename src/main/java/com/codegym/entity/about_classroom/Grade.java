@@ -21,7 +21,8 @@ public class Grade {
     private Integer gradeId;
     private String gradeName;
 
-    @JsonBackReference(value = "classroom_grade")
+    @JsonBackReference
+//    @JsonBackReference(value = "classroom_grade")
     @OneToMany(mappedBy = "grade")
     private Set<Classroom> classrooms;
 }

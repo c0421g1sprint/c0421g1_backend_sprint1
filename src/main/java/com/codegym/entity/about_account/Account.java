@@ -2,6 +2,7 @@ package com.codegym.entity.about_account;
 
 import com.codegym.entity.about_teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,11 +27,13 @@ public class Account {
     private boolean lock_flag;
     private boolean delete_flag;
 
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @OneToOne(mappedBy = "account")
     @JsonBackReference
+    @OneToOne(mappedBy = "account")
+//    @JsonBackReference
     private Teacher teacher;
 }

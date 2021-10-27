@@ -20,7 +20,8 @@ public class Division {
     private Integer divisionId;
     private String divisionName;
 
-    @JsonBackReference(value = "teacher_division")
+    @JsonBackReference
+//    @JsonBackReference(value = "teacher_division")
     @OneToMany(mappedBy = "division")
     private Set<Teacher> teachers;
 }

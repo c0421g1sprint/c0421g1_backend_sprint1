@@ -1,5 +1,4 @@
 package com.codegym.service;
 
-public interface IStudentService {
-
+public interface IStudentService{
 }
