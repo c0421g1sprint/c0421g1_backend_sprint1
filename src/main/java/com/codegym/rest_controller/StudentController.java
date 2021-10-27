@@ -56,7 +56,7 @@ public class StudentController {
             if (studentDelete == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             else {
                 StudentDTO studentDTO = new StudentDTO();
-                BeanUtils.copyProperties(studentDelete,studentDTO);
+                BeanUtils.copyProperties(studentDelete, studentDTO);
                 return new ResponseEntity<>(studentDTO, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -81,5 +81,15 @@ public class StudentController {
         BeanUtils.copyProperties(studentDto, student);
         studentService.editStudent(student);
         return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
+    //LamNT do find by id to edit student
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Student> findById(@PathVariable Integer id) {
+        Student student = this.studentService.getById(id);
+        if (student != null) {
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
