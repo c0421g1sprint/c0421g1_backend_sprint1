@@ -61,7 +61,7 @@ public class TeacherController {
     }
 
     //chuc nang tim kiem theo ten  - LinhDN
-    @GetMapping("/list/search")
+    @GetMapping("/list/searchName")
     public ResponseEntity<Page<Teacher>> getTeacherListWithKeyWord
     (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam("name") String name) {
         Page<Teacher> teacherList = teacherService.findAllTeacherByQueryWithName(pageable, name);
@@ -133,6 +133,18 @@ public class TeacherController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(divisionList, HttpStatus.OK);
+        }
+    }
+
+    //goi ra danh sach giao vien dua vao tu khoa tim kiem va phong ban - LinhDN - 27/10
+    @GetMapping("/list/")
+    public ResponseEntity<Page<Teacher>> getTeacherListWithKeyWordAndDivision
+    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(value = "name", required = false) String name,@RequestParam(value = "divisionId",required = false) Integer divisionId  ) {
+        Page<Teacher> teacherList = teacherService.findAllTeacherByQueryWithNameAndDivision(pageable, name, divisionId);
+        if (teacherList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(teacherList, HttpStatus.OK);
         }
     }
 }

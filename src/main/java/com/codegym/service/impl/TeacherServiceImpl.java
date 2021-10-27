@@ -57,6 +57,11 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
+    public Page<Teacher> findAllTeacherByQueryWithNameAndDivision(Pageable pageable,String name, Integer id) {
+        return this.teacherRepository.findAllTeacherByQueryWithKeywordAndDivision(pageable, name, id);
+    }
+
+    @Override
     public Page<Teacher> findAllTeacherByQuery(Pageable pageable) {
         return teacherRepository.findAllTeacherByQuery(pageable);
     }

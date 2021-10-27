@@ -22,4 +22,5 @@ public interface ITeacherService {
     void updateInFor(Teacher teacher);
     void save(Teacher teacher);
     List<Division> findAllDivisionByQuery();
+    Page<Teacher> findAllTeacherByQueryWithNameAndDivision(Pageable pageable,String name, Integer id);
 }
