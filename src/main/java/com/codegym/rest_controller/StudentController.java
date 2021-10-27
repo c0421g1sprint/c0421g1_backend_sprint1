@@ -122,7 +122,7 @@ public class StudentController {
     }
     
     // Diệp search student ngày 25/10
-    @GetMapping("searchstudent")
+    @GetMapping("/searchstudent")
     public ResponseEntity<Page<Student>> getSearchStudent(@PageableDefault(value = 2) Pageable pageable,
                                                           @RequestParam(required = false) String inforStudent) {
         Page<Student> students = studentService.searchStudent(pageable, inforStudent);

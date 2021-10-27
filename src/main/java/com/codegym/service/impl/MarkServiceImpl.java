@@ -39,7 +39,7 @@ public class MarkServiceImpl implements IMarkService {
 
 
     @Override
-    public Page<Mark> search(Pageable pageable, String nameStudent, String subject) {
-        return iMarkRepository.findAllStudentByName(pageable,nameStudent, subject);
+    public Page<Mark> search(Pageable pageable, String nameStudent, Integer subjectId, String className) {
+        return iMarkRepository.findAllStudentByName(pageable,nameStudent, subjectId, className);
     }
 }

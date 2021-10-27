@@ -1,5 +1,6 @@
 package com.codegym.dto;
 
+import com.codegym.entity.about_classroom.Classroom;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -43,5 +45,7 @@ public class StudentDTO {
     //    @Pattern(regexp = "^(09[0|3])+([0-9]{7})\\b$", message = "Số điện thoại sai định dạng." +
 //            "\n VD:090xxxxxxx, x gồm 7 chữ số")
     private String studentParentPhone;
+    private Classroom Classroom;
+    private Set<MarkDto> mark;
 
 }

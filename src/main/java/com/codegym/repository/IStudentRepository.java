@@ -61,12 +61,18 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
             "s.student_mother_name, s.student_date_of_birth, s.student_ethnicity, " +
             "s.student_address,s.student_name,s.student_religion, s.student_image," +
             "s.student_status, s.student_parent_phone, s.delete_flag, s.classroom_id" +
-            "  from student s" +
+            " from student s" +
             " join classroom on s.classroom_id = classroom.classroom_id " +
-            " join mark on s.student_id = mark.student_id" +
-            " join grade on classroom.grade_id = grade.grade_id" +
-            " where s.student_name like %:inforStudent% or s.student_date_of_birth like %:inforStudent%" +
-            " or classroom.classroom_name like %:inforStudent%", nativeQuery = true)
+            " where s.student_name like :inforStudent or s.student_date_of_birth like :inforStudent" +
+            " or classroom.classroom_name like :inforStudent",
+            countQuery = "SELECT count(*)" +
+                    " from student s" +
+                    " join classroom on s.classroom_id = classroom.classroom_id " +
+                    " join mark on s.student_id = mark.student_id" +
+                    " join grade on classroom.grade_id = grade.grade_id" +
+                    " where s.student_name like :inforStudent or s.student_date_of_birth like :inforStudent" +
+                    " or classroom.classroom_name like :inforStudent",
+            nativeQuery = true)
     Page<Student> searchStudent(Pageable pageable,@Param("inforStudent") String inforStudent);
 
 }

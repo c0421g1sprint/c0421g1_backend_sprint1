@@ -1,7 +1,13 @@
 package com.codegym.rest_controller;
 
+import com.codegym.dto.MarkDto;
+import com.codegym.dto.StudentDTO;
+import com.codegym.dto.SubjectDto;
+import com.codegym.entity.about_schedule.Subject;
 import com.codegym.entity.about_student.Mark;
+import com.codegym.entity.about_student.Student;
 import com.codegym.service.IMarkService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +26,7 @@ public class MarkController {
     @Autowired
     private IMarkService iMarkService;
 
+//    MinhNN 27/10
     @GetMapping("/list")
     public ResponseEntity<Page<Mark>> getAll(@PageableDefault(size = 5) Pageable pageable) {
         Page<Mark> markList = this.iMarkService.findAll(pageable);
@@ -29,6 +36,8 @@ public class MarkController {
         return new ResponseEntity<>(markList, HttpStatus.OK);
     }
 
+
+//    MinhNN 27/10
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Integer id) {
         Mark mark = this.iMarkService.getById(id);
@@ -39,15 +48,21 @@ public class MarkController {
         }
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<?> updateMark(@RequestBody Mark mark) {
+
+//    MinhNN 27/10
+    @PatchMapping("/edit")
+    public ResponseEntity<?> updateMark(@RequestBody MarkDto markDto) {
+        Mark mark = new Mark();
+        BeanUtils.copyProperties(markDto, mark);
         this.iMarkService.save(mark);
         return new ResponseEntity<>(mark,HttpStatus.OK);
     }
 
+
+    //    MinhNN 27/10
     @GetMapping("/search")
-    public ResponseEntity<?> searchNameStudent(@PageableDefault(size = 5) Pageable pageable,@RequestParam String nameStudent, String subject) {
-        Page<Mark> marks = this.iMarkService.search(pageable,nameStudent, subject);
+    public ResponseEntity<?> searchNameStudent(@PageableDefault(size = 6) Pageable pageable,@RequestParam(required = false) String nameStudent,@RequestParam(required = false) Integer subjectId, @RequestParam(required = false) String className) {
+        Page<Mark> marks = this.iMarkService.search(pageable,nameStudent, subjectId, className);
         return new ResponseEntity<>(marks,HttpStatus.OK);
     }
 }

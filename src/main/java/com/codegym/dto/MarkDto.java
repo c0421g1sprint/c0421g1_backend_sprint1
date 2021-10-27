@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class MarkDto {
 
     private Integer markId;
-    private StudentDTO student;
+    private Student student;
     private Subject subject;
     private Double markPointNumber1;
     private Double markPointNumber2;

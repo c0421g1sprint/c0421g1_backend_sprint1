@@ -51,8 +51,8 @@ public class StudentServiceImpl implements IStudentService {
 
     // Diep search student 25/10
     @Override
-    public Page<Student> searchStudent(Pageable pageable, String infortudent) {
-        return this.studentRepository.searchStudent(pageable, "%" + infortudent + "%");
+    public Page<Student> searchStudent(Pageable pageable, String inforStudent) {
+        return this.studentRepository.searchStudent(pageable, "%" + inforStudent + "%");
     }
 
 }
