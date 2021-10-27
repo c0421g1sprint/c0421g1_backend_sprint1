@@ -40,6 +40,12 @@ public class StudentServiceImpl implements IStudentService {
         return studentRepository.findStudentWhereId(id);
     }
 
+    //creator: HaNTT, date: 23/10/2021
+    @Override
+    public void deleteStudentFromClass(Integer id) {
+       this.studentRepository.deleteStudentFromClass(id);
+    }
+
     //Trùng code với Danh dòng 20
 //      creator: HaNTT, date: 23/10/2021
 //    @Override

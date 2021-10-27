@@ -44,7 +44,7 @@ public class ClassroomController {
     //DanhNT coding controller show list
     // check ok 9:00 AM
     @GetMapping
-    public ResponseEntity<Page<Classroom>> showList(@PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity<?> showList(@PageableDefault(size = 5) Pageable pageable) {
         Page<Classroom> classroomList = this.classroomService.findAllPage(pageable);
         if (classroomList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -67,37 +67,32 @@ public class ClassroomController {
     // check ok
     @PutMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateClass(@RequestBody Classroom classroom) {
-        Set<Student> studentList = classroom.getStudents();
 
         this.classroomService.updateSchoolYear(classroom.getClassroomSchoolYear(),
                 classroom.getTeacher().getTeacherId(),
                 classroom.getClassroomId());
 
-        if (studentList != null) {
-            for (Student student : studentList) {
-                this.studentService.updateClassForStudent(classroom.getClassroomId(), student.getStudentId());
-            }
-        }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //DanhNT - coding controller for promote
-    @PutMapping(value = "/promote/{id}")
-    public ResponseEntity<?> promoteClass(@PathVariable Integer id) {
-        Classroom classroom = this.classroomService.getById(id);
-        if (classroom != null) {
-            String currentName = classroom.getClassroomName();
-            String[] promoteName = classroom.getClassroomName().split("");
-            String[] demoteName = classroom.getClassroomName().split("");
+    @PutMapping(value = "/promote")
+    public ResponseEntity<?> promoteClass(@RequestBody Classroom classroom) {
+
+        Classroom newClassroom = this.classroomService.getById(classroom.getClassroomId());
+        if (newClassroom != null) {
+            String currentName = newClassroom.getClassroomName();
+            String[] promoteName = newClassroom.getClassroomName().split("");
+            String[] demoteName = newClassroom.getClassroomName().split("");
             if (promoteName[0].equals("5")) {
-                classroom.setDeleteFlag(true);
+                newClassroom.setDeleteFlag(true);
             } else {
                 promoteName[0] = String.valueOf(Integer.parseInt(promoteName[0]) + 1);
                 String rejoinName = String.join("", promoteName);
-                classroom.setClassroomName(rejoinName);
+                newClassroom.setClassroomName(rejoinName);
             }
-            Set<Student> studentSet = classroom.getStudents();
+            Set<Student> studentSet = newClassroom.getStudents();
             for (Student student : studentSet) {
                 Set<Mark> mark = student.getMarks();
                 List<Double> avgList = new ArrayList<>();
@@ -114,14 +109,14 @@ public class ClassroomController {
                     }
                     demoteName[0] = String.valueOf(Integer.parseInt(demoteName[0]) - 1);
                     String rejoinName = String.join("", demoteName);
-                    String year = String.valueOf(Integer.parseInt(classroom.getClassroomSchoolYear()) + 1);
+                    String year = String.valueOf(Integer.parseInt(newClassroom.getClassroomSchoolYear()) + 1);
                     Classroom promoteClass = this.classroomService.findClassByNameAndSchoolYear(currentName, rejoinName, year);
                     student.setClassroom(promoteClass);
                     // rejoin student to database
                     this.studentService.updateClassForStudent(student.getClassroom().getClassroomId(), student.getStudentId());
                 }
             }
-            this.classroomService.updateClassNameAfterPromote(classroom.getClassroomName(), classroom.getClassroomId());
+            this.classroomService.updateClassNameAfterPromote(newClassroom.getClassroomName(), newClassroom.getClassroomId());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -179,4 +174,27 @@ public class ClassroomController {
         }
         return new ResponseEntity<>(newClassroomStatus, HttpStatus.OK);
     }
+
+    //DanhNT
+    @PatchMapping("/delete")
+    public ResponseEntity<?> deleteStudentFromClass(@RequestBody StudentDto studentDto) {
+        if (studentDto != null) {
+            this.studentService.deleteStudentFromClass(studentDto.getStudentId());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    //DanhNT
+    @PatchMapping("/updateClassForStudent")
+    public ResponseEntity<?> updateClassForStudent(@RequestBody List<StudentDto> studentList, @RequestBody Integer id) {
+        if (studentList != null) {
+            for (StudentDto student : studentList) {
+                this.studentService.updateClassForStudent(id, student.getStudentId());
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }

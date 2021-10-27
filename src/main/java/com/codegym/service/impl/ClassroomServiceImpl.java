@@ -17,12 +17,6 @@ public class ClassroomServiceImpl implements IClassroomService {
 
     //DanhNT coding 2:00PM - 23-10-2021
     @Override
-    public List<Classroom> findAll() {
-        return this.classroomRepository.findAllList();
-    }
-
-    //DanhNT coding 2:00PM - 23-10-2021
-    @Override
     public Classroom getById(Integer id) {
         return this.classroomRepository.findById(id).orElse(null);
     }
@@ -54,8 +48,8 @@ public class ClassroomServiceImpl implements IClassroomService {
 
     //creator: HaNTT, date: 23/10/2021  (tạo mới)
     @Override
-    public Integer saveClassRoom(String name, String schoolYear, Integer gradeId,Integer teacherId, boolean deleteFlag) {
-        return classroomRepository.saveClassRoom(name, schoolYear, gradeId,teacherId, deleteFlag);
+    public Integer saveClassRoom(String name, String schoolYear, Integer gradeId, Integer teacherId, boolean deleteFlag) {
+        return classroomRepository.saveClassRoom(name, schoolYear, gradeId, teacherId, deleteFlag);
     }
 
 }

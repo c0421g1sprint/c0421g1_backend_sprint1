@@ -26,7 +26,7 @@ public class TeacherController {
         List<Teacher> teacherList = this.teacherService.findTeacherWhereTeacherIdNull();
 
         if (teacherList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(teacherList, HttpStatus.OK);
     }
