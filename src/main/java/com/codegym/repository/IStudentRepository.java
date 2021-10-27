@@ -31,10 +31,10 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     @Query(value="SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity," +
             " student_father_name, student_gender, student_image, student_mother_name, student_name, " +
             "student_parent_phone, student_religion, student_status, classroom_id\n" +
-            "FROM sprint1.student\n" +
+            "FROM student\n" +
             "WHERE classroom_id is null",
             countQuery="SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id\n" +
-                    "FROM sprint1.student\n" +
+                    "FROM student\n" +
                     "WHERE classroom_id is null;",
             nativeQuery = true)
     Page<Student> findWhereClassroomIdNull(Pageable pageable);
@@ -42,7 +42,7 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     //creator: HaNTT, date: 23/10/2021 (khi nhấn button tạo mới student: find one --> add to list student)
     @Query(value= "SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, " +
             "student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id\n" +
-            "FROM sprint1.student\n" +
+            "FROM student\n" +
             "WHERE student_id = ?;",
             nativeQuery = true)
     Student findStudentWhereId(Integer id);

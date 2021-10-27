@@ -41,11 +41,9 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
     //DanhNT coding find all list class pagination
     @Query(value = "select c.classroom_id, c.classroom_name, c.classroom_school_year, c.delete_flag, c.grade_id, c.teacher_id\n" +
             "from classroom c\n" +
-            "join teacher t on t.teacher_id = c.teacher_id\n" +
             "where c.delete_flag = false",
             countQuery = "select count(*)\n" +
                     "from classroom c \n" +
-                    "join teacher t on t.teacher_id = c.teacher_id\n" +
                     "where c.delete_flag = false"
             ,nativeQuery = true)
     Page<Classroom> findAllPage(Pageable pageable);
@@ -67,7 +65,7 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
 
     //creator: HaNTT, date: 23/10/2021  (tạp lớp mới)
     @Modifying
-    @Query(value="INSERT INTO sprint1.classroom(classroom_name, classroom_school_year, grade_id,teacher_id, delete_flag)\n" +
+    @Query(value="INSERT INTO classroom(classroom_name, classroom_school_year, grade_id,teacher_id, delete_flag)\n" +
             "values (?1,?2,?3,?4,?5);",
             nativeQuery = true)
     Integer saveClassRoom(String name, String schoolYear, Integer gradeId,Integer teacherId, boolean deleteFlag);
