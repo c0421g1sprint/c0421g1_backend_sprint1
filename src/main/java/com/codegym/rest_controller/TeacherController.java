@@ -18,14 +18,14 @@ public class TeacherController {
     @Autowired
     private ITeacherService teacherService;
     // diep search teacher 25/10
-    @GetMapping("/searchteacher")
-    public ResponseEntity<Page<Teacher>> getsearchTeacher(@PageableDefault(value = 2) Pageable pageable,
+    @GetMapping("/search")
+    public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 2) Pageable pageable,
                                                           @RequestParam(required = false)String search) {
 //        Page<Teacher> teachers = teacherService.searchTeacher(pageable, teacherId, teacherName, teacherGender, teacherDateOfBirth, teacherPhone, teacherAddress);
         Page<Teacher> teachers = teacherService.searchTeacher(pageable, search);
 
         if (teachers.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(teachers, HttpStatus.OK);
     }
