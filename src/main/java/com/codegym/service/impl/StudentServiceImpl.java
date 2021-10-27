@@ -49,10 +49,10 @@ public class StudentServiceImpl implements IStudentService {
                 student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentId());
     }
 
+    // Diep search student 25/10
     @Override
-    public Page<Student> searchStudent(Pageable pageable, String inforStudent) {
-        return null;
+    public Page<Student> searchStudent(Pageable pageable, String infortudent) {
+        return this.studentRepository.searchStudent(pageable, "%" + infortudent + "%");
     }
-
 
 }
