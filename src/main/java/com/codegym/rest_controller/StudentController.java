@@ -90,7 +90,6 @@ public class StudentController {
         BeanUtils.copyProperties(studentDto, student);
         studentService.editStudent(student);
         return new ResponseEntity<>(student, HttpStatus.OK);
-
     }
     
     //HauPT do showDetailStudent function
@@ -122,8 +121,7 @@ public class StudentController {
     // Diệp search student ngày 25/10
     @GetMapping("searchstudent")
     public ResponseEntity<Page<Student>> getSearchStudent(@PageableDefault(value = 2) Pageable pageable,
-                                                          @RequestParam(required = false) String inforStudent
-    ) {
+                                                          @RequestParam(required = false) String inforStudent) {
         Page<Student> students = studentService.searchStudent(pageable, inforStudent);
         if (students.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
