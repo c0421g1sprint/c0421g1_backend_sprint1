@@ -10,6 +10,7 @@ import com.codegym.service.IStudentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -32,12 +33,14 @@ public class StudentController {
     private IClassroomService classroomService;
 
     //DungNM - Lấy danh sách học sinh của 1 lớp
-    @GetMapping("/{classroomId}")
-    public ResponseEntity<Page<StudentDTO>> getStudentsOfClassroom(@PathVariable String classroomId,
-                                                                   @PageableDefault(value = 10) Pageable pageable) {
+    @GetMapping("/get-students-by-classroom-id")
+    public ResponseEntity<Page<StudentDTO>> getStudentsOfClassroom(@RequestParam String classId,@RequestParam String index, @RequestParam String size) {
         try {
-            int classId = Integer.parseInt(classroomId);
-            Page<Student> students = studentService.findByClassroom(classId, pageable);
+            int pageIndex = Integer.parseInt(index);
+            int pageSize = Integer.parseInt(size);
+            int classroomID = Integer.parseInt(classId);
+            Pageable pageable = PageRequest.of(pageIndex, pageSize);
+            Page<Student> students = studentService.findByClassroom(classroomID, pageable);
             if (students.getContent().size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
