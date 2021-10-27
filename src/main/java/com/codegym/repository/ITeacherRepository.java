@@ -1,21 +1,14 @@
 package com.codegym.repository;
-
-
 import com.codegym.entity.about_teacher.Teacher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import org.springframework.data.jpa.repository.Query;
-
 import org.springframework.data.jpa.repository.Modifying;
-
 import org.springframework.data.repository.query.Param;
-
 import org.springframework.stereotype.Repository;
-
 import javax.transaction.Transactional;
-
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -74,7 +67,7 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
 
 
 
-
+//    MinhNN
     @Modifying
     @Query(value = "UPDATE teacher as c\n" +
             "SET c.teacher_phone =?1, c.teacher_address = ?2, c.teacher_email = ?3\n" +
@@ -94,5 +87,16 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
     @Query(value = "update teacher set delete_flag = true where teacher_id = :id ", nativeQuery = true)
     void saveDeleteTeacher(int id);
 
+    //creator: HaNTT, date: 23/10/2021  (select-option)
+    @Query(value = "SELECT teacher_id, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, " +
+            "teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id," +
+            "delete_flag\n" +
+            "FROM teacher \n" +
+            "WHERE teacher_id IN (\n" +
+            "SELECT T.teacher_id FROM teacher T\n" +
+            "LEFT JOIN classroom c ON c.teacher_id = t.teacher_id\n" +
+            "WHERE c.teacher_id IS NULL);",
+            nativeQuery = true)
+    List<Teacher> findTeacherWhereTeacherIdNull();
 
 }

@@ -1,4 +1,5 @@
 package com.codegym.service.impl;
+import com.codegym.dto.TeacherUpdateDto;
 import com.codegym.entity.about_teacher.Division;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.repository.IDivisionRepository;
@@ -9,15 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TeacherServiceImpl implements ITeacherService {
     @Autowired
 
     private ITeacherRepository teacherRepository;
-
-
 
     @Autowired
     private IDivisionRepository divisionRepository;
@@ -41,7 +39,7 @@ public class TeacherServiceImpl implements ITeacherService {
 
     //MinhNN 24/10 update infor teacher
     @Override
-    public void updateInFor(Teacher teacher) {
+    public void updateInFor(TeacherUpdateDto teacher) {
         teacherRepository.editPersonInfor(teacher.getTeacherPhone(), teacher.getTeacherAddress(), teacher.getTeacherEmail(), teacher.getTeacherId());
     }
 
@@ -88,5 +86,10 @@ public class TeacherServiceImpl implements ITeacherService {
         }
     }
 
+    //creator: HaNTT, date: 23/10/2021  (select-option)
+    @Override
+    public List<Teacher> findTeacherWhereTeacherIdNull() {
+        return teacherRepository.findTeacherWhereTeacherIdNull();
+    }
 
 }

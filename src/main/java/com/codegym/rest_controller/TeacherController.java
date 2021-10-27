@@ -1,10 +1,10 @@
 package com.codegym.rest_controller;
-import com.codegym.DTO.TeacherDto;
+import com.codegym.dto.TeacherDto;
+import com.codegym.dto.TeacherUpdateDto;
 import com.codegym.entity.about_schedule.ScheduleDetail;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.IScheduleDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,6 @@ import java.util.List;
 import com.codegym.entity.about_student.Student;
 import com.codegym.service.IStudentService;
 import org.springframework.data.domain.Page;
-//import org.springframework.data.web.PageableDefault;
 import java.util.Optional;
 import com.codegym.entity.about_teacher.Division;
 import com.codegym.service.ITeacherService;
@@ -22,8 +21,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
@@ -32,9 +33,15 @@ import org.springframework.validation.annotation.Validated;
 public class TeacherController {
 
     @Autowired
+    private ITeacherService teacherService;
+
+    @Autowired
+    private IStudentService iStudentService;
+
+    @Autowired
     private IScheduleDetailService iScheduleDetailService;
 
-//Phuc lich day giao vien
+    //Phuc lich day giao vien
     @GetMapping("/schedule/{id}")
     public ResponseEntity<List<ScheduleDetail>> showScheduleTeacher(@PathVariable Integer id) {
         List<ScheduleDetail> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(id);
@@ -45,11 +52,6 @@ public class TeacherController {
             return new ResponseEntity<>(scheduleDetailList, HttpStatus.OK);
         }
     }
-
-
-
-    @Autowired
-    private IStudentService iStudentService;
 
     //PhucNK danh sach hoc sinh ma giao vien chu nhiem
     @GetMapping(value = "/list/{id}")
@@ -69,17 +71,13 @@ public class TeacherController {
     //PhucNK xem chi tiet hoc sinh
     @GetMapping(value = "/detail/{id}")
     public ResponseEntity<Student> getListStudentDetail( @PathVariable(required = false) Integer id) {
-        Optional<Student> studentList = iStudentService.getListStudentDetail(id);
-        if (!studentList.isPresent()) {
+        Student studentDetail = iStudentService.getListStudentDetail(id);
+        if (studentDetail == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(studentList.get(), HttpStatus.OK);
+            return new ResponseEntity<>(studentDetail, HttpStatus.OK);
         }
     }
-
-
-    @Autowired
-    private ITeacherService teacherService;
 
     // diep search teacher 25/10
     @GetMapping("/search")
@@ -152,17 +150,14 @@ public class TeacherController {
         }
     }
 
-
     //    MinhNN 24/10 update infor teacherg
     @PatchMapping("/updateInFor")
-    public ResponseEntity<?> updateInforTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult
+    public ResponseEntity<?> updateInforTeacher(@RequestBody @Validated TeacherUpdateDto teacherDto, BindingResult
             bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            Teacher teacher = new Teacher();
-            BeanUtils.copyProperties(teacherDto, teacher);
-            this.teacherService.updateInFor(teacher);
+            this.teacherService.updateInFor(teacherDto);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
@@ -205,6 +200,19 @@ public class TeacherController {
 
         }
     }
+
+    //*Note : CẦN CHECK LẠI PHƯƠNG THỨC
+    //create: HaNTT, date: 23/10/2021 (select-option)
+    @GetMapping("/find-teacher") //OK
+    public ResponseEntity<List<Teacher>> getListTeacherNotHaveChairedClass() {
+        List<Teacher> teacherList = this.teacherService.findTeacherWhereTeacherIdNull();
+
+        if (teacherList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(teacherList, HttpStatus.OK);
+    }
+
 }
 
 
