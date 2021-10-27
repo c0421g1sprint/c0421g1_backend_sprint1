@@ -26,12 +26,10 @@ public class TeacherServiceImpl implements ITeacherService {
 
 
     @Override
-    public void delete(Integer id) {
-        Teacher teacher = teacherRepository.findByIdTeacherByQuery(id).orElse(null);
-        if (teacher != null) {
-            teacherRepository.saveDeleteTeacher(teacher.getTeacherId());
-        }
+    public Page<Teacher> searchTeacher(Pageable pageable, String search) {
+        return teacherRepository.searchTeacher(pageable, "%" + search + "%");
     }
+
     @Override
     public void update(Teacher teacher) {
         this.teacherRepository.updateTeacher(teacher.isDeleteFlag(), teacher.getTeacherAddress(), teacher.getTeacherDateOfBirth(), teacher.getTeacherEmail(), teacher.getTeacherGender(), teacher.getTeacherImage(), teacher.getTeacherName(), teacher.getTeacherPhone(), teacher.getTeacherUniversity(),teacher.getDivision().getDivisionId(), teacher.getDegree().getDegreeId(),teacher.getTeacherId());
@@ -87,6 +85,14 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     public Page<Teacher> findAllTeacherByQueryWithDivision(Pageable pageable, int id) {
         return teacherRepository.findByIdTeacherByDivision(pageable,id);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Teacher teacher = teacherRepository.findByIdTeacherByQuery(id).orElse(null);
+        if (teacher != null) {
+            teacherRepository.saveDeleteTeacher(teacher.getTeacherId());
+        }
     }
 
 

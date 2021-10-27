@@ -28,8 +28,23 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/teachers")
 public class TeacherController {
+
     @Autowired
     private ITeacherService teacherService;
+
+    // diep search teacher 25/10
+    @GetMapping("/search")
+    public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 2) Pageable pageable,
+                                                          @RequestParam(required = false) String search) {
+//        Page<Teacher> teachers = teacherService.searchTeacher(pageable, teacherId, teacherName, teacherGender, teacherDateOfBirth, teacherPhone, teacherAddress);
+        Page<Teacher> teachers = teacherService.searchTeacher(pageable, search);
+
+        if (teachers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(teachers, HttpStatus.OK);
+    }
+
 
 
 
@@ -53,6 +68,7 @@ public class TeacherController {
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+
     }
 
     //chuc nang xoa 1 giao vien (thuc chat la update teacher_deleteFlag = 1) - LinhDN
@@ -64,7 +80,8 @@ public class TeacherController {
     //chuc nang tim kiem theo ten  - LinhDN
     @GetMapping("/list/searchName")
     public ResponseEntity<Page<Teacher>> getTeacherListWithKeyWord
-    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam("name") String name) {
+    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable
+             pageable, @RequestParam("name") String name) {
         Page<Teacher> teacherList = teacherService.findAllTeacherByQueryWithName(pageable, name);
         if (teacherList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -76,7 +93,8 @@ public class TeacherController {
     //chuc nang tim kiem theo phong ban  - LinhDN
     @GetMapping("/list/division/{id}")
     public ResponseEntity<Page<Teacher>> getTeacherListByDivision
-    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable, @PathVariable Integer id) {
+    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable
+             pageable, @PathVariable Integer id) {
         Page<Teacher> teacherList = teacherService.findAllTeacherByQueryWithDivision(pageable, id);
         if (teacherList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -87,7 +105,8 @@ public class TeacherController {
 
     // chức năng thêm mới - BaoHG
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public ResponseEntity<Teacher> saveTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult bindingResult) {
+    public ResponseEntity<Teacher> saveTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult
+            bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -101,7 +120,8 @@ public class TeacherController {
 
     //    MinhNN 24/10 update infor teacherg
     @PatchMapping("/updateInFor")
-    public ResponseEntity<?> updateInforTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult bindingResult) {
+    public ResponseEntity<?> updateInforTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult
+            bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -112,9 +132,10 @@ public class TeacherController {
         }
     }
 
-     // chức năng  cập nhập  - BaoHG
+    // chức năng  cập nhập  - BaoHG
     @RequestMapping(value = "/update", method = RequestMethod.PATCH)
-    public ResponseEntity<?> updateTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult bindingResult) {
+    public ResponseEntity<?> updateTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult
+            bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
