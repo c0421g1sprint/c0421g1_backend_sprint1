@@ -93,18 +93,6 @@ public class StudentController {
 
     }
     
-    // Diệp search student ngày 25/10
-    @GetMapping("searchstudent")
-    public ResponseEntity<Page<Student>> getSearchStudent(@PageableDefault(value = 2) Pageable pageable,
-                                                          @RequestParam(required = false) String inforStudent
-    ) {
-        Page<Student> students = studentService.searchStudent(pageable, inforStudent);
-        if (students.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(students, HttpStatus.OK);
-    }
-
     //HauPT do showDetailStudent function
     @GetMapping("/detail/{id}")
     public ResponseEntity<Student> showDetailStudent(@PathVariable Integer id) {
@@ -130,5 +118,17 @@ public class StudentController {
         List<Classroom> classroomList = classroomService.findAll();
         return (classroomList.size() == 0) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                 : new ResponseEntity<>(classroomList, HttpStatus.OK);
+    }
+    
+    // Diệp search student ngày 25/10
+    @GetMapping("searchstudent")
+    public ResponseEntity<Page<Student>> getSearchStudent(@PageableDefault(value = 2) Pageable pageable,
+                                                          @RequestParam(required = false) String inforStudent
+    ) {
+        Page<Student> students = studentService.searchStudent(pageable, inforStudent);
+        if (students.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 }
