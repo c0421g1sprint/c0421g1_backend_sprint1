@@ -1,22 +1,30 @@
 package com.codegym.repository;
 
-import com.codegym.entity.about_teacher.Division;
+
 import com.codegym.entity.about_teacher.Teacher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
+
 import org.springframework.data.jpa.repository.Query;
+
+import org.springframework.data.jpa.repository.Modifying;
+
 import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.List;
+
 import java.util.Optional;
 
 @Repository
 @Transactional
 public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
+
+
+//    @Query(value= "select * from teacher join acount on teacher.teacher_id = acount.teacher_id where acount.acount_id =?1", nativeQuery = true)
+//    Teacher findTeacherByAccountId();
 
     // Diep search teacher 26/10
     @Query(value = "select * from teacher\n" +
@@ -85,5 +93,6 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
     @Modifying
     @Query(value = "update teacher set delete_flag = true where teacher_id = :id ", nativeQuery = true)
     void saveDeleteTeacher(int id);
+
 
 }

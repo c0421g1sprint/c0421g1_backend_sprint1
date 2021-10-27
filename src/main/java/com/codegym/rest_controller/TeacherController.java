@@ -1,39 +1,29 @@
 package com.codegym.rest_controller;
-
+import com.codegym.DTO.TeacherDto;
+import com.codegym.entity.about_schedule.ScheduleDetail;
+import com.codegym.entity.about_teacher.Teacher;
+import com.codegym.service.IScheduleDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import com.codegym.entity.about_student.Student;
 import com.codegym.service.IStudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+//import org.springframework.data.web.PageableDefault;
 import java.util.Optional;
-
-
-import com.codegym.DTO.TeacherDto;
 import com.codegym.entity.about_teacher.Division;
-
-
-
-import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
 
 
-import java.util.List;
 
 
 @RestController
@@ -41,12 +31,27 @@ import java.util.List;
 @RequestMapping("/api/teachers")
 public class TeacherController {
 
+    @Autowired
+    private IScheduleDetailService iScheduleDetailService;
+
+//Phuc lich day giao vien
+    @GetMapping("/schedule/{id}")
+    public ResponseEntity<List<ScheduleDetail>> showScheduleTeacher(@PathVariable Integer id) {
+        List<ScheduleDetail> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(id);
+        if (scheduleDetailList.isEmpty()) {
+            System.out.println("233346365");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(scheduleDetailList, HttpStatus.OK);
+        }
+    }
+
 
 
     @Autowired
     private IStudentService iStudentService;
 
-    //PhucNK
+    //PhucNK danh sach hoc sinh ma giao vien chu nhiem
     @GetMapping(value = "/list/{id}")
     public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 1) Pageable pageable, @PathVariable Optional<Integer> id) {
         if(id == null){
@@ -61,9 +66,9 @@ public class TeacherController {
         }
     }
 
-    //PhucNK
+    //PhucNK xem chi tiet hoc sinh
     @GetMapping(value = "/detail/{id}")
-    public ResponseEntity<Student> getListStudentDetail(@PathVariable(required = false) Integer id) {
+    public ResponseEntity<Student> getListStudentDetail( @PathVariable(required = false) Integer id) {
         Optional<Student> studentList = iStudentService.getListStudentDetail(id);
         if (!studentList.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -89,20 +94,6 @@ public class TeacherController {
         return new ResponseEntity<>(teachers, HttpStatus.OK);
     }
 
-
-
-
-    //chuc nang hien thi danh sach giao vien - LinhDN
-//    @GetMapping("/list")
-////    public ResponseEntity<Page<Teacher>> getTeacherList
-////    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable) {
-////        Page<Teacher> teacherList = teacherService.findAllTeacherByQuery(pageable);
-////        if (teacherList.isEmpty()) {
-////            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-////        } else {
-////            return new ResponseEntity<>(teacherList, HttpStatus.OK);
-////        }
-////    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Teacher> findTeacherById(@PathVariable int id) {
@@ -211,10 +202,10 @@ public class TeacherController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(teacherList, HttpStatus.OK);
+
         }
     }
 }
-//    _________________________________________
 
 
 
