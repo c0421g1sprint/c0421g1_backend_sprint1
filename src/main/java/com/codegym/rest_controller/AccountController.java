@@ -17,7 +17,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@RequestMapping(value = "/account")
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 public class AccountController {
     @Autowired
     private IAccountService accountService;
@@ -31,7 +32,7 @@ public class AccountController {
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/createAccount")
+    @PostMapping(value = "/add")
     public ResponseEntity<List<FieldError>> createAccount(@Valid @RequestBody AccountDto accountDto,
                                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
