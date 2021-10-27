@@ -17,7 +17,6 @@ public interface ITeacherService {
     Page<Teacher> findAllTeacherByQueryWithName(Pageable pageable, String name);
     Page<Teacher> findAllTeacherByQueryWithDivision(Pageable pageable, int id);
     void delete(Integer id);
-    Optional<Teacher> findById(int id);
     void update(Teacher teacher);
     void updateInFor(Teacher teacher);
     void save(Teacher teacher);

@@ -14,12 +14,13 @@ import java.util.Optional;
 public class StudentServiceImpl implements IStudentService {
     @Autowired
     private IStudentRepository studentRepository;
-
+    //Phuc
     @Override
     public Page<Student> getListStudent(Pageable pageable, Integer id) {
         return studentRepository.getListStudent(pageable,id);
-    }
 
+    }
+    //Phuc
     @Override
     public Optional<Student> getListStudentDetail(Integer id) {
         return studentRepository.getListStudentDetail(id);
