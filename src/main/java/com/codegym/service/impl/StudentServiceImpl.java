@@ -32,13 +32,6 @@ public class StudentServiceImpl implements IStudentService {
     public Page<Student> findByClassroom(int classroomId, Pageable pageable) {
         return studentRepository.findByClassroomId(classroomId, pageable);
     }
-
-    // Diep search student 25/10
-    @Override
-    public Page<Student> searchStudent(Pageable pageable, String infortudent) {
-        return this.studentRepository.searchStudent(pageable, "%" + infortudent + "%");
-    }
-
     
     //LamNT saveStudent function
     @Override
@@ -56,5 +49,10 @@ public class StudentServiceImpl implements IStudentService {
                 student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentId());
     }
 
+    // Diep search student 25/10
+    @Override
+    public Page<Student> searchStudent(Pageable pageable, String infortudent) {
+        return this.studentRepository.searchStudent(pageable, "%" + infortudent + "%");
+    }
 
 }
