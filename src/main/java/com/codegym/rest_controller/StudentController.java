@@ -65,19 +65,6 @@ public class StudentController {
         }
     }
 
-    // Diệp search student ngày 25/10
-    @GetMapping("searchstudent")
-    public ResponseEntity<Page<Student>> getSearchStudent(@PageableDefault(value = 2) Pageable pageable,
-                                                          @RequestParam(required = false) String inforStudent
-    ) {
-        Page<Student> students = studentService.searchStudent(pageable, inforStudent);
-        if (students.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(students, HttpStatus.OK);
-    }
-
-
     //LamNT do createStudent function
     @PostMapping("/add")
     public ResponseEntity<Integer> addStudent(@RequestBody @Validated StudentDTO studentDto) {
@@ -96,4 +83,18 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.OK);
 
     }
+    
+    // Diệp search student ngày 25/10
+    @GetMapping("searchstudent")
+    public ResponseEntity<Page<Student>> getSearchStudent(@PageableDefault(value = 2) Pageable pageable,
+                                                          @RequestParam(required = false) String inforStudent
+    ) {
+        Page<Student> students = studentService.searchStudent(pageable, inforStudent);
+        if (students.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(students, HttpStatus.OK);
+    }
+
+
 }
