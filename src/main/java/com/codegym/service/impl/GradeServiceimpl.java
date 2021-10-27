@@ -7,14 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
-public class GradeServiceimpl implements IGradeService {
+public class GradeServiceImpl implements IGradeService {
 
     @Autowired
     private IGradeRepository gradeRepository;
 
     @Override
-    public List<Grade> findAllGrade() {
+    public List<Grade> findAll() {
         return gradeRepository.findAllGrade();
     }
+
 }
