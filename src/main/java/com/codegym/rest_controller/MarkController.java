@@ -46,7 +46,7 @@ public class MarkController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchNameStudent(@PageableDefault(size = 5) Pageable pageable,@RequestParam String nameStudent, String subject) {
+    public ResponseEntity<?> searchNameStudent(@PageableDefault(size = 6) Pageable pageable,@RequestParam(required = false) String nameStudent,@RequestParam(required = false) String subject) {
         Page<Mark> marks = this.iMarkService.search(pageable,nameStudent, subject);
         return new ResponseEntity<>(marks,HttpStatus.OK);
     }

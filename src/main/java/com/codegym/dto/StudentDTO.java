@@ -1,11 +1,13 @@
 package com.codegym.dto;
 
+import com.codegym.entity.about_classroom.Classroom;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -24,5 +26,7 @@ public class StudentDTO {
     private String studentImage;
     private String studentStatus;
     private String studentParentPhone;
+    private Classroom Classroom;
+    private Set<MarkDto> mark;
 
 }
