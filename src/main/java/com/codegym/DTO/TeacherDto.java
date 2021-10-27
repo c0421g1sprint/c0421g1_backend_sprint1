@@ -1,6 +1,10 @@
-package com.codegym.dto;
+package com.codegym.DTO;
 
 
+
+import com.codegym.entity.about_account.Account;
+import com.codegym.entity.about_teacher.Degree;
+import com.codegym.entity.about_teacher.Division;
 
 import javax.validation.constraints.*;
 
@@ -41,15 +45,15 @@ public class TeacherDto {
     @NotEmpty(message = "hình ảnh không được để trống")
     private String teacherImage;
 
-    private DegreeDto degree;
-    private DivisionDto division;
-    private AccountDto account;
+    private Degree degree;
+    private Division division;
+    private Account account;
     private boolean deleteFlag;
 
     public TeacherDto() {
     }
 
-    public TeacherDto(String teacherName, Byte teacherGender,String teacherDateOfBirth,String teacherUniversity,String teacherAddress,String teacherEmail, String teacherPhone, String teacherImage, DegreeDto degree, DivisionDto division, AccountDto account, boolean deleteFlag) {
+    public TeacherDto(String teacherName, Byte teacherGender,String teacherDateOfBirth,String teacherUniversity,String teacherAddress,String teacherEmail, String teacherPhone, String teacherImage, Degree degree, Division division, Account account, boolean deleteFlag) {
         this.teacherName = teacherName;
         this.teacherGender = teacherGender;
         this.teacherDateOfBirth = teacherDateOfBirth;
@@ -136,27 +140,27 @@ public class TeacherDto {
         this.teacherImage = teacherImage;
     }
 
-    public DegreeDto getDegree() {
+    public Degree getDegree() {
         return degree;
     }
 
-    public void setDegree(DegreeDto degree) {
+    public void setDegree(Degree degree) {
         this.degree = degree;
     }
 
-    public DivisionDto getDivision() {
+    public Division getDivision() {
         return division;
     }
 
-    public void setDivision(DivisionDto division) {
+    public void setDivision(Division division) {
         this.division = division;
     }
 
-    public AccountDto getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(AccountDto account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 
