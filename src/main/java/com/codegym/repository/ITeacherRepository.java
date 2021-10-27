@@ -29,9 +29,8 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
     //native Query hien thi danh sach - LinhDN
     @Query(value = "select" +
             " teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id" +
-            " from teacher where delete_flag = false ", nativeQuery = true, countQuery="select count(*)  from teacher where delete_flag = false;")
+            " from teacher where delete_flag = false ", nativeQuery = true, countQuery = "select count(*)  from teacher where delete_flag = false;")
     Page<Teacher> findAllTeacherByQuery(Pageable pageable);
-
 
 
     @Query(value = "select" +
@@ -42,33 +41,31 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
 
     //native Query hien thi danh sach theo tu khoa nhap vao- LinhDN
     @Query(value = "select teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id\n" +
-            "from teacher where (delete_flag = false and teacher_name like %:name%)", nativeQuery = true, countQuery="select teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id\n" +
+            "from teacher where (delete_flag = false and teacher_name like %:name%)", nativeQuery = true, countQuery = "select teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id\n" +
             "from teacher where (delete_flag = false and teacher_name like %:name%)")
     Page<Teacher> findAllTeacherByQueryWithKeyword(Pageable pageable, @Param("name") String name);
 
     //native Query hien thi danh sach theo phong ban- LinhDN
     @Query(value = "select" +
             " teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id " +
-            "from teacher where (delete_flag = false and division_id = :id)", nativeQuery = true, countQuery="select" +
+            "from teacher where (delete_flag = false and division_id = :id)", nativeQuery = true, countQuery = "select" +
             " teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id " +
             "from teacher where (delete_flag = false and division_id = :id)")
     Page<Teacher> findByIdTeacherByDivision(Pageable pageable, int id);
 
     @Modifying
-    @Query(value = "INSERT INTO `sprint1`.`teacher` (`delete_flag`, `teacher_address`, `teacher_date_of_birth`, `teacher_email`, `teacher_gender`, `teacher_image`, `teacher_name`, `teacher_phone`, `teacher_university`, `account_id`, `degree_id`, `division_id`) " +
-            "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12);",nativeQuery = true)
-    void createNewTeacher(Boolean deleteFlag,String address, String dateOfBirth, String email, Byte gender, String image, String name, String phone, String teacher_university,Integer divisionId, Integer degreeId,Integer account_id);
+    @Query(value = "INSERT INTO `teacher` (`delete_flag`, `teacher_address`, `teacher_date_of_birth`, `teacher_email`, `teacher_gender`, `teacher_image`, `teacher_name`, `teacher_phone`, `teacher_university`, `degree_id`, `division_id`) " +
+            "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11);", nativeQuery = true)
+    void createNewTeacher(Boolean deleteFlag, String address, String dateOfBirth, String email, Byte gender, String image, String name, String phone, String teacher_university, Integer divisionId, Integer degreeId);
 
 
     @Modifying
-    @Query(value = "update teacher set delete_flag = ?1,teacher_address = ?2,teacher_date_of_birth= ?3,teacher_email = ?4,teacher_gender=?5,teacher_image=?6,teacher_name=?7,teacher_phone=?8,teacher_university=?9,degree_id=?10,division_id=?11,account_id = ?12 \n" +
-            "where (teacher_id = ?13);",nativeQuery = true)
-    void updateTeacher(Boolean deleteFlag,String address, String dateOfBirth, String email, Byte gender, String image, String name, String phone, String teacher_university,Integer divisionId, Integer degreeId,Integer accouuntId,Integer teacherId);
+    @Query(value = "update teacher set delete_flag = ?1,teacher_address = ?2,teacher_date_of_birth= ?3,teacher_email = ?4,teacher_gender=?5,teacher_image=?6,teacher_name=?7,teacher_phone=?8,teacher_university=?9,degree_id=?10,division_id=?11 \n" +
+            "where (teacher_id = ?12);", nativeQuery = true)
+    void updateTeacher(Boolean deleteFlag, String address, String dateOfBirth, String email, Byte gender, String image, String name, String phone, String teacher_university, Integer divisionId, Integer degreeId, Integer teacherId);
 
 
-    //lay ra danh sach cac phong ban - LinhDN
-    @Query(value = "SELECT division_id, division_name FROM teacher_management_sprint1.division;", nativeQuery = true)
-    List<Division> findAllDivisionByQuery();
+
 
     @Modifying
     @Query(value = "UPDATE teacher as c\n" +
@@ -76,9 +73,17 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
             "WHERE teacher_id = ?4 ", nativeQuery = true)
     void editPersonInfor(String phone, String address, String email, Integer id);
 
+    //Tim kiem theo ten & phong ban - LinhDN - 27/10 - 09:55
+    @Query(value = "select * from teacher where delete_flag = false and ((?1 is Null or teacher_name like %?1%) and (?2 is null or division_id = ?2))",
+            countQuery = "select * from teacher where delete_flag = false and ((?1 is Null or teacher_name like %?1%) and (?2 is null or division_id = ?2))",
+            nativeQuery = true)
+    Page<Teacher> findAllTeacherByQueryWithKeywordAndDivision(Pageable pageable, @Param("name") String name, @Param("id") Integer id);
+
+
 
     //native Query xoa 1 giao vien (~ update deleteFlag = true) - LinhDN
     @Modifying
     @Query(value = "update teacher set delete_flag = true where teacher_id = :id ", nativeQuery = true)
     void saveDeleteTeacher(int id);
+
 }
