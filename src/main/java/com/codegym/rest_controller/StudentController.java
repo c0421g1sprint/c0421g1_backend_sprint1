@@ -92,7 +92,6 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
-
     //HauPT do showDetailStudent function
     @GetMapping("/detail/{id}")
     public ResponseEntity<Student> showDetailStudent(@PathVariable Integer id) {
