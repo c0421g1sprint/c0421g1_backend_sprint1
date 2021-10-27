@@ -20,7 +20,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/schedules")
 public class ScheduleController {
     // QuanTA
@@ -81,6 +81,7 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleDetail, HttpStatus.ACCEPTED);
     }
 
+    // list subject QuanTA
     @GetMapping(value = "/subject")
     public ResponseEntity<List<Subject>> findAllSubject(){
         List<Subject> subjectList = this.subjectService.findAllSubject();
