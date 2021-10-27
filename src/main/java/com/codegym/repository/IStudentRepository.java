@@ -57,21 +57,22 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
                      String student_religion, Integer student_id);
 
      // Diep: search student 5h12 ngày 25/10
-    @Query(value="select s.student_id, s.student_gender, s.student_father_name, " +
-            "s.student_mother_name, s.student_date_of_birth, s.student_ethnicity, " +
-            "s.student_address,s.student_name,s.student_religion, s.student_image," +
-            "s.student_status, s.student_parent_phone, s.delete_flag, s.classroom_id" +
+    @Query(value="select " +
+//            "s.student_id, s.student_gender, s.student_father_name, s.student_mother_name, s.student_date_of_birth, s.student_ethnicity, " +
+//            "s.student_address,s.student_name,s.student_religion, s.student_image, s.student_status, s.student_parent_phone, s.delete_flag, s.classroom_id, m.mark_point_number1,\n" +
+//            " m.mark_point_number2, m.mark_point_number3\n" +
+            "* " +
             " from student s" +
             " join classroom on s.classroom_id = classroom.classroom_id " +
-            " where s.student_name like :inforStudent or s.student_date_of_birth like :inforStudent" +
-            " or classroom.classroom_name like :inforStudent",
+            " join mark m on s.student_id = m.student_id" +
+            " join grade on classroom.grade_id = grade.grade_id" +
+            " where s.student_name like :inforStudent or s.student_date_of_birth like :inforStudent or classroom.classroom_name like :inforStudent",
             countQuery = "SELECT count(*)" +
                     " from student s" +
                     " join classroom on s.classroom_id = classroom.classroom_id " +
-                    " join mark on s.student_id = mark.student_id" +
+                    " join mark m on s.student_id = m.student_id" +
                     " join grade on classroom.grade_id = grade.grade_id" +
-                    " where s.student_name like :inforStudent or s.student_date_of_birth like :inforStudent" +
-                    " or classroom.classroom_name like :inforStudent",
+                    " where s.student_name like :inforStudent or s.student_date_of_birth like :inforStudent or classroom.classroom_name like :inforStudent",
             nativeQuery = true)
     Page<Student> searchStudent(Pageable pageable,@Param("inforStudent") String inforStudent);
 
