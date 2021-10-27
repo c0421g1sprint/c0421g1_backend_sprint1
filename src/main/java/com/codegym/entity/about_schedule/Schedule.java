@@ -23,8 +23,6 @@ public class Schedule {
 
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
-
-    @JsonManagedReference
 //    @JsonBackReference
     @JoinColumn(name = "classroom_id", referencedColumnName = "classroomId")
     private Classroom classroom;

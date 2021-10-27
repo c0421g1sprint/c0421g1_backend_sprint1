@@ -1,6 +1,6 @@
 package com.codegym.rest_controller;
 
-import com.codegym.DTO.ScheduleDetailDto;
+import com.codegym.dto.ScheduleDetailDto;
 import com.codegym.entity.about_classroom.Classroom;
 import com.codegym.entity.about_classroom.Grade;
 import com.codegym.entity.about_schedule.ScheduleDetail;
@@ -91,3 +91,4 @@ public class ScheduleController {
         return new ResponseEntity<>(subjectList, HttpStatus.ACCEPTED);
     }
 }
+

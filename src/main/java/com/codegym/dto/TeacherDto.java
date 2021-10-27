@@ -1,50 +1,41 @@
-package com.codegym.entity.about_teacher;
+package com.codegym.dto;
 
 import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_classroom.Classroom;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.codegym.entity.about_teacher.Degree;
+import com.codegym.entity.about_teacher.Division;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.sql.Date;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Teacher {
-    @Id
+public class TeacherDto {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer teacherId;
     private String teacherName;
     private Byte teacherGender;
-    private String teacherDateOfBirth;
+    private Date teacherDateOfBirth;
     private String teacherUniversity;
     private String teacherAddress;
     private String teacherEmail;
     private String teacherPhone;
     private String teacherImage;
 
-//    @JsonManagedReference
-    @ManyToOne(targetEntity = Degree.class)
-    @JoinColumn(name = "degree_id", referencedColumnName = "degreeId")
     private Degree degree;
 
-    @ManyToOne(targetEntity = Division.class)
-    @JoinColumn(name = "division_id", referencedColumnName = "divisionId")
     private Division division;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id", referencedColumnName = "accountId")
     private Account account;
 
-//    @JsonBackReference(value = "teacher_classroom")
-    @OneToOne(mappedBy = "teacher")
     private Classroom classroom;
 
     private boolean deleteFlag;

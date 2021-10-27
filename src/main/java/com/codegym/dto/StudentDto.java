@@ -1,30 +1,29 @@
-package com.codegym.entity.about_student;
+package com.codegym.dto;
 
 import com.codegym.entity.about_classroom.Classroom;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.codegym.entity.about_student.Mark;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.sql.Date;
 import java.util.Set;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
-    @Id
+public class StudentDto {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studentId;
     private Byte studentGender;
     private String studentFatherName;
     private String studentMotherName;
-    private String studentDateOfBirth;
+    private Date studentDateOfBirth;
     private String studentEthnicity;
     private String studentAddress;
     private String studentName;
@@ -34,13 +33,7 @@ public class Student {
     private String studentParentPhone;
     private boolean deleteFlag;
 
-//    @JsonBackReference(value = "classroom_student")
-    @ManyToOne(targetEntity = Classroom.class)
-    @JoinColumn(name = "classroom_id", referencedColumnName = "classroomId")
     private Classroom classroom;
 
-//    @JsonBackReference
-    @JsonBackReference(value = "student_mark")
-    @OneToMany(mappedBy = "student")
     private Set<Mark> marks;
 }
