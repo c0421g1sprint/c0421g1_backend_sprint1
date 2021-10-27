@@ -32,22 +32,6 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
             "where s.student_id = :id", nativeQuery = true)
     void deleteStudentById(@Param("id") Integer id);
 
-
-    // Diep: search student 5h12 ngày 25/10
-    @Query(value="select s.student_id, s.student_gender, s.student_father_name, " +
-            "s.student_mother_name, s.student_date_of_birth, s.student_ethnicity, " +
-            "s.student_address,s.student_name,s.student_religion, s.student_image," +
-            "s.student_status, s.student_parent_phone, s.delete_flag, s.classroom_id" +
-            "  from student s" +
-            " join classroom on s.classroom_id = classroom.classroom_id " +
-            " join mark on s.student_id = mark.student_id" +
-            " join grade on classroom.grade_id = grade.grade_id" +
-            " where s.student_name like %:inforStudent% or s.student_date_of_birth like %:inforStudent%" +
-            " or classroom.classroom_name like %:inforStudent%", nativeQuery = true)
-    Page<Student> searchStudent(Pageable pageable,@Param("inforStudent") String inforStudent);
-
-
-
     //LamNT do create function
     @Modifying
     @Query(value = "insert into `sprint1`.`student` (delete_flag,student_address, student_date_of_birth, student_ethnicity," +
@@ -64,5 +48,18 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     void editStudent(String student_address, String student_date_of_birth, String student_ethnicity, String student_father_name,
                      String student_gender, String student_mother_name, String student_name, String student_parent_phone,
                      String student_religion, Integer student_id);
+
+     // Diep: search student 5h12 ngày 25/10
+    @Query(value="select s.student_id, s.student_gender, s.student_father_name, " +
+            "s.student_mother_name, s.student_date_of_birth, s.student_ethnicity, " +
+            "s.student_address,s.student_name,s.student_religion, s.student_image," +
+            "s.student_status, s.student_parent_phone, s.delete_flag, s.classroom_id" +
+            "  from student s" +
+            " join classroom on s.classroom_id = classroom.classroom_id " +
+            " join mark on s.student_id = mark.student_id" +
+            " join grade on classroom.grade_id = grade.grade_id" +
+            " where s.student_name like %:inforStudent% or s.student_date_of_birth like %:inforStudent%" +
+            " or classroom.classroom_name like %:inforStudent%", nativeQuery = true)
+    Page<Student> searchStudent(Pageable pageable,@Param("inforStudent") String inforStudent);
 
 }
