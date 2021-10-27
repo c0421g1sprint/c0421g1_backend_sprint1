@@ -1,10 +1,11 @@
 package com.codegym.rest_controller;
 
 
+import com.codegym.DTO.TeacherDto;
 import com.codegym.entity.about_teacher.Division;
 
 
-import com.codegym.dto.TeacherDto;
+
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.BeanUtils;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -33,16 +34,16 @@ public class TeacherController {
 
 
     //chuc nang hien thi danh sach giao vien - LinhDN
-    @GetMapping("/list")
-    public ResponseEntity<Page<Teacher>> getTeacherList
-    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<Teacher> teacherList = teacherService.findAllTeacherByQuery(pageable);
-        if (teacherList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(teacherList, HttpStatus.OK);
-        }
-    }
+//    @GetMapping("/list")
+//    public ResponseEntity<Page<Teacher>> getTeacherList
+//    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable) {
+//        Page<Teacher> teacherList = teacherService.findAllTeacherByQuery(pageable);
+//        if (teacherList.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } else {
+//            return new ResponseEntity<>(teacherList, HttpStatus.OK);
+//        }
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Teacher> findTeacherById(@PathVariable int id) {
@@ -125,7 +126,7 @@ public class TeacherController {
 
     }
 
-    @GetMapping("/listDivision/")
+    @GetMapping("/listDivision")
     public ResponseEntity<List<Division>> getDivisionList
             () {
         List<Division> divisionList = teacherService.findAllDivisionByQuery();
@@ -137,7 +138,7 @@ public class TeacherController {
     }
 
     //goi ra danh sach giao vien dua vao tu khoa tim kiem va phong ban - LinhDN - 27/10
-    @GetMapping("/list/")
+    @GetMapping("/list")
     public ResponseEntity<Page<Teacher>> getTeacherListWithKeyWordAndDivision
     (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(value = "name", required = false) String name,@RequestParam(value = "divisionId",required = false) Integer divisionId  ) {
         Page<Teacher> teacherList = teacherService.findAllTeacherByQueryWithNameAndDivision(pageable, name, divisionId);

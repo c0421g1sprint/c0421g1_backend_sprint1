@@ -4,6 +4,7 @@ package com.codegym.service.impl;
 import com.codegym.entity.about_teacher.Division;
 
 import com.codegym.entity.about_teacher.Teacher;
+import com.codegym.repository.IDivisionRepository;
 import com.codegym.repository.ITeacherRepository;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class TeacherServiceImpl implements ITeacherService {
 
     private ITeacherRepository teacherRepository;
 
+    @Autowired
+    private IDivisionRepository divisionRepository;
+
 
     @Override
     public void delete(Integer id) {
@@ -30,12 +34,12 @@ public class TeacherServiceImpl implements ITeacherService {
     }
     @Override
     public void update(Teacher teacher) {
-        this.teacherRepository.updateTeacher(teacher.isDeleteFlag(), teacher.getTeacherAddress(), teacher.getTeacherDateOfBirth(), teacher.getTeacherEmail(), teacher.getTeacherGender(), teacher.getTeacherImage(), teacher.getTeacherName(), teacher.getTeacherPhone(), teacher.getTeacherUniversity(),teacher.getDivision().getDivisionId(), teacher.getDegree().getDegreeId(),teacher.getAccount().getAccountId(),teacher.getTeacherId());
+        this.teacherRepository.updateTeacher(teacher.isDeleteFlag(), teacher.getTeacherAddress(), teacher.getTeacherDateOfBirth(), teacher.getTeacherEmail(), teacher.getTeacherGender(), teacher.getTeacherImage(), teacher.getTeacherName(), teacher.getTeacherPhone(), teacher.getTeacherUniversity(),teacher.getDivision().getDivisionId(), teacher.getDegree().getDegreeId(),teacher.getTeacherId());
     }
 
     @Override
     public void save(Teacher teacher) {
-        this.teacherRepository.createNewTeacher(teacher.isDeleteFlag(), teacher.getTeacherAddress(), teacher.getTeacherDateOfBirth(), teacher.getTeacherEmail(), teacher.getTeacherGender(), teacher.getTeacherImage(), teacher.getTeacherName(), teacher.getTeacherPhone(), teacher.getTeacherUniversity(),teacher.getDivision().getDivisionId(), teacher.getDegree().getDegreeId(),teacher.getAccount().getAccountId());
+        this.teacherRepository.createNewTeacher(teacher.isDeleteFlag(), teacher.getTeacherAddress(), teacher.getTeacherDateOfBirth(), teacher.getTeacherEmail(), teacher.getTeacherGender(), teacher.getTeacherImage(), teacher.getTeacherName(), teacher.getTeacherPhone(), teacher.getTeacherUniversity(),teacher.getDivision().getDivisionId(), teacher.getDegree().getDegreeId());
     }
 
     @Override
@@ -53,7 +57,7 @@ public class TeacherServiceImpl implements ITeacherService {
 
     @Override
     public List<Division> findAllDivisionByQuery() {
-        return this.teacherRepository.findAllDivisionByQuery();
+        return this.divisionRepository.findAllDivisionByQuery();
     }
 
     @Override
