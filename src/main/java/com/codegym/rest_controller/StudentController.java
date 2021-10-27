@@ -10,6 +10,7 @@ import com.codegym.service.IStudentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -32,12 +33,14 @@ public class StudentController {
     private IClassroomService classroomService;
 
     //DungNM - Lấy danh sách học sinh của 1 lớp
-    @GetMapping("/{classroomId}")
-    public ResponseEntity<Page<StudentDTO>> getStudentsOfClassroom(@PathVariable String classroomId,
-                                                                   @PageableDefault(value = 10) Pageable pageable) {
+    @GetMapping("/get-students-by-classroom-id")
+    public ResponseEntity<Page<StudentDTO>> getStudentsOfClassroom(@RequestParam String classId,@RequestParam String index, @RequestParam String size) {
         try {
-            int classId = Integer.parseInt(classroomId);
-            Page<Student> students = studentService.findByClassroom(classId, pageable);
+            int pageIndex = Integer.parseInt(index);
+            int pageSize = Integer.parseInt(size);
+            int classroomID = Integer.parseInt(classId);
+            Pageable pageable = PageRequest.of(pageIndex, pageSize);
+            Page<Student> students = studentService.findByClassroom(classroomID, pageable);
             if (students.getContent().size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -91,7 +94,7 @@ public class StudentController {
         studentService.editStudent(student);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
-
+    
     //HauPT do showDetailStudent function
     @GetMapping("/detail/{id}")
     public ResponseEntity<Student> showDetailStudent(@PathVariable Integer id) {
@@ -101,7 +104,6 @@ public class StudentController {
         }
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
-
 
     //DungNM - 26/10 - lấy toàn bộ danh sách khối có trong DB
     @GetMapping("/get-all-grade")
@@ -117,5 +119,16 @@ public class StudentController {
         List<Classroom> classroomList = classroomService.findAll();
         return (classroomList.size() == 0) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                 : new ResponseEntity<>(classroomList, HttpStatus.OK);
+    }
+    
+    // Diệp search student ngày 25/10
+    @GetMapping("searchstudent")
+    public ResponseEntity<Page<Student>> getSearchStudent(@PageableDefault(value = 2) Pageable pageable,
+                                                          @RequestParam(required = false) String inforStudent) {
+        Page<Student> students = studentService.searchStudent(pageable, inforStudent);
+        if (students.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 }
