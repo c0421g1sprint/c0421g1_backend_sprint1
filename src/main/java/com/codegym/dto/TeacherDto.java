@@ -19,7 +19,6 @@ import java.sql.Date;
 @AllArgsConstructor
 public class TeacherDto {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer teacherId;
     private String teacherName;
     private Byte teacherGender;

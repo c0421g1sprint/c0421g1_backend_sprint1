@@ -1,5 +1,4 @@
 package com.codegym.rest_controller;
-
 import com.codegym.dto.ClassroomDto;
 import com.codegym.dto.StudentDto;
 import com.codegym.entity.about_classroom.Classroom;
@@ -16,7 +15,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -68,7 +66,7 @@ public class ClassroomController {
     //check ok : 27/10 - 9:55
     @PatchMapping("/edit")
     public ResponseEntity<?> updateClass(@RequestBody ClassroomDto classroomDto) {
-        Set<StudentDto> studentList = classroomDto.getStudents();
+        Set<Student> studentList = classroomDto.getStudents();
 
         if (classroomDto.getTeacher() != null){
             this.classroomService.updateSchoolYear(classroomDto.getClassroomSchoolYear(),
@@ -77,7 +75,7 @@ public class ClassroomController {
         }
 
         if (studentList != null) {
-            for (StudentDto student : studentList) {
+            for (Student student : studentList) {
                 this.studentService.updateClassForStudent(classroomDto.getClassroomId(), student.getStudentId());
             }
         }
@@ -165,12 +163,12 @@ public class ClassroomController {
         String name = classroomDto.getClassroomName();
         String schoolYear = classroomDto.getClassroomSchoolYear();
         Integer teacherId = classroomDto.getTeacher().getTeacherId();
-        Set<StudentDto> studentDtoSet = classroomDto.getStudents();
+        Set<Student> studentDtoSet = classroomDto.getStudents();
         // angurlar-service: làm sao để add studentSet vào class? -->TS: classroom =  getFormValue --> classroom.setStudents = hashset<Student>?
         //Chuyển StudentDto-> Student
         if (studentDtoSet != null){
             Set<Student> studentSet = new HashSet<>();
-            for (StudentDto item : studentDtoSet) {
+            for (Student item : studentDtoSet) {
                 Student student = new Student();
                 BeanUtils.copyProperties(item, student);
                 studentSet.add(student);

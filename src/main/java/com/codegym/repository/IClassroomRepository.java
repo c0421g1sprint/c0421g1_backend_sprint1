@@ -50,7 +50,7 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
     //creator: HaNTT merge DanhNT, date: 23/10/2021  (check class Duplicate)
     @Query(value="select classroom_id, classroom_name, classroom_school_year, delete_flag, grade_id, teacher_id\n" +
             "from classroom\n" +
-            "where (classroom_name = ?1 or classroom_name = ?2 ) and classroom_school_year = ?3",
+            "where (classroom_name = ?1 or classroom_name = ?2) and  classroom_school_year = ?3",
             nativeQuery = true)
     Classroom findClassByNameAndSchoolYear(String firstName,String secondName, String schoolYear);
 

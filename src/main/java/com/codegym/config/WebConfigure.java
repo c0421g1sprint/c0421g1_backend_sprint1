@@ -34,7 +34,7 @@ public class WebConfigure extends WebSecurityConfigurerAdapter {
         http.csrf().disable().formLogin().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().authorizeRequests().antMatchers("/api/public/**").permitAll()
-            .and().authorizeRequests().anyRequest().authenticated();
+            .and().authorizeRequests().anyRequest().permitAll();
         http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
     }
 

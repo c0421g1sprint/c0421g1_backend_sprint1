@@ -1,12 +1,10 @@
 package com.codegym.entity.about_news;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table
 public class News {
 
     @Id
