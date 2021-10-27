@@ -34,7 +34,7 @@ public interface IMarkRepository extends JpaRepository<Mark, Integer> {
 
 
 //  MinhNN 27/10
-    @Query(value = "SELECT *\n" +
+    @Query(value = "SELECT mark.mark_id, mark.mark_point_number1, mark.mark_point_number2, mark.mark_point_number3, s.student_id, sb.subject_id\n" +
             "FROM mark\n" +
             "JOIN student s on mark.student_id = s.student_id\n" +
             "JOIN subject sb on mark.subject_id = sb.subject_id\n" +

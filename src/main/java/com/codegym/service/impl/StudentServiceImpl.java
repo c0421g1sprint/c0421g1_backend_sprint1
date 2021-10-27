@@ -55,4 +55,8 @@ public class StudentServiceImpl implements IStudentService {
         return this.studentRepository.searchStudent(pageable, "%" + inforStudent + "%");
     }
 
+    //    search Student by Nhật
+    public Page<Student> findSearch(Pageable pageable, String name, String status) {
+        return studentRepository.findSearch(pageable,"%"+name+"%","%"+status+"%");
+    }
 }

@@ -131,4 +131,15 @@ public class StudentController {
         }
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
+
+    // Hàm search by Nhật
+    @GetMapping("/search")
+    public ResponseEntity<Page<Student>> searchByName(@PageableDefault(value = 1) Pageable pageable, @RequestParam String name, @RequestParam String status) {
+        Page<Student> studentList = studentService.findSearch(pageable, name, status);
+        if (studentList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(studentList, HttpStatus.OK);
+
+    }
 }

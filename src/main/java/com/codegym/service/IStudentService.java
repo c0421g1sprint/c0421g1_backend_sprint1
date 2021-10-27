@@ -18,4 +18,5 @@ public interface IStudentService{
     //    Diệp search student ngày 25/10
     Page<Student> searchStudent(Pageable pageable, String inforStudent);
 
+    Page<Student> findSearch(Pageable pageable, String name, String status);
 }
