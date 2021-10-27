@@ -1,25 +1,25 @@
-package com.codegym.entity.about_teacher;
+package com.codegym.DTO;
 
+import com.codegym.entity.about_teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
-@Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Division {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DivisionDto {
+
     private Integer divisionId;
     private String divisionName;
-    @JsonBackReference(value = "teacher_division")
-    @OneToMany(mappedBy = "division")
     private Set<Teacher> teachers;
 }
