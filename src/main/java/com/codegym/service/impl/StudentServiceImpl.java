@@ -17,7 +17,6 @@ public class StudentServiceImpl implements IStudentService {
     public Student getById(int id) {
         return studentRepository.getStudentById(id);
     }
-
     @Override
     public Student deleteById(int id) {
         Student student = getById(id);
@@ -48,6 +47,4 @@ public class StudentServiceImpl implements IStudentService {
                 student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(), student.getStudentName(),
                 student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentId());
     }
-
-
 }
