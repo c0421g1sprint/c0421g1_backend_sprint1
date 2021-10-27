@@ -5,7 +5,6 @@ import com.codegym.dto.StudentDto;
 import com.codegym.entity.about_classroom.Classroom;
 import com.codegym.entity.about_student.Mark;
 import com.codegym.entity.about_student.Student;
-import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.IClassroomService;
 import com.codegym.service.IStudentService;
 import com.codegym.service.ITeacherService;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/classroom")
 public class ClassroomController {
 
@@ -68,17 +66,19 @@ public class ClassroomController {
     //DanhNT - coding controller for edit class information
     //check ok
     //check ok : 27/10 - 9:55
-    @PutMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateClass(@RequestBody Classroom classroom) {
-        Set<Student> studentList = classroom.getStudents();
+    @PatchMapping("/edit")
+    public ResponseEntity<?> updateClass(@RequestBody ClassroomDto classroomDto) {
+        Set<StudentDto> studentList = classroomDto.getStudents();
 
-        this.classroomService.updateSchoolYear(classroom.getClassroomSchoolYear(),
-                classroom.getTeacher().getTeacherId(),
-                classroom.getClassroomId());
+        if (classroomDto.getTeacher() != null){
+            this.classroomService.updateSchoolYear(classroomDto.getClassroomSchoolYear(),
+                    classroomDto.getTeacher().getTeacherId(),
+                    classroomDto.getClassroomId());
+        }
 
         if (studentList != null) {
-            for (Student student : studentList) {
-                this.studentService.updateClassForStudent(classroom.getClassroomId(), student.getStudentId());
+            for (StudentDto student : studentList) {
+                this.studentService.updateClassForStudent(classroomDto.getClassroomId(), student.getStudentId());
             }
         }
 
@@ -88,8 +88,8 @@ public class ClassroomController {
     //DanhNT - coding controller for promote
     //check ok : 27/10 - 9:55
     @PutMapping(value = "/promote")
-    public ResponseEntity<?> promoteClass(@RequestBody Classroom classroom) {
-        Classroom newClassroom = this.classroomService.getById(classroom.getClassroomId());
+    public ResponseEntity<?> promoteClass(@RequestBody ClassroomDto classroomDto) {
+        Classroom newClassroom = this.classroomService.getById(classroomDto.getClassroomId());
         if (newClassroom != null) {
             String currentName = newClassroom.getClassroomName();
             String[] promoteName = newClassroom.getClassroomName().split("");
@@ -168,21 +168,23 @@ public class ClassroomController {
         Set<StudentDto> studentDtoSet = classroomDto.getStudents();
         // angurlar-service: làm sao để add studentSet vào class? -->TS: classroom =  getFormValue --> classroom.setStudents = hashset<Student>?
         //Chuyển StudentDto-> Student
-        Set<Student> studentSet = new HashSet<>();
-        for (StudentDto item : studentDtoSet) {
-            Student student = new Student();
-            BeanUtils.copyProperties(item, student);
-            studentSet.add(student);
+        if (studentDtoSet != null){
+            Set<Student> studentSet = new HashSet<>();
+            for (StudentDto item : studentDtoSet) {
+                Student student = new Student();
+                BeanUtils.copyProperties(item, student);
+                studentSet.add(student);
+            }
+            //lưu class trước (return Integer/void)
+            Integer newClassroomStatus = this.classroomService.saveClassRoom(name, schoolYear, 1, teacherId, false);
+            //lấy lại classId:
+            Integer classroomId = this.classroomService.findClassByNameAndSchoolYear(name, name, schoolYear).getClassroomId();
+            System.err.println("classId khi lưu class: " + classroomId);
+            //set class cho List student đã chọn
+            for (Student student : studentSet) {
+                this.studentService.updateClassForStudent(classroomId, student.getStudentId());
+            }
         }
-        //lưu class trước (return Integer/void)
-        Integer newClassroomStatus = this.classroomService.saveClassRoom(name, schoolYear, 1, teacherId, false);
-        //lấy lại classId:
-        Integer classroomId = this.classroomService.findClassByNameAndSchoolYear(name, name, schoolYear).getClassroomId();
-        System.err.println("classId khi lưu class: " + classroomId);
-        //set class cho List student đã chọn
-        for (Student student : studentSet) {
-            this.studentService.updateClassForStudent(classroomId, student.getStudentId());
-        }
-        return new ResponseEntity<>(newClassroomStatus, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,11 +1,6 @@
 package com.codegym.entity.about_account;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,8 +11,8 @@ public class Role {
     private Integer roleId;
     private String roleName;
 
+    @JsonBackReference(value = "role_account")
     @ManyToMany(mappedBy = "roles")
-    @JsonBackReference
     private Set<Account> accounts;
 
     public Integer getRoleId() {

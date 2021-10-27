@@ -5,8 +5,8 @@ import com.codegym.repository.ITeacherRepository;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
 
 @Service
 public class TeacherServiceImpl implements ITeacherService {

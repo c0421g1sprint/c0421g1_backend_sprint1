@@ -7,22 +7,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+
 
 @Repository
 @Transactional
 public interface IClassroomRepository extends JpaRepository<Classroom, Integer> {
 
-    // DanhNT coding 5:00PM
-    @Modifying
-    @Query(value = "select c.classroom_id, c.classroom_name, c.classroom_school_year, c.delete_flag, c.grade_id, c.teacher_id\n" +
-            "from classroom c\n" +
-            "join teacher t on t.teacher_id = c.teacher_id\n" +
-            "where c.delete_flag = false;", nativeQuery = true)
-    List<Classroom> findAllList();
+
+    //QuanTA && TaiNP
+    @Query(value = "select classroom_id,classroom_name,classroom_school_year,delete_flag,grade_id,teacher_id " +
+            "from classroom where delete_flag = false",nativeQuery = true)
+    List<Classroom> findAllClassroomExist();
+
 
     // DanhNT coding 5:00PM
     @Query(value = "select c.classroom_id, c.classroom_name, c.classroom_school_year, c.delete_flag, c.grade_id, c.teacher_id\n" +
@@ -69,4 +68,5 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
             "values (?1,?2,?3,?4,?5);",
             nativeQuery = true)
     Integer saveClassRoom(String name, String schoolYear, Integer gradeId,Integer teacherId, boolean deleteFlag);
+
 }

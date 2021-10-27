@@ -22,13 +22,13 @@ public class ClassroomDto {
 
     private String classroomSchoolYear;
 
-    private GradeDto grade;
+    private com.codegym.dto.GradeDto grade;
 
     private boolean deleteFlag;
 
-    private TeacherDto teacher;
+    private com.codegym.dto.TeacherDto teacher;
 
-    private Set<StudentDto> students;
+    private Set<com.codegym.dto.StudentDto> students;
 
-    private ScheduleDto schedule;
+    private com.codegym.dto.ScheduleDto schedule;
 }

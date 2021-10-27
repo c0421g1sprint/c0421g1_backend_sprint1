@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -15,11 +14,13 @@ public class ClassroomServiceImpl implements IClassroomService {
     @Autowired
     private IClassroomRepository classroomRepository;
 
-    //DanhNT coding 2:00PM - 23-10-2021
+    //TaiNP && QuanTA
+    //search method search Classroom exists
     @Override
-    public List<Classroom> findAll() {
-        return this.classroomRepository.findAllList();
+    public List<Classroom> findAllClassroomExist() {
+        return this.classroomRepository.findAllClassroomExist();
     }
+
 
     //DanhNT coding 2:00PM - 23-10-2021
     @Override
