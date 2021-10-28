@@ -66,7 +66,7 @@ public class ScheduleController {
 
     //QuanTA 22/10 10h:46 api update schedule detail
     @PutMapping(value = "/schedule-update")
-    public ResponseEntity<?> updateScheduleDetail(@RequestBody List<ScheduleSubjectDto> scheduleSubjectDtoList) {
+    public ResponseEntity<Void> updateScheduleDetail(@RequestBody List<ScheduleSubjectDto> scheduleSubjectDtoList) {
         for (ScheduleSubjectDto n : scheduleSubjectDtoList){
             scheduleService.updateSchedule(n.getSubjectId(),n.getScheduleDetailId());
         }

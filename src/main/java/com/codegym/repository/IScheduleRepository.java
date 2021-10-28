@@ -1,6 +1,6 @@
 package com.codegym.repository;
 
-import com.codegym.entity.about_schedule.Schedule;
+
 import com.codegym.entity.about_schedule.ScheduleDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 @Transactional
 public interface IScheduleRepository extends JpaRepository<ScheduleDetail, Integer> {
-    //    List<Schedule> findAllByScheduleId(Integer scheduleId);
     // QuanTA coding query find classs room dang ton tai 27/10/2021
 
     @Query(value = "select schedule_detail_id, sd.schedule_id, sd.subject_id, sd.study_day_time_id\n" +
