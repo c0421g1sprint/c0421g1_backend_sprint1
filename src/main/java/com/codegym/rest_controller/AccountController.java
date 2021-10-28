@@ -3,13 +3,15 @@ package com.codegym.rest_controller;
 import com.codegym.dto.AccountDto;
 import com.codegym.dto.EditPasswordAccountDto;
 import com.codegym.dto.LoginRequestDto;
-import com.codegym.emailJava.ConfirmService;
+import com.codegym.email_java.ConfirmService;
 import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_account.AccountDetails;
-import com.codegym.jwtToken.JwtProvider;
-import com.codegym.jwtToken.ResponseToken;
+import com.codegym.jwt_token.JwtProvider;
+import com.codegym.jwt_token.ResponseToken;
 import com.codegym.service.IAccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -37,6 +39,8 @@ import java.util.Map;
 @RequestMapping("/api/public")
 public class AccountController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -53,13 +57,13 @@ public class AccountController {
     private ConfirmService confirmService;
 
     @GetMapping("/info")
-    public ResponseEntity<?> test() {
+    public ResponseEntity<String> test() {
         return new ResponseEntity<>("TEST", HttpStatus.OK);
     }
 
     //    Kiet login API use to authentication by HttpBasic 23/10
     @PostMapping("/login")
-    public ResponseEntity<?> loginAccount(@Valid @RequestBody LoginRequestDto loginRequestDto, BindingResult bindingResult) {
+    public ResponseEntity<ResponseToken> loginAccount(@Valid @RequestBody LoginRequestDto loginRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -88,14 +92,14 @@ public class AccountController {
                 tokenResponse.put("refreshToken", token);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokenResponse);
             } catch (Exception ex) {
-                System.out.println("Message log{}" + ex.getMessage());
+                LOGGER.error(ex.getMessage());
             }
         }
     }
 
 //    Kiet login register account 26/10
     @GetMapping("/register")
-    public ResponseEntity<?> sendLinkRegisterByEmail(@Valid @RequestBody AccountDto accountDto, BindingResult bindingResult){
+    public ResponseEntity<String> sendLinkRegisterByEmail(@Valid @RequestBody AccountDto accountDto, BindingResult bindingResult){
         if (bindingResult.hasFieldErrors()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -104,14 +108,13 @@ public class AccountController {
             BeanUtils.copyProperties(accountDto, account);
             this.accountService.signUp(account);
         }catch (Exception ex){
-            System.out.println(ex.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/confirm")
-    public ResponseEntity<?> confirm(@RequestParam(value = "token") String token) {
+    public ResponseEntity<String> confirm(@RequestParam(value = "token") String token) {
         try {
             confirmService.confirmEmailWithToken(token);
         } catch (Exception e) {
@@ -122,7 +125,7 @@ public class AccountController {
 
     //HauPT do editPassword function
     @PatchMapping("/editPass")
-    public ResponseEntity<?> editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
+    public ResponseEntity editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
         Account account = accountService.getAccountById(editPasswordAccountDto.getAccountId());
         if (!account.getAccountPassword().equals(editPasswordAccountDto.getOldPassword()) || bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

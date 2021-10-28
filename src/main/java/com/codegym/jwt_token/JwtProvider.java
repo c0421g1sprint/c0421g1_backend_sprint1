@@ -1,4 +1,4 @@
-package com.codegym.jwtToken;
+package com.codegym.jwt_token;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 public class JwtProvider {
 
-    private final String secretKey = "C0421G1";
+    private static final String SECRET_KEY = "C0421G1";
     // Generate Tokens Method
     public String generateToken(UserDetails userDetail){
         String[] authorizationAccount = getAuthorizationAccount(userDetail);
@@ -27,7 +27,7 @@ public class JwtProvider {
                 .withSubject(userDetail.getUsername())
                 .withArrayClaim("authorization", authorizationAccount)
                 .withExpiresAt(new Date(System.currentTimeMillis()+ 30*60*1000))
-                .sign(Algorithm.HMAC512(secretKey));
+                .sign(Algorithm.HMAC512(SECRET_KEY));
     }
 
     private String[] getAuthorizationAccount(UserDetails userDetail) {
@@ -42,7 +42,7 @@ public class JwtProvider {
     private JWTVerifier getVerifier(){
         JWTVerifier verifier;
         try {
-            Algorithm algorithm = Algorithm.HMAC512(secretKey);
+            Algorithm algorithm = Algorithm.HMAC512(SECRET_KEY);
             verifier = JWT.require(algorithm).withIssuer("CODE_GYM").build();
         }catch (JWTVerificationException exception){
             throw new JWTVerificationException("Can not verifier");

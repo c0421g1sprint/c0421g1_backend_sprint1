@@ -1,9 +1,16 @@
 package com.codegym.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+@Getter
+@Setter
+@ToString
 public class AccountDto {
     @NotBlank
     @NotNull
@@ -13,43 +20,8 @@ public class AccountDto {
     private String accountPassword;
     @Pattern(regexp = "^[a-zA-Z0-9]+\\@[a-z]+\\.[a-z]+$")
     private String email;
-    private final boolean activated_flag = false;
-    private final boolean lock_flag = true;
-    private final boolean delete_flag = false;
+    private static final boolean IS_ACTIVE = false;
+    private static final boolean IS_NOT_LOCK = true;
+    private static final boolean IS_DELETE = false;
 
-    public String getAccountUsername() {
-        return accountUsername;
-    }
-
-    public void setAccountUsername(String accountUsername) {
-        this.accountUsername = accountUsername;
-    }
-
-    public String getAccountPassword() {
-        return accountPassword;
-    }
-
-    public void setAccountPassword(String accountPassword) {
-        this.accountPassword = accountPassword;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean isActivated_flag() {
-        return activated_flag;
-    }
-
-    public boolean isLock_flag() {
-        return lock_flag;
-    }
-
-    public boolean isDelete_flag() {
-        return delete_flag;
-    }
 }

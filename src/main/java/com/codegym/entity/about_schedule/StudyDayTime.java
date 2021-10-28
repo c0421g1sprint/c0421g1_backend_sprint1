@@ -1,14 +1,12 @@
 package com.codegym.entity.about_schedule;
 
-import com.codegym.entity.about_student.Mark;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -16,7 +14,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudyDayTime {
+public class StudyDayTime implements Serializable {
     @Id
     private String studyDayTimeId;
     private String studyDayTimeStudyTime;

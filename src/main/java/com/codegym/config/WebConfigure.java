@@ -1,6 +1,6 @@
 package com.codegym.config;
 
-import com.codegym.jwtToken.JwtFilterRequest;
+import com.codegym.jwt_token.JwtFilterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,7 +38,7 @@ public class WebConfigure extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
     }
 
-
+    @Override
     @Bean
     protected AuthenticationManager authenticationManager () throws Exception {
         return super.authenticationManager();

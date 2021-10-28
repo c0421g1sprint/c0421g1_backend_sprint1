@@ -3,7 +3,6 @@ package com.codegym.entity.about_account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -42,7 +41,7 @@ public class AccountDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return this.account.isLock_flag();
+        return this.account.isNotBlock();
     }
 
     @Override
@@ -52,6 +51,6 @@ public class AccountDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.account.isActivated_flag();
+        return this.account.isActive();
     }
 }
