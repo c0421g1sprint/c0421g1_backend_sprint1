@@ -35,7 +35,6 @@ public class TeacherController {
     @GetMapping("/search")
     public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 2) Pageable pageable,
                                                           @RequestParam(required = false) String search) {
-//        Page<Teacher> teachers = teacherService.searchTeacher(pageable, teacherId, teacherName, teacherGender, teacherDateOfBirth, teacherPhone, teacherAddress);
         Page<Teacher> teachers = teacherService.searchTeacher(pageable, search);
 
         if (teachers.isEmpty()) {

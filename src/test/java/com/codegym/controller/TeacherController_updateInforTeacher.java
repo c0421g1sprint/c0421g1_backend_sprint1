@@ -43,15 +43,15 @@ public class TeacherController_updateInforTeacher {
 
         Account account = new Account();
         account.setAccountId(1);
-        teacherDto.setAccount(account);
+//        teacherDto.setAccount(account);
 
         Division division = new Division();
         division.setDivisionId(1);
-        teacherDto.setDivision(division);
+//        teacherDto.setDivision(division);
 
         Degree degree = new Degree();
         degree.setDegreeId(1);
-        teacherDto.setDegree(degree);
+//        teacherDto.setDegree(degree);
 
         teacherDto.setTeacherId(6);
 
@@ -79,15 +79,15 @@ public class TeacherController_updateInforTeacher {
 
         Account account = new Account();
         account.setAccountId(1);
-        teacherDto.setAccount(account);
+//        teacherDto.setAccount(account);
 
         Division division = new Division();
         division.setDivisionId(1);
-        teacherDto.setDivision(division);
+//        teacherDto.setDivision(division);
 
         Degree degree = new Degree();
         degree.setDegreeId(1);
-        teacherDto.setDegree(degree);
+//        teacherDto.setDegree(degree);
 
         teacherDto.setTeacherId(1);
         this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
@@ -113,15 +113,15 @@ public class TeacherController_updateInforTeacher {
 
         Account account = new Account();
         account.setAccountId(1);
-        teacherDto.setAccount(account);
+//        teacherDto.setAccount(account);
 
         Division division = new Division();
         division.setDivisionId(1);
-        teacherDto.setDivision(division);
+//        teacherDto.setDivision(division);
 
         Degree degree = new Degree();
         degree.setDegreeId(1);
-        teacherDto.setDegree(degree);
+//        teacherDto.setDegree(degree);
 
         teacherDto.setTeacherId(1);
         this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
@@ -147,15 +147,15 @@ public class TeacherController_updateInforTeacher {
 
         Account account = new Account();
         account.setAccountId(1);
-        teacherDto.setAccount(account);
+//        teacherDto.setAccount(account);
 
         Division division = new Division();
         division.setDivisionId(1);
-        teacherDto.setDivision(division);
+//        teacherDto.setDivision(division);
 
         Degree degree = new Degree();
         degree.setDegreeId(1);
-        teacherDto.setDegree(degree);
+//        teacherDto.setDegree(degree);
 
         teacherDto.setTeacherId(1);
         this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
@@ -181,15 +181,15 @@ public class TeacherController_updateInforTeacher {
 
         Account account = new Account();
         account.setAccountId(1);
-        teacherDto.setAccount(account);
+//        teacherDto.setAccount(account);
 
         Division division = new Division();
         division.setDivisionId(1);
-        teacherDto.setDivision(division);
+//        teacherDto.setDivision(division);
 
         Degree degree = new Degree();
         degree.setDegreeId(1);
-        teacherDto.setDegree(degree);
+//        teacherDto.setDegree(degree);
 
         teacherDto.setTeacherId(1);
 
@@ -216,15 +216,15 @@ public class TeacherController_updateInforTeacher {
 
         Account account = new Account();
         account.setAccountId(1);
-        teacherDto.setAccount(account);
+//        teacherDto.setAccount(account);
 
         Division division = new Division();
         division.setDivisionId(1);
-        teacherDto.setDivision(division);
+//        teacherDto.setDivision(division);
 
         Degree degree = new Degree();
         degree.setDegreeId(1);
-        teacherDto.setDegree(degree);
+//        teacherDto.setDegree(degree);
 
         teacherDto.setTeacherId(1);
         this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/teachers/updateInFor")
