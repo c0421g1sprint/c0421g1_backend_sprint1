@@ -11,9 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -78,7 +75,7 @@ public class ScheduleController_showScheduleTailByIdClass {
         ResponseEntity<List<ScheduleDetail>> listResponseEntity
                 = this.scheduleController.scheduleDetailClassroom(1);
 
-        Assertions.assertEquals(HttpStatus.OK, listResponseEntity.getStatusCode());
+        Assertions.assertEquals(HttpStatus.ACCEPTED, listResponseEntity.getStatusCode());
 
         List<ScheduleDetail> scheduleDetailList = listResponseEntity.getBody();
 
@@ -89,32 +86,32 @@ public class ScheduleController_showScheduleTailByIdClass {
     public void showListClass_5() {
         ResponseEntity<List<Classroom>> pageResponseEntity
                 = this.scheduleController.showListClassroomExist();
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, pageResponseEntity.getStatusCode());
+        Assertions.assertEquals(HttpStatus.NOT_ACCEPTABLE, pageResponseEntity.getStatusCode());
     }
 
     @Test
     public void showListClass_6() {
         ResponseEntity<List<Classroom>> pageResponseEntity
                 = this.scheduleController.showListClassroomExist();
-        Assertions.assertEquals(HttpStatus.OK, pageResponseEntity.getStatusCode());
+        Assertions.assertEquals(HttpStatus.ACCEPTED, pageResponseEntity.getStatusCode());
 
         List<Classroom> classrooms = pageResponseEntity.getBody();
 
-        Assertions.assertEquals("1A1", classrooms.get(1).getClassroomName());
+        Assertions.assertEquals("Lớp 1A1", classrooms.get(0).getClassroomName());
     }
 
     @Test
     public void showListGrade_5() {
         ResponseEntity<List<Grade>> pageResponseEntity
                 = this.scheduleController.showListGrade();
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, pageResponseEntity.getStatusCode());
+        Assertions.assertEquals(HttpStatus.NOT_ACCEPTABLE, pageResponseEntity.getStatusCode());
     }
 
     @Test
     public void showListGrade_6() {
         ResponseEntity<List<Grade>> pageResponseEntity
                 = this.scheduleController.showListGrade();
-        Assertions.assertEquals(HttpStatus.OK, pageResponseEntity.getStatusCode());
+        Assertions.assertEquals(HttpStatus.ACCEPTED, pageResponseEntity.getStatusCode());
 
         List<Grade> grades = pageResponseEntity.getBody();
 

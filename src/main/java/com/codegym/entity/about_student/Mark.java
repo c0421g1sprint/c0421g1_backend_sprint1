@@ -1,7 +1,6 @@
 package com.codegym.entity.about_student;
 
 import com.codegym.entity.about_schedule.Subject;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

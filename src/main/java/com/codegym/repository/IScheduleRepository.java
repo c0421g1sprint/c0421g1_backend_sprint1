@@ -34,5 +34,4 @@ public interface IScheduleRepository extends JpaRepository<ScheduleDetail, Integ
             "SET subject_id=?1\n" +
             "WHERE schedule_id=?2;", nativeQuery = true)
     void updateSchedule(int updateValue, int idScheduleDetail);
-
 }

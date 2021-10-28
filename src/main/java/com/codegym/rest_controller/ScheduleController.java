@@ -83,4 +83,3 @@ public class ScheduleController {
         return new ResponseEntity<>(subjectList, HttpStatus.ACCEPTED);
     }
 }
-
