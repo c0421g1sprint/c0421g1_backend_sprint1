@@ -1,7 +1,7 @@
 package com.codegym.rest_controller;
 
 
-import com.codegym.DTO.TeacherDto;
+import com.codegym.dto.TeacherDto;
 import com.codegym.entity.about_teacher.Division;
 
 
@@ -36,7 +36,7 @@ public class TeacherController {
     @GetMapping("/search")
     public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 2) Pageable pageable,
                                                           @RequestParam(required = false) String search) {
-//        Page<Teacher> teachers = teacherService.searchTeacher(pageable, teacherId, teacherName, teacherGender, teacherDateOfBirth, teacherPhone, teacherAddress);
+
         Page<Teacher> teachers = teacherService.searchTeacher(pageable, search);
 
         if (teachers.isEmpty()) {
@@ -46,19 +46,6 @@ public class TeacherController {
     }
 
 
-
-
-    //chuc nang hien thi danh sach giao vien - LinhDN
-//    @GetMapping("/list")
-//    public ResponseEntity<Page<Teacher>> getTeacherList
-//    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable) {
-//        Page<Teacher> teacherList = teacherService.findAllTeacherByQuery(pageable);
-//        if (teacherList.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } else {
-//            return new ResponseEntity<>(teacherList, HttpStatus.OK);
-//        }
-//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Teacher> findTeacherById(@PathVariable int id) {

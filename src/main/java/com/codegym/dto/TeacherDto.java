@@ -1,12 +1,10 @@
-package com.codegym.DTO;
+package com.codegym.dto;
 
 
 
 import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_teacher.Degree;
 import com.codegym.entity.about_teacher.Division;
-
-import javax.validation.constraints.*;
 
 
 public class TeacherDto {
