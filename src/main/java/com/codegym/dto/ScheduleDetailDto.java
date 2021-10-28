@@ -1,4 +1,4 @@
-package com.codegym.DTO;
+package com.codegym.dto;
 
 import com.codegym.entity.about_schedule.Schedule;
 import com.codegym.entity.about_schedule.StudyDayTime;

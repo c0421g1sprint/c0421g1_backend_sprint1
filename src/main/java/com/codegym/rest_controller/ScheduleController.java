@@ -1,7 +1,6 @@
 package com.codegym.rest_controller;
 
-import com.codegym.DTO.ScheduleDetailDto;
-import com.codegym.DTO.ScheduleSubjectDto;
+import com.codegym.dto.ScheduleSubjectDto;
 import com.codegym.entity.about_classroom.Classroom;
 import com.codegym.entity.about_classroom.Grade;
 import com.codegym.entity.about_schedule.ScheduleDetail;
@@ -10,17 +9,12 @@ import com.codegym.service.IClassroomService;
 import com.codegym.service.IGradeService;
 import com.codegym.service.IScheduleService;
 import com.codegym.service.ISubjectService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*",allowedHeaders = "*")

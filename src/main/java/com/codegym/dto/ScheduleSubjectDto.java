@@ -1,4 +1,4 @@
-package com.codegym.DTO;
+package com.codegym.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
