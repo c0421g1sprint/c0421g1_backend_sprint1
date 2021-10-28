@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface ITeacherService {
 
 
-
     Page<Teacher> findAllTeacherByQuery(Pageable pageable);
     Teacher findTeacherByIdByQuery(int id);
     Page<Teacher> findAllTeacherByQueryWithName(Pageable pageable, String name);

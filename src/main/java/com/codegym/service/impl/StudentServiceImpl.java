@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+
 
 @Service
 public class StudentServiceImpl implements IStudentService {
@@ -21,7 +21,9 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public Optional<Student> getListStudentDetail(Integer id) {
-        return studentRepository.getListStudentDetail(id);
+    public Student getStudentDetail(Integer id) {
+        return studentRepository.getStudentDetail(id);
     }
+
+
 }
