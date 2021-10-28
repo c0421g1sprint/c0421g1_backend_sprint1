@@ -1,7 +1,9 @@
 package com.codegym.rest_controller;
+
 import com.codegym.dto.TeacherDto;
 import com.codegym.dto.TeacherUpdateDto;
 import com.codegym.entity.about_schedule.ScheduleDetail;
+import com.codegym.entity.about_teacher.Degree;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.IScheduleDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,15 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 import com.codegym.entity.about_student.Student;
 import com.codegym.service.IStudentService;
 import org.springframework.data.domain.Page;
+
 import java.util.Optional;
+
 import com.codegym.entity.about_teacher.Division;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.BeanUtils;
@@ -56,7 +62,7 @@ public class TeacherController {
     //PhucNK danh sach hoc sinh ma giao vien chu nhiem
     @GetMapping(value = "/list/{id}")
     public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 1) Pageable pageable, @PathVariable Optional<Integer> id) {
-        if(id == null){
+        if (id == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Page<Student> studentList = iStudentService.getListStudent(pageable, id.get());
@@ -70,7 +76,7 @@ public class TeacherController {
 
     //PhucNK xem chi tiet hoc sinh
     @GetMapping(value = "/detail/{id}")
-    public ResponseEntity<Student> getListStudentDetail( @PathVariable(required = false) Integer id) {
+    public ResponseEntity<Student> getListStudentDetail(@PathVariable(required = false) Integer id) {
         Student studentDetail = iStudentService.getListStudentDetail(id);
         if (studentDetail == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -164,7 +170,7 @@ public class TeacherController {
 
     // chức năng  cập nhập  - BaoHG
     @RequestMapping(value = "/update", method = RequestMethod.PATCH)
-    public ResponseEntity<?> updateTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult
+    public ResponseEntity<Teacher> updateTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult
             bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -187,11 +193,21 @@ public class TeacherController {
             return new ResponseEntity<>(divisionList, HttpStatus.OK);
         }
     }
+    // BaoHG
+    @GetMapping("/listDegree")
+    public ResponseEntity<List<Degree>> getDegreeList() {
+        List<Degree> divisionList = this.teacherService.findAllDegreeByQuery();
+        if (divisionList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(divisionList, HttpStatus.OK);
+        }
+    }
 
     //goi ra danh sach giao vien dua vao tu khoa tim kiem va phong ban - LinhDN - 27/10
     @GetMapping("/list")
     public ResponseEntity<Page<Teacher>> getTeacherListWithKeyWordAndDivision
-    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(value = "name", required = false) String name,@RequestParam(value = "divisionId",required = false) Integer divisionId  ) {
+    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "divisionId", required = false) Integer divisionId) {
         Page<Teacher> teacherList = teacherService.findAllTeacherByQueryWithNameAndDivision(pageable, name, divisionId);
         if (teacherList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -212,6 +228,7 @@ public class TeacherController {
         }
         return new ResponseEntity<>(teacherList, HttpStatus.OK);
     }
+
 
 }
 
