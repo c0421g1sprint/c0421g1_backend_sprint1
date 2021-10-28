@@ -1,5 +1,4 @@
 package com.codegym.rest_controller;
-
 import com.codegym.dto.ScheduleSubjectDto;
 import com.codegym.entity.about_classroom.Classroom;
 import com.codegym.entity.about_classroom.Grade;
@@ -18,6 +17,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*",allowedHeaders = "*")
+
 @RequestMapping("/api/schedules")
 public class ScheduleController {
     // QuanTA
@@ -73,6 +73,7 @@ public class ScheduleController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // list subject QuanTA
     @GetMapping(value = "/subject")
     public ResponseEntity<List<Subject>> findAllSubject(){
         List<Subject> subjectList = this.subjectService.findAllSubject();
@@ -82,3 +83,4 @@ public class ScheduleController {
         return new ResponseEntity<>(subjectList, HttpStatus.ACCEPTED);
     }
 }
+

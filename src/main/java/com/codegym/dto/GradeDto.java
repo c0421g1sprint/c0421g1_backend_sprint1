@@ -1,26 +1,24 @@
-package com.codegym.entity.about_classroom;
+package com.codegym.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.codegym.entity.about_classroom.Classroom;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.util.Set;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Grade {
-    @Id
+public class GradeDto {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer gradeId;
     private String gradeName;
 
-    @JsonBackReference(value = "classroom_grade")
-    @OneToMany(mappedBy = "grade")
     private Set<Classroom> classrooms;
 }

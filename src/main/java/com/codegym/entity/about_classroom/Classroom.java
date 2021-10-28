@@ -25,23 +25,22 @@ public class Classroom {
     private String classroomName;
     private String classroomSchoolYear;
 
-    @JsonManagedReference
     @ManyToOne(targetEntity = Grade.class)
     @JoinColumn(name = "grade_id", referencedColumnName = "gradeId")
     private Grade grade;
 
     private boolean deleteFlag;
 
-    @JsonBackReference
+    @JsonBackReference(value = "teacher_classroom")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacherId")
     private Teacher teacher;
 
-    @JsonBackReference
+    @JsonBackReference(value = "student_classroom")
     @OneToMany(mappedBy = "classroom")
     private Set<Student> students;
 
-    @JsonBackReference
+    @JsonBackReference(value = "schedule_classroom")
     @OneToOne(mappedBy = "classroom")
     private Schedule schedule;
 }

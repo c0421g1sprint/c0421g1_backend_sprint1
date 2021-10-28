@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class GradeServiceImpl implements IGradeService {
+
     @Autowired
     IGradeRepository gradeRepository;
 
+    //TaiNP && QuanTA
     @Override
     public List<Grade> findAllGrade() {
-        return gradeRepository.findAllGrade();
+        return this.gradeRepository.findAllGrade();
     }
 }

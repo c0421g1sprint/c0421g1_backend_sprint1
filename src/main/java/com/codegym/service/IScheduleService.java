@@ -5,7 +5,14 @@ import com.codegym.entity.about_schedule.ScheduleDetail;
 import java.util.List;
 
 public interface IScheduleService {
-    ScheduleDetail save (ScheduleDetail scheduleDetail);
+
+    //TaiNP && QuanTA
+    ScheduleDetail save(ScheduleDetail scheduleDetail);
+
+    //TaiNP && QuanTA
     List<ScheduleDetail> findScheduleDetailByClassroomId(Integer classroomId);
-    void updateSchedule (Integer subjectId, Integer scheduleDId);
+
+
+    //TaiNP && QuanTA
+    void updateSchedule(Integer updateValue, Integer idScheduleDetail);
 }

@@ -20,12 +20,12 @@ public class Mark {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer markId;
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @ManyToOne(targetEntity = Student.class)
     @JoinColumn(name = "student_id",referencedColumnName = "studentId")
     private Student student;
 
-    @JsonManagedReference
+//    @JsonManagedReference
 //    @JsonBackReference
     @ManyToOne(targetEntity = Subject.class)
     @JoinColumn(name = "subject_id",referencedColumnName = "subjectId")
