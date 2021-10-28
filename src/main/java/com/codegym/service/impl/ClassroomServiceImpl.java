@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -49,14 +50,14 @@ public class ClassroomServiceImpl implements IClassroomService {
 
     //Danh coding 10:PM - 25-10-2021
     @Override
-    public void updateClassNameAfterPromote(String newName, Integer classId) {
-        this.classroomRepository.updateClassNameAfterPromote(newName, classId);
+    public void updateClassNameAfterPromote(String newName, Integer gradeId, Integer classId) {
+        this.classroomRepository.updateClassNameAfterPromote(newName, gradeId, classId);
     }
 
     //creator: HaNTT, date: 23/10/2021  (tạo mới)
     @Override
-    public Integer saveClassRoom(String name, String schoolYear,Integer teacherId) {
-        return classroomRepository.saveClassRoom(name, schoolYear,teacherId);
+    public Integer saveClassRoom(String name, String schoolYear, Integer teacherId) {
+        return classroomRepository.saveClassRoom(name, schoolYear, teacherId);
     }
 
 }

@@ -19,11 +19,11 @@ public interface IClassroomService {
     Page<Classroom> findAllPage(Pageable pageable);
 
     //creator: HaNTT, date: 23/10/2021  (check class Duplicate)
-    Classroom findClassByNameAndSchoolYear(String firstName,String secondName, String schoolYear);
+    Classroom findClassByNameAndSchoolYear(String firstName, String secondName, String schoolYear);
 
     //DanhNT coding 9:00 25-10-21
-    void updateClassNameAfterPromote(String newName, Integer classId);
+    void updateClassNameAfterPromote(String newName, Integer gradeId, Integer classId);
 
     //creator: HaNTT, date: 23/10/2021  (tạo mới)
-    Integer saveClassRoom(String name, String schoolYear,Integer teacherId);
+    Integer saveClassRoom(String name, String schoolYear, Integer teacherId);
 }

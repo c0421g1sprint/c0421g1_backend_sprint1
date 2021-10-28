@@ -136,7 +136,9 @@ public class ClassroomController {
                 }
             }
             this.classroomService.
-                    updateClassNameAfterPromote(newClassroom.getClassroomName(), newClassroom.getClassroomId());
+                    updateClassNameAfterPromote(newClassroom.getClassroomName(),
+                            newClassroom.getGrade().getGradeId(),
+                            newClassroom.getClassroomId());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -198,5 +200,15 @@ public class ClassroomController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PatchMapping("/delete")
+    public ResponseEntity<Integer> removeStudentFromClass(@RequestBody List<StudentDto> studentDtoList) {
+        if (studentDtoList != null) {
+            for (StudentDto student : studentDtoList) {
+                this.studentService.deleteStudentFromClass(student.getStudentId());
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 }

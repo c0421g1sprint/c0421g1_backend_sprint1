@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
 
     //QuanTA && TaiNP
     @Query(value = "select classroom_id,classroom_name,classroom_school_year,delete_flag,grade_id,teacher_id " +
-            "from classroom where delete_flag = false",nativeQuery = true)
+            "from classroom where delete_flag = false", nativeQuery = true)
     List<Classroom> findAllClassroomExist();
 
 
@@ -44,29 +45,29 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
             countQuery = "select count(*)\n" +
                     "from classroom c \n" +
                     "where c.delete_flag = false"
-            ,nativeQuery = true)
+            , nativeQuery = true)
     Page<Classroom> findAllPage(Pageable pageable);
 
     //creator: HaNTT merge DanhNT, date: 23/10/2021  (check class Duplicate)
-    @Query(value="select classroom_id, classroom_name, classroom_school_year, delete_flag, grade_id, teacher_id\n" +
+    @Query(value = "select classroom_id, classroom_name, classroom_school_year, delete_flag, grade_id, teacher_id\n" +
             "from classroom\n" +
             "where (classroom_name = ?1 or classroom_name = ?2) and  classroom_school_year = ?3",
             nativeQuery = true)
-    Classroom findClassByNameAndSchoolYear(String firstName,String secondName, String schoolYear);
+    Classroom findClassByNameAndSchoolYear(String firstName, String secondName, String schoolYear);
 
     //DanhNT coding update className
     @Modifying
     @Transactional
     @Query(value = "update classroom\n" +
-            "set classroom_name = ?1\n" +
-            "where classroom_id = ?2" , nativeQuery = true)
-    void updateClassNameAfterPromote(String newName, Integer classId);
+            "set classroom_name = ?1, grade_id = ?2\n" +
+            "where classroom_id = ?3,", nativeQuery = true)
+    void updateClassNameAfterPromote(String newName, Integer gradeId, Integer classId);
 
     //creator: HaNTT, date: 23/10/2021  (tạp lớp mới)
     @Modifying
-    @Query(value="INSERT INTO classroom(classroom_name, classroom_school_year, grade_id,teacher_id, delete_flag)\n" +
+    @Query(value = "INSERT INTO classroom(classroom_name, classroom_school_year, grade_id,teacher_id, delete_flag)\n" +
             "values (?1,?2,1,?3,false);",
             nativeQuery = true)
-    Integer saveClassRoom(String name, String schoolYear,Integer teacherId);
+    Integer saveClassRoom(String name, String schoolYear, Integer teacherId);
 
 }
