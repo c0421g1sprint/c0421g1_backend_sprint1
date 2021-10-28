@@ -1,5 +1,6 @@
 package com.codegym.service.impl;
 
+
 import com.codegym.entity.about_schedule.Subject;
 import com.codegym.repository.ISubjectRepository;
 import com.codegym.service.ISubjectService;
@@ -13,7 +14,6 @@ public class SubjectServiceImpl implements ISubjectService {
     @Autowired
     ISubjectRepository subjectRepository;
 
-//    MinhNN 27/10
     @Override
     public List<Subject> findAllSubject() {
         return subjectRepository.findAllSubject();

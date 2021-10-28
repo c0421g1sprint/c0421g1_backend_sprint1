@@ -5,8 +5,8 @@ import com.codegym.repository.IGradeRepository;
 import com.codegym.service.IGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
 
 @Service
 public class GradeServiceImpl implements IGradeService {
@@ -17,5 +17,13 @@ public class GradeServiceImpl implements IGradeService {
     @Override
     public List<Grade> findAll() {
         return gradeRepository.findAllGrade();
+    }
+
+
+    //TaiNP && QuanTA
+    @Override
+    public List<Grade> findAllGrade() {
+        return this.gradeRepository.findAllGrade();
+
     }
 }

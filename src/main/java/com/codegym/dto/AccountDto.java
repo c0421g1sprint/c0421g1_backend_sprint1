@@ -1,28 +1,55 @@
+
 package com.codegym.dto;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
-import com.codegym.entity.about_account.Role;
-import com.codegym.entity.about_teacher.Teacher;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.Set;
-
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class AccountDto {
-    private Integer accountId;
+    @NotBlank
+    @NotNull
     private String accountUsername;
+    @NotBlank
+    @NotNull
     private String accountPassword;
-    private String accountEmail;
-    private boolean activated_flag;
-    private boolean lock_flag;
-    private boolean delete_flag;
-    private Set<Role> roles;
-    private Teacher teacher;
+    @Pattern(regexp = "^[a-zA-Z0-9]+\\@[a-z]+\\.[a-z]+$")
+    private String email;
+    private final boolean activated_flag = false;
+    private final boolean lock_flag = true;
+    private final boolean delete_flag = false;
+
+    public String getAccountUsername() {
+        return accountUsername;
+    }
+
+    public void setAccountUsername(String accountUsername) {
+        this.accountUsername = accountUsername;
+    }
+
+    public String getAccountPassword() {
+        return accountPassword;
+    }
+
+    public void setAccountPassword(String accountPassword) {
+        this.accountPassword = accountPassword;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActivated_flag() {
+        return activated_flag;
+    }
+
+    public boolean isLock_flag() {
+        return lock_flag;
+    }
+
+    public boolean isDelete_flag() {
+        return delete_flag;
+    }
 }

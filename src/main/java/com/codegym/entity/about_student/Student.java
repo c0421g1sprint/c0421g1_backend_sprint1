@@ -39,6 +39,7 @@ public class Student {
     @JoinColumn(name = "classroom_id", referencedColumnName = "classroomId")
     private Classroom classroom;
 
+//    @JsonBackReference
     @JsonBackReference(value = "student_mark")
     @OneToMany(mappedBy = "student")
     private Set<Mark> marks;

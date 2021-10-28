@@ -1,11 +1,7 @@
 package com.codegym.rest_controller;
 
 import com.codegym.dto.MarkDto;
-import com.codegym.dto.StudentDTO;
-import com.codegym.dto.SubjectDto;
-import com.codegym.entity.about_schedule.Subject;
 import com.codegym.entity.about_student.Mark;
-import com.codegym.entity.about_student.Student;
 import com.codegym.service.IMarkService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")

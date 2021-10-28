@@ -1,6 +1,6 @@
 package com.codegym.rest_controller;
 
-import com.codegym.dto.StudentDTO;
+import com.codegym.dto.StudentDto;
 import com.codegym.entity.about_classroom.Classroom;
 import com.codegym.entity.about_classroom.Grade;
 import com.codegym.entity.about_student.Student;
@@ -11,13 +11,15 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.function.Function;
 
@@ -27,32 +29,34 @@ import java.util.function.Function;
 public class StudentController {
     @Autowired
     private IStudentService studentService;
+    
     @Autowired
     private IGradeService gradeService;
+    
     @Autowired
     private IClassroomService classroomService;
 
     //DungNM - Lấy danh sách học sinh của 1 lớp
     @GetMapping("/get-students-by-classroom-id")
-    public ResponseEntity<Page<StudentDTO>> getStudentsOfClassroom(@RequestParam String classId,@RequestParam String index, @RequestParam String size) {
+    public ResponseEntity<Page<StudentDto>> getStudentsOfClassroom(@RequestParam String classId, @RequestParam String index, @RequestParam String size) {
         try {
             int pageIndex = Integer.parseInt(index);
             int pageSize = Integer.parseInt(size);
             int classroomID = Integer.parseInt(classId);
             Pageable pageable = PageRequest.of(pageIndex, pageSize);
-            Page<Student> students = studentService.findByClassroom(classroomID, pageable);
+            Page<Student> students = studentService.findStudentsByClassroomId(classroomID, pageable);
             if (students.getContent().size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            Page<StudentDTO> studentDTOPage = students.map(new Function<Student, StudentDTO>() {
+            Page<StudentDto> StudentDtoPage = students.map(new Function<Student, StudentDto>() {
                 @Override
-                public StudentDTO apply(Student entity) {
-                    StudentDTO dto = new StudentDTO();
+                public StudentDto apply(Student entity) {
+                    StudentDto dto = new StudentDto();
                     BeanUtils.copyProperties(entity, dto);
                     return dto;
                 }
             });
-            return new ResponseEntity<>(studentDTOPage, HttpStatus.OK);
+            return new ResponseEntity<>(StudentDtoPage, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -61,15 +65,15 @@ public class StudentController {
 
     //DungNM - Xoá học sinh theo Id của học sinh
     @PatchMapping("/{id}")
-    public ResponseEntity<StudentDTO> deleteStudentById(@PathVariable String id) {
+    public ResponseEntity<StudentDto> deleteStudentById(@PathVariable String id) {
         try {
             int studentId = Integer.parseInt(id);
             Student studentDelete = studentService.deleteById(studentId);
             if (studentDelete == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             else {
-                StudentDTO studentDTO = new StudentDTO();
-                BeanUtils.copyProperties(studentDelete, studentDTO);
-                return new ResponseEntity<>(studentDTO, HttpStatus.OK);
+                StudentDto StudentDto = new StudentDto();
+                BeanUtils.copyProperties(studentDelete, StudentDto);
+                return new ResponseEntity<>(StudentDto, HttpStatus.OK);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -79,18 +83,18 @@ public class StudentController {
 
     //LamNT do createStudent function
     @PostMapping("/add")
-    public ResponseEntity<Integer> addStudent(@RequestBody @Validated StudentDTO studentDto) {
+    public ResponseEntity<Integer> addStudent(@RequestBody @Validated StudentDto StudentDto) {
         Student student = new Student();
-        BeanUtils.copyProperties(studentDto, student);
+        BeanUtils.copyProperties(StudentDto, student);
         studentService.saveStudent(student);
         return new ResponseEntity<>(student.getStudentId(), HttpStatus.CREATED);
     }
 
     //LamNT do editStudent function
     @PatchMapping("/edit")
-    public ResponseEntity<?> editStudent(@RequestBody @Validated StudentDTO studentDto) {
+    public ResponseEntity<?> editStudent(@RequestBody @Validated StudentDto StudentDto) {
         Student student = new Student();
-        BeanUtils.copyProperties(studentDto, student);
+        BeanUtils.copyProperties(StudentDto, student);
         studentService.editStudent(student);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
@@ -140,6 +144,27 @@ public class StudentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(studentList, HttpStatus.OK);
+    }
 
+    //create: HaNTT, date: 23/10/2021
+    @GetMapping("/find-student") //OK  (checkbox)
+    public ResponseEntity<Page<Student>> getStudentNotHaveClass(@PageableDefault(size = 5) Pageable pageable) {
+        Page<Student> studentList = this.studentService.findWhereClassroomIdNull(pageable);
+
+        if (studentList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(studentList, HttpStatus.OK);
+    }
+
+    //*Note : CẦN CHECK LẠI PHƯƠNG THỨC
+    //create: HaNTT, date: 23/10/2021 (add student to List)
+    @GetMapping("/find-student/{id}") //OK
+    public ResponseEntity<Student> getStudentById(@PathVariable Integer id) {
+        Student student = this.studentService.findStudentById(id);
+        if (student == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 }
