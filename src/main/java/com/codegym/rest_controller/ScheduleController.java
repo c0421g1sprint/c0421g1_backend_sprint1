@@ -48,14 +48,14 @@ public class ScheduleController {
     }
 
     //QuanTA 22/10 10h:46 api tra ve 1 list classroom dang ton tai
-    @GetMapping(value = "/classroom-exist")
-    public ResponseEntity<List<Classroom>> showListClassroomExist() {
-        List<Classroom> classroomList = this.classroomService.findAllClassroomExist();
-        if (classroomList == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
-        return new ResponseEntity<>(classroomList, HttpStatus.ACCEPTED);
-    }
+//    @GetMapping(value = "/classroom-exist")
+//    public ResponseEntity<List<Classroom>> showListClassroomExist() {
+//        List<Classroom> classroomList = this.classroomService.findAllClassroomExist();
+//        if (classroomList == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+//        }
+//        return new ResponseEntity<>(classroomList, HttpStatus.ACCEPTED);
+//    }
 
     //QuanTA 22/10 11h:27 api tra ve tkb cua 1 classroom
     @GetMapping(value = "/schedule-classroom/{id}")

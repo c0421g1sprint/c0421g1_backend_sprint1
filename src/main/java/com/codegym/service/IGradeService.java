@@ -8,4 +8,7 @@ public interface IGradeService {
     //TaiNP && QuanTA
     List<Grade> findAllGrade();
 
+    //DanhNT
+    Grade findGradeById(Integer gradeId);
+
 }

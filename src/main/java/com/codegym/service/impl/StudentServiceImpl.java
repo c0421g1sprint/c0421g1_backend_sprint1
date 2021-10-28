@@ -14,17 +14,15 @@ public class StudentServiceImpl implements IStudentService {
     @Autowired
     private IStudentRepository studentRepository;
     //Phuc
-    @Override
-    public Page<Student> getListStudent(Pageable pageable, Integer id) {
-        return studentRepository.getListStudent(pageable,id);
-
-
-    }
-    //Phuc
-    @Override
-    public Student getListStudentDetail(Integer id) {
-        return studentRepository.findStudentWhereId(id);
-    }
+//    @Override
+//    public Page<Student> getListStudent(Pageable pageable, Integer id) {
+//        return studentRepository.getListStudent(pageable,id);
+//    }
+//    //Phuc
+//    @Override
+//    public Student getListStudentDetail(Integer id) {
+//        return studentRepository.findStudentWhereId(id);
+//    }
 
     //Trùng code với chị Hà
     //Danh coding 2:00PM - 23-10-2021
@@ -57,10 +55,5 @@ public class StudentServiceImpl implements IStudentService {
        this.studentRepository.deleteStudentFromClass(id);
     }
 
-    //Trùng code với Danh dòng 20
-//      creator: HaNTT, date: 23/10/2021
-//    @Override
-//    public Integer setClassroomForNewStudent(Integer classRoomId, Integer studentId) {
-//        return studentRepository.setClassroomForNewStudent(classRoomId, studentId);
-//    }
+
 }

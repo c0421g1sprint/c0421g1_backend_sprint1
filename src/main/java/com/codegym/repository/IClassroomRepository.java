@@ -65,8 +65,8 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
     //creator: HaNTT, date: 23/10/2021  (tạp lớp mới)
     @Modifying
     @Query(value="INSERT INTO classroom(classroom_name, classroom_school_year, grade_id,teacher_id, delete_flag)\n" +
-            "values (?1,?2,?3,?4,?5);",
+            "values (?1,?2,1,?3,false);",
             nativeQuery = true)
-    Integer saveClassRoom(String name, String schoolYear, Integer gradeId,Integer teacherId, boolean deleteFlag);
+    Integer saveClassRoom(String name, String schoolYear,Integer teacherId);
 
 }

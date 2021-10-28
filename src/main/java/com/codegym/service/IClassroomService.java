@@ -25,5 +25,5 @@ public interface IClassroomService {
     void updateClassNameAfterPromote(String newName, Integer classId);
 
     //creator: HaNTT, date: 23/10/2021  (tạo mới)
-    Integer saveClassRoom(String name, String schoolYear, Integer gradeId,Integer teacherId, boolean deleteFlag);
+    Integer saveClassRoom(String name, String schoolYear,Integer teacherId);
 }

@@ -53,31 +53,31 @@ public class TeacherController {
         }
     }
 
-    //PhucNK danh sach hoc sinh ma giao vien chu nhiem
-    @GetMapping(value = "/list/{id}")
-    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 1) Pageable pageable, @PathVariable Optional<Integer> id) {
-        if(id == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Page<Student> studentList = iStudentService.getListStudent(pageable, id.get());
-        if (studentList.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(studentList, HttpStatus.OK);
-        }
-    }
+//    //PhucNK danh sach hoc sinh ma giao vien chu nhiem
+//    @GetMapping(value = "/list/{id}")
+//    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 1) Pageable pageable, @PathVariable Optional<Integer> id) {
+//        if(id == null){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        Page<Student> studentList = iStudentService.getListStudent(pageable, id.get());
+//        if (studentList.isEmpty()) {
+////            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } else {
+//            return new ResponseEntity<>(studentList, HttpStatus.OK);
+//        }
+//    }
 
-    //PhucNK xem chi tiet hoc sinh
-    @GetMapping(value = "/detail/{id}")
-    public ResponseEntity<Student> getListStudentDetail( @PathVariable(required = false) Integer id) {
-        Student studentDetail = iStudentService.getListStudentDetail(id);
-        if (studentDetail == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(studentDetail, HttpStatus.OK);
-        }
-    }
+//    //PhucNK xem chi tiet hoc sinh
+//    @GetMapping(value = "/detail/{id}")
+//    public ResponseEntity<Student> getListStudentDetail( @PathVariable(required = false) Integer id) {
+//        Student studentDetail = iStudentService.getListStudentDetail(id);
+//        if (studentDetail == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } else {
+//            return new ResponseEntity<>(studentDetail, HttpStatus.OK);
+//        }
+//    }
 
     // diep search teacher 25/10
     @GetMapping("/search")

@@ -16,8 +16,6 @@ import java.util.Optional;
 public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
 
 
-//    @Query(value= "select * from teacher join acount on teacher.teacher_id = acount.teacher_id where acount.acount_id =?1", nativeQuery = true)
-//    Teacher findTeacherByAccountId();
 
     // Diep search teacher 26/10
     @Query(value = "select * from teacher\n" +

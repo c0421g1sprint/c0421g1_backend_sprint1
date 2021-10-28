@@ -1,10 +1,12 @@
 package com.codegym.rest_controller;
+
 import com.codegym.dto.ClassroomDto;
 import com.codegym.dto.StudentDto;
 import com.codegym.entity.about_classroom.Classroom;
 import com.codegym.entity.about_student.Mark;
 import com.codegym.entity.about_student.Student;
 import com.codegym.service.IClassroomService;
+import com.codegym.service.IGradeService;
 import com.codegym.service.IStudentService;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.BeanUtils;
@@ -15,6 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +39,10 @@ public class ClassroomController {
     //DanhNT & HaNTT coding controller
     @Autowired
     private ITeacherService teacherService;
+
+    //DanhNT
+    @Autowired
+    private IGradeService gradeService;
 
     //DanhNT coding controller show list
     //check ok 9:00 AM
@@ -68,7 +75,7 @@ public class ClassroomController {
     public ResponseEntity<?> updateClass(@RequestBody ClassroomDto classroomDto) {
         Set<Student> studentList = classroomDto.getStudents();
 
-        if (classroomDto.getTeacher() != null){
+        if (classroomDto.getTeacher() != null) {
             this.classroomService.updateSchoolYear(classroomDto.getClassroomSchoolYear(),
                     classroomDto.getTeacher().getTeacherId(),
                     classroomDto.getClassroomId());
@@ -87,7 +94,8 @@ public class ClassroomController {
     //check ok : 27/10 - 9:55
     @PutMapping(value = "/promote")
     public ResponseEntity<?> promoteClass(@RequestBody ClassroomDto classroomDto) {
-        Classroom newClassroom = this.classroomService.getById(classroomDto.getClassroomId());
+        Classroom newClassroom = null;
+        newClassroom = this.classroomService.getById(classroomDto.getClassroomId());
         if (newClassroom != null) {
             String currentName = newClassroom.getClassroomName();
             String[] promoteName = newClassroom.getClassroomName().split("");
@@ -98,6 +106,8 @@ public class ClassroomController {
                 promoteName[0] = String.valueOf(Integer.parseInt(promoteName[0]) + 1);
                 String rejoinName = String.join("", promoteName);
                 newClassroom.setClassroomName(rejoinName);
+                int number = classroomDto.getGrade().getGradeId() + 1;
+                classroomDto.setGrade(this.gradeService.findGradeById(number));
             }
             Set<Student> studentSet = newClassroom.getStudents();
             for (Student student : studentSet) {
@@ -117,13 +127,16 @@ public class ClassroomController {
                     demoteName[0] = String.valueOf(Integer.parseInt(demoteName[0]) - 1);
                     String rejoinName = String.join("", demoteName);
                     String year = String.valueOf(Integer.parseInt(newClassroom.getClassroomSchoolYear()) + 1);
-                    Classroom promoteClass = this.classroomService.findClassByNameAndSchoolYear(currentName, rejoinName, year);
+                    Classroom promoteClass = this.classroomService.
+                            findClassByNameAndSchoolYear(currentName, rejoinName, year);
                     student.setClassroom(promoteClass);
                     // rejoin student to database
-                    this.studentService.updateClassForStudent(student.getClassroom().getClassroomId(), student.getStudentId());
+                    this.studentService.
+                            updateClassForStudent(student.getClassroom().getClassroomId(), student.getStudentId());
                 }
             }
-            this.classroomService.updateClassNameAfterPromote(newClassroom.getClassroomName(), newClassroom.getClassroomId());
+            this.classroomService.
+                    updateClassNameAfterPromote(newClassroom.getClassroomName(), newClassroom.getClassroomId());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -166,7 +179,7 @@ public class ClassroomController {
         Set<Student> studentDtoSet = classroomDto.getStudents();
         // angurlar-service: làm sao để add studentSet vào class? -->TS: classroom =  getFormValue --> classroom.setStudents = hashset<Student>?
         //Chuyển StudentDto-> Student
-        if (studentDtoSet != null){
+        if (studentDtoSet != null) {
             Set<Student> studentSet = new HashSet<>();
             for (Student item : studentDtoSet) {
                 Student student = new Student();
@@ -174,10 +187,9 @@ public class ClassroomController {
                 studentSet.add(student);
             }
             //lưu class trước (return Integer/void)
-            Integer newClassroomStatus = this.classroomService.saveClassRoom(name, schoolYear, 1, teacherId, false);
+            Integer newClassroomStatus = this.classroomService.saveClassRoom(name, schoolYear, teacherId);
             //lấy lại classId:
             Integer classroomId = this.classroomService.findClassByNameAndSchoolYear(name, name, schoolYear).getClassroomId();
-            System.err.println("classId khi lưu class: " + classroomId);
             //set class cho List student đã chọn
             for (Student student : studentSet) {
                 this.studentService.updateClassForStudent(classroomId, student.getStudentId());
@@ -185,4 +197,6 @@ public class ClassroomController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }

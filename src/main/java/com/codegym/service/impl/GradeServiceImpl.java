@@ -17,4 +17,9 @@ public class GradeServiceImpl implements IGradeService {
     public List<Grade> findAllGrade() {
         return this.gradeRepository.findAllGrade();
     }
+
+    @Override
+    public Grade findGradeById(Integer gradeId) {
+        return this.gradeRepository.findGradeById(gradeId);
+    }
 }
