@@ -1,6 +1,5 @@
 package com.codegym.entity.about_schedule;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

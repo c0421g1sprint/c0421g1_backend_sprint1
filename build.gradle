@@ -2,6 +2,8 @@ plugins {
     id 'org.springframework.boot' version '2.5.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'war'
+    id 'org.sonarqube' version("3.0")
 }
 
 group = 'com.codegym'
@@ -11,6 +13,15 @@ sourceCompatibility = '1.8'
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
+    }
+}
+
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'http://18.217.47.135:9000/'
+        property 'sonar.login', 'f4570cffe1dd5bf39ecbeed0ef04eef921709b5a'
+        property 'sonar.projectKey', 'C0421G1_ReviewCode_QuanTA'
+        property 'sonar.projectName', 'C0421G1_ReviewCode_QuanTA'
     }
 }
 

@@ -76,7 +76,7 @@ public class ScheduleController_showScheduleTailByIdClass {
     @Test
     public void showScheduleTailByIdClass_11() {
         ResponseEntity<List<ScheduleDetail>> listResponseEntity
-                = this.scheduleController.showScheduleTailByIdClass(java.util.Optional.of(1));
+                = this.scheduleController.scheduleDetailClassroom(1);
 
         Assertions.assertEquals(HttpStatus.OK, listResponseEntity.getStatusCode());
 
@@ -88,14 +88,14 @@ public class ScheduleController_showScheduleTailByIdClass {
     @Test
     public void showListClass_5() {
         ResponseEntity<List<Classroom>> pageResponseEntity
-                = this.scheduleController.showListClass();
+                = this.scheduleController.showListClassroomExist();
         Assertions.assertEquals(HttpStatus.NOT_FOUND, pageResponseEntity.getStatusCode());
     }
 
     @Test
     public void showListClass_6() {
         ResponseEntity<List<Classroom>> pageResponseEntity
-                = this.scheduleController.showListClass();
+                = this.scheduleController.showListClassroomExist();
         Assertions.assertEquals(HttpStatus.OK, pageResponseEntity.getStatusCode());
 
         List<Classroom> classrooms = pageResponseEntity.getBody();

@@ -39,11 +39,4 @@ public class StudentServiceImpl implements IStudentService {
     public Student findStudentById(Integer id) {
         return studentRepository.findStudentWhereId(id);
     }
-
-    //Trùng code với Danh dòng 20
-//      creator: HaNTT, date: 23/10/2021
-//    @Override
-//    public Integer setClassroomForNewStudent(Integer classRoomId, Integer studentId) {
-//        return studentRepository.setClassroomForNewStudent(classRoomId, studentId);
-//    }
 }
