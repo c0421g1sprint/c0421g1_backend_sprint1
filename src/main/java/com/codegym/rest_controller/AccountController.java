@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +23,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -121,10 +123,15 @@ public class AccountController {
     }
 
     //HauPT do editPassword function
-    @PatchMapping("/editPass")
+    @PatchMapping(value = "/editPass", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
-        Account account = accountService.getAccountById(editPasswordAccountDto.getAccountId());
-        if (!account.getAccountPassword().equals(editPasswordAccountDto.getOldPassword()) || bindingResult.hasFieldErrors()) {
+        System.out.println(editPasswordAccountDto);
+        Integer id = editPasswordAccountDto.getAccountId();
+        Account account = accountService.getAccountById(id);
+//        BCrypt.checkpw(account.getAccountPassword(),editPasswordAccountDto.getOldPassword());
+        if (!account.getAccountPassword().equals(editPasswordAccountDto.getOldPassword())
+                || bindingResult.hasFieldErrors()
+                || !editPasswordAccountDto.getAccountPassword().equals(editPasswordAccountDto.getConfirmPassword())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             accountService.editPassword(editPasswordAccountDto.getAccountId(), editPasswordAccountDto.getAccountPassword());

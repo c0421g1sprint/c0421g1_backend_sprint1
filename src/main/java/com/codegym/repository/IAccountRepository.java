@@ -33,7 +33,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
 
     //HauPT do getAccountById function
     @Query(value = "select " +
-            " account_id, account_email, account_password, account_username, activated_flag, delete_flag, lock_flag" +
+            " account_id, email, account_password, account_username, activated_flag, delete_flag, lock_flag" +
             " from `account` a where a.account_id = :id", nativeQuery = true)
     Account getAccountById(int id);
 

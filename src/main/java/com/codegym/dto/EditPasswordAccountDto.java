@@ -23,6 +23,7 @@ public class EditPasswordAccountDto {
     @Pattern(regexp = "^[0-9a-zA-Z]+$" , message = "Mật khẩu chỉ được chứa chữ cái thường , chữ cái in hoa và số ")
     private String accountPassword;
     private String oldPassword;
+    private String confirmPassword;
 
 }
 
