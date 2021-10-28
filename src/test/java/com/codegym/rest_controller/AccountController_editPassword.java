@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AccountController_editPassword {
+ class AccountController_editPassword {
 
     @Autowired
     private MockMvc mockMvc;
@@ -24,7 +24,7 @@ public class AccountController_editPassword {
     private ObjectMapper objectMapper;
 
     @Test
-    public void editPassword_19() throws Exception {
+     void editPassword_19() throws Exception {
         EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword(null);
         accountDto.setConfirmPassword(null);
@@ -39,7 +39,7 @@ public class AccountController_editPassword {
     }
 
     @Test
-    public void editPassword_20() throws Exception {
+     void editPassword_20() throws Exception {
         EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword("");
         accountDto.setConfirmPassword("");
@@ -53,7 +53,7 @@ public class AccountController_editPassword {
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void editPassword_21() throws Exception {
+     void editPassword_21() throws Exception {
         EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword("      ");
         accountDto.setConfirmPassword("      ");
@@ -67,7 +67,7 @@ public class AccountController_editPassword {
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void editPassword_22() throws Exception {
+     void editPassword_22() throws Exception {
         EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword("aaa");
         accountDto.setConfirmPassword("aaa");
@@ -82,7 +82,7 @@ public class AccountController_editPassword {
     }
 
     @Test
-    public void editPassword_23() throws Exception {
+     void editPassword_23() throws Exception {
         EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword("sadddqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
         accountDto.setConfirmPassword("sadddqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
@@ -97,7 +97,7 @@ public class AccountController_editPassword {
     }
 
     @Test
-    public void editPassword_24() throws Exception {
+     void editPassword_24() throws Exception {
         EditPasswordAccountDto accountDto = new EditPasswordAccountDto();
         accountDto.setAccountPassword("7777777");
         accountDto.setConfirmPassword("7777777");

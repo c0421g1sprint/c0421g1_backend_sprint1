@@ -23,7 +23,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -124,11 +123,9 @@ public class AccountController {
 
     //HauPT do editPassword function
     @PatchMapping(value = "/editPass", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
-        System.out.println(editPasswordAccountDto);
+    public ResponseEntity<Void> editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
         Integer id = editPasswordAccountDto.getAccountId();
         Account account = accountService.getAccountById(id);
-//        BCrypt.checkpw(account.getAccountPassword(),editPasswordAccountDto.getOldPassword());
         if (!account.getAccountPassword().equals(editPasswordAccountDto.getOldPassword())
                 || bindingResult.hasFieldErrors()
                 || !editPasswordAccountDto.getAccountPassword().equals(editPasswordAccountDto.getConfirmPassword())) {
