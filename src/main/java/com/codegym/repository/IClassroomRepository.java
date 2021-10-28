@@ -25,10 +25,10 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
 
 
     // DanhNT coding 5:00PM
-    @Query(value = "select c.classroom_id, c.classroom_name, c.classroom_school_year, c.delete_flag, c.grade_id, c.teacher_id\n" +
-            "from classroom c\n" +
-            "where c.delete_flag = false and c.classroom_id = ?1", nativeQuery = true)
-    Optional<Classroom> findById(Integer id);
+    @Query(value = "select classroom_id, classroom_name, classroom_school_year, delete_flag, grade_id, teacher_id\n" +
+            "from classroom\n" +
+            "where classroom_id = ?1\n", nativeQuery = true)
+    Optional<Classroom> findById(int id);
 
     //DanhNT Coding for update class 11:30PM
     @Modifying
@@ -39,11 +39,15 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
     void updateSchoolYear(String schoolYear, Integer teacherId, Integer classId);
 
     //DanhNT coding find all list class pagination
-    @Query(value = "select c.classroom_id, c.classroom_name, c.classroom_school_year, c.delete_flag, c.grade_id, c.teacher_id\n" +
+    @Query(value = "select classroom_id, classroom_name, classroom_school_year, c.delete_flag, grade_id,\n" +
+            "t.teacher_id, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender,\n" +
+            " teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id\n" +
             "from classroom c\n" +
-            "where c.delete_flag = false",
+            "join teacher t on t.teacher_id = c.teacher_id\n" +
+            "where c.delete_flag = false\n",
             countQuery = "select count(*)\n" +
-                    "from classroom c \n" +
+                    "from classroom c\n" +
+                    "join teacher t on t.teacher_id = c.teacher_id\n" +
                     "where c.delete_flag = false"
             , nativeQuery = true)
     Page<Classroom> findAllPage(Pageable pageable);
@@ -60,7 +64,7 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
     @Transactional
     @Query(value = "update classroom\n" +
             "set classroom_name = ?1, grade_id = ?2\n" +
-            "where classroom_id = ?3,", nativeQuery = true)
+            "where classroom_id = ?3", nativeQuery = true)
     void updateClassNameAfterPromote(String newName, Integer gradeId, Integer classId);
 
     //creator: HaNTT, date: 23/10/2021  (tạp lớp mới)
@@ -69,5 +73,6 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
             "values (?1,?2,1,?3,false);",
             nativeQuery = true)
     Integer saveClassRoom(String name, String schoolYear, Integer teacherId);
+
 
 }

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -54,4 +55,9 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
             "where student_id = ?1",nativeQuery = true)
     void deleteStudentFromClass(Integer id);
 
+    //DanhNT
+    @Query(value = "select student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id " +
+            "from student " +
+            "where classroom_id = ?1", nativeQuery = true)
+    List<Student> findAllByClassroomId(Integer id);
 }

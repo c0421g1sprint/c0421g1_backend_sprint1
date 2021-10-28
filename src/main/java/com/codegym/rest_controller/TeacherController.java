@@ -1,4 +1,5 @@
 package com.codegym.rest_controller;
+
 import com.codegym.dto.TeacherDto;
 import com.codegym.dto.TeacherUpdateDto;
 import com.codegym.entity.about_schedule.ScheduleDetail;
@@ -10,11 +11,15 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 import com.codegym.entity.about_student.Student;
 import com.codegym.service.IStudentService;
 import org.springframework.data.domain.Page;
+
 import java.util.Optional;
+
 import com.codegym.entity.about_teacher.Division;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.BeanUtils;
@@ -191,7 +196,7 @@ public class TeacherController {
     //goi ra danh sach giao vien dua vao tu khoa tim kiem va phong ban - LinhDN - 27/10
     @GetMapping("/list")
     public ResponseEntity<Page<Teacher>> getTeacherListWithKeyWordAndDivision
-    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(value = "name", required = false) String name,@RequestParam(value = "divisionId",required = false) Integer divisionId  ) {
+    (@PageableDefault(value = 2, sort = "teacher_id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "divisionId", required = false) Integer divisionId) {
         Page<Teacher> teacherList = teacherService.findAllTeacherByQueryWithNameAndDivision(pageable, name, divisionId);
         if (teacherList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -1,6 +1,7 @@
 package com.codegym.service;
 
 import com.codegym.entity.about_classroom.Classroom;
+import com.codegym.entity.about_student.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public interface IClassroomService {
 
     //DanhNT coding 3:00PM 23-10-21
-    Classroom getById(Integer id);
+    Classroom getById(int id);
 
     //Trùng code với chị Hà
     //DanhNT coding 3:00PM 23-10-21
@@ -26,4 +27,7 @@ public interface IClassroomService {
 
     //creator: HaNTT, date: 23/10/2021  (tạo mới)
     Integer saveClassRoom(String name, String schoolYear, Integer teacherId);
+
+    //DanhNT
+    List<Student> findAllByClassroomId(int id);
 }

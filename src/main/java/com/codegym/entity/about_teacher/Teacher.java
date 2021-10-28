@@ -43,7 +43,7 @@ public class Teacher {
     @JoinColumn(name = "account_id", referencedColumnName = "accountId")
     private Account account;
 
-//    @JsonBackReference(value = "teacher_classroom")
+    @JsonBackReference(value = "teacher_classroom")
     @OneToOne(mappedBy = "teacher")
     private Classroom classroom;
 

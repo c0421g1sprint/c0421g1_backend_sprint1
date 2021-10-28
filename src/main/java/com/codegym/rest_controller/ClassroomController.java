@@ -11,6 +11,7 @@ import com.codegym.service.IStudentService;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -18,10 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -48,7 +46,7 @@ public class ClassroomController {
     //check ok 9:00 AM
     //check ok : 27/10 - 9:55
     @GetMapping
-    public ResponseEntity<Page<Classroom>> showList(@PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity<?> showList(@PageableDefault(size = 5) Pageable pageable) {
         Page<Classroom> classroomList = this.classroomService.findAllPage(pageable);
         if (classroomList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,8 +57,8 @@ public class ClassroomController {
     //DanhNT coding controller find by id
     //check ok 9:00 AM - ok
     //check ok : 27/10 - 9:55
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Classroom> findById(@PathVariable Integer id) {
+    @GetMapping("/get-classroom/{id}")
+    public ResponseEntity<Classroom> findById(@PathVariable int id) {
         Classroom classroom = this.classroomService.getById(id);
         if (classroom == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -68,19 +66,30 @@ public class ClassroomController {
         return new ResponseEntity<>(classroom, HttpStatus.OK);
     }
 
+    //DanhNT
+    @GetMapping("/get-student-classroom/{id}")
+    public ResponseEntity<?> findAllByClassroomId(@PathVariable int id) {
+        List<Student> studentList = this.classroomService.findAllByClassroomId(id);
+        if (studentList != null) {
+            return new ResponseEntity<>(studentList, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
     //DanhNT - coding controller for edit class information
     //check ok
     //check ok : 27/10 - 9:55
     @PatchMapping("/edit")
     public ResponseEntity<?> updateClass(@RequestBody ClassroomDto classroomDto) {
-        Set<Student> studentList = classroomDto.getStudents();
-
+        Classroom classroom = new Classroom();
+        BeanUtils.copyProperties(classroomDto, classroom);
         if (classroomDto.getTeacher() != null) {
             this.classroomService.updateSchoolYear(classroomDto.getClassroomSchoolYear(),
                     classroomDto.getTeacher().getTeacherId(),
                     classroomDto.getClassroomId());
         }
-
+        Set<Student> studentList = classroomDto.getStudents();
         if (studentList != null) {
             for (Student student : studentList) {
                 this.studentService.updateClassForStudent(classroomDto.getClassroomId(), student.getStudentId());
@@ -200,6 +209,7 @@ public class ClassroomController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //DanhNT
     @PatchMapping("/delete")
     public ResponseEntity<Integer> removeStudentFromClass(@RequestBody List<StudentDto> studentDtoList) {
         if (studentDtoList != null) {

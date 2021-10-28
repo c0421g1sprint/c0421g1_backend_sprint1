@@ -1,7 +1,9 @@
 package com.codegym.service.impl;
 
 import com.codegym.entity.about_classroom.Classroom;
+import com.codegym.entity.about_student.Student;
 import com.codegym.repository.IClassroomRepository;
+import com.codegym.repository.IStudentRepository;
 import com.codegym.service.IClassroomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,9 @@ public class ClassroomServiceImpl implements IClassroomService {
     @Autowired
     private IClassroomRepository classroomRepository;
 
+    @Autowired
+    private IStudentRepository iStudentRepository;
+
     //TaiNP && QuanTA
     //search method search Classroom exists
 //    @Override
@@ -25,7 +30,7 @@ public class ClassroomServiceImpl implements IClassroomService {
 
     //DanhNT coding 2:00PM - 23-10-2021
     @Override
-    public Classroom getById(Integer id) {
+    public Classroom getById(int id) {
         return this.classroomRepository.findById(id).orElse(null);
     }
 
@@ -58,6 +63,12 @@ public class ClassroomServiceImpl implements IClassroomService {
     @Override
     public Integer saveClassRoom(String name, String schoolYear, Integer teacherId) {
         return classroomRepository.saveClassRoom(name, schoolYear, teacherId);
+    }
+
+    //DanhNT
+    @Override
+    public List<Student> findAllByClassroomId(int id) {
+        return this.iStudentRepository.findAllByClassroomId(id);
     }
 
 }

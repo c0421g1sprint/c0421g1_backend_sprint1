@@ -4,6 +4,8 @@ import com.codegym.entity.about_student.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface IStudentService{
     //Trùng với chị Hà nhưng khác kiểu trả về
     //Danh coding 2:00PM - 23-10-2021
