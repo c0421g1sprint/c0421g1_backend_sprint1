@@ -13,6 +13,7 @@ import java.util.List;
 public class SubjectServiceImpl implements ISubjectService {
     @Autowired
     ISubjectRepository subjectRepository;
+
     @Override
     public List<Subject> findAllSubject() {
         return subjectRepository.findAllSubject();

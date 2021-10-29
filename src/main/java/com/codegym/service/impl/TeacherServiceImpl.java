@@ -1,15 +1,20 @@
 package com.codegym.service.impl;
+
 import com.codegym.dto.TeacherUpdateDto;
+import com.codegym.entity.about_teacher.Degree;
 import com.codegym.entity.about_teacher.Division;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.repository.IDivisionRepository;
 import com.codegym.repository.ITeacherRepository;
+import com.codegym.repository.news.IDegreeRepository;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+
 
 @Service
 public class TeacherServiceImpl implements ITeacherService {
@@ -19,6 +24,9 @@ public class TeacherServiceImpl implements ITeacherService {
 
     @Autowired
     private IDivisionRepository divisionRepository;
+
+    @Autowired
+    private IDegreeRepository iDegreeRepository;
 
     //DiepLV
     @Override
@@ -90,6 +98,13 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     public List<Teacher> findTeacherWhereTeacherIdNull() {
         return teacherRepository.findTeacherWhereTeacherIdNull();
+    }
+
+
+    //BaoHG 29/10
+    @Override
+    public List<Degree> findAllDegreeByQuery() {
+        return this.iDegreeRepository.findAllDegreeByQuery();
     }
 
 }

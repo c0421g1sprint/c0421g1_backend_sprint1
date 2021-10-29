@@ -11,13 +11,11 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+
 @Repository
 @Transactional
 public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
 
-
-//    @Query(value= "select * from teacher join acount on teacher.teacher_id = acount.teacher_id where acount.acount_id =?1", nativeQuery = true)
-//    Teacher findTeacherByAccountId();
 
     // Diep search teacher 26/10
     @Query(value = "select * from teacher\n" +
@@ -64,7 +62,6 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
     @Query(value = "update teacher set delete_flag = ?1,teacher_address = ?2,teacher_date_of_birth= ?3,teacher_email = ?4,teacher_gender=?5,teacher_image=?6,teacher_name=?7,teacher_phone=?8,teacher_university=?9,degree_id=?10,division_id=?11 \n" +
             "where (teacher_id = ?12);", nativeQuery = true)
     void updateTeacher(Boolean deleteFlag, String address, String dateOfBirth, String email, Byte gender, String image, String name, String phone, String teacher_university, Integer divisionId, Integer degreeId, Integer teacherId);
-
 
 
 //    MinhNN

@@ -1,18 +1,22 @@
 package com.codegym.rest_controller;
-
-import com.codegym.dto.ScheduleDetailDto;
-import com.codegym.entity.about_classroom.Classroom;
-import com.codegym.entity.about_classroom.Grade;
-import com.codegym.entity.about_schedule.ScheduleDetail;
 import com.codegym.entity.about_schedule.Subject;
-import com.codegym.service.IClassroomService;
-import com.codegym.service.IGradeService;
-import com.codegym.service.IScheduleService;
 import com.codegym.service.ISubjectService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.codegym.dto.ScheduleDetailDto;
+import com.codegym.dto.ScheduleSubjectDto;
+import com.codegym.entity.about_classroom.Classroom;
+import com.codegym.entity.about_classroom.Grade;
+import com.codegym.entity.about_schedule.ScheduleDetail;
+import com.codegym.service.IClassroomService;
+import com.codegym.service.IGradeService;
+import com.codegym.service.IScheduleService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +27,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/schedules")
 public class ScheduleController {
+
     // QuanTA
     // Tiem Service
     @Autowired
@@ -69,16 +74,11 @@ public class ScheduleController {
 
     //QuanTA 22/10 10h:46 api update schedule detail
     @PutMapping(value = "/schedule-update")
-    public ResponseEntity<ScheduleDetail> updateScheduleDetail(
-            @RequestBody @Valid ScheduleDetailDto scheduleDetailDto, BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    public ResponseEntity<Void> updateScheduleDetail(@RequestBody List<ScheduleSubjectDto> scheduleSubjectDtoList) {
+        for (ScheduleSubjectDto n : scheduleSubjectDtoList){
+            scheduleService.updateSchedule(n.getSubjectId(),n.getScheduleDetailId());
         }
-        ScheduleDetail scheduleDetail = new ScheduleDetail();
-        BeanUtils.copyProperties(scheduleDetailDto, scheduleDetail);
-        this.scheduleService.updateSchedule(scheduleDetail.getSubject().getSubjectId(),
-                scheduleDetail.getScheduleDetailId());
-        return new ResponseEntity<>(scheduleDetail, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // list subject QuanTA

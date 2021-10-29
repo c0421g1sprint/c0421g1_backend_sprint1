@@ -14,11 +14,18 @@ public class ClassroomServiceImpl implements IClassroomService {
     @Autowired
     private IClassroomRepository classroomRepository;
 
+
+    //DungNM - sử dụng lại code từ DanhNT - lấy toàn bộ danh sách lớp có trong DB
+    @Override
+    public List<Classroom> findAll() {
+        return this.classroomRepository.findAllList();
+    }
+
     //TaiNP && QuanTA
     //search method search Classroom exists
     @Override
     public List<Classroom> findAllClassroomExist() {
-        return this.classroomRepository.findAllClassroomExist();
+        return this.classroomRepository.findAllList();
     }
 
 
@@ -49,8 +56,8 @@ public class ClassroomServiceImpl implements IClassroomService {
 
     //Danh coding 10:PM - 25-10-2021
     @Override
-    public void updateClassNameAfterPromote(String newName, Integer classId) {
-        this.classroomRepository.updateClassNameAfterPromote(newName, classId);
+    public void updateClassNameAfterPromote(String newName,Integer gradeId, Integer classId) {
+        this.classroomRepository.updateClassNameAfterPromote(newName,gradeId, classId);
     }
 
     //creator: HaNTT, date: 23/10/2021  (tạo mới)

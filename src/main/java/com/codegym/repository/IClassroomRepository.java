@@ -16,12 +16,17 @@ import java.util.Optional;
 @Transactional
 public interface IClassroomRepository extends JpaRepository<Classroom, Integer> {
 
+//    // DungNM coding 5:00PM
+//    @Modifying
+//    @Query(value = "select c.classroom_id, c.classroom_name, c.classroom_school_year, c.delete_flag, c.grade_id, c.teacher_id\n" +
+//            "from classroom c " +
+//            "where c.delete_flag = false;", nativeQuery = true)
+//    List<Classroom> findAllList();
 
     //QuanTA && TaiNP
     @Query(value = "select classroom_id,classroom_name,classroom_school_year,delete_flag,grade_id,teacher_id " +
             "from classroom where delete_flag = false",nativeQuery = true)
-    List<Classroom> findAllClassroomExist();
-
+    List<Classroom> findAllList();
 
     // DanhNT coding 5:00PM
     @Query(value = "select c.classroom_id, c.classroom_name, c.classroom_school_year, c.delete_flag, c.grade_id, c.teacher_id\n" +
@@ -58,9 +63,9 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
     @Modifying
     @Transactional
     @Query(value = "update classroom\n" +
-            "set classroom_name = ?1\n" +
-            "where classroom_id = ?2" , nativeQuery = true)
-    void updateClassNameAfterPromote(String newName, Integer classId);
+            "set classroom_name = ?1, grade_id = ?2\n" +
+            "where classroom_id = ?3" , nativeQuery = true)
+    void updateClassNameAfterPromote(String newName, Integer gradeId, Integer classId);
 
     //creator: HaNTT, date: 23/10/2021  (tạp lớp mới)
     @Modifying

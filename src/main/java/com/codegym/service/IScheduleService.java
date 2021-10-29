@@ -8,6 +8,7 @@ public interface IScheduleService {
 
     //TaiNP && QuanTA
     ScheduleDetail save (ScheduleDetail scheduleDetail);
+
     //TaiNP && QuanTA
     List<ScheduleDetail> findScheduleDetailByClassroomId(Integer classroomId);
 

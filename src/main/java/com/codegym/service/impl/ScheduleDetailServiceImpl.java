@@ -11,8 +11,6 @@ import java.util.List;
 @Service
 public class ScheduleDetailServiceImpl  implements IScheduleDetailService {
 
-
-
     @Autowired
     private IScheduleDetailRepository iScheduleDetailRepository;
 
