@@ -88,11 +88,11 @@ public class StudentController {
 
     //LamNT do editStudent function
     @PatchMapping("/edit")
-    public ResponseEntity<?> editStudent(@RequestBody @Validated StudentDTO studentDto) {
+    public ResponseEntity<StudentDTO> editStudent(@RequestBody @Validated StudentDTO studentDto) {
         Student student = new Student();
         BeanUtils.copyProperties(studentDto, student);
         studentService.editStudent(student);
-        return new ResponseEntity<>(student, HttpStatus.OK);
+        return new ResponseEntity<StudentDTO>(studentDto, HttpStatus.OK);
     }
     
     //HauPT do showDetailStudent function

@@ -38,7 +38,7 @@ public class StudentServiceImpl implements IStudentService {
     public void saveStudent(Student student) {
         studentRepository.saveStudent(student.isDeleteFlag(), student.getStudentAddress(), student.getStudentDateOfBirth(),
                 student.getStudentEthnicity(), student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(),
-                student.getStudentName(), student.getStudentParentPhone(), student.getStudentReligion());
+                student.getStudentName(), student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentImage());
     }
 
     //LamNT editStudent function
@@ -46,7 +46,7 @@ public class StudentServiceImpl implements IStudentService {
     public void editStudent(Student student) {
         studentRepository.editStudent(student.getStudentAddress(), student.getStudentDateOfBirth(), student.getStudentEthnicity(),
                 student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(), student.getStudentName(),
-                student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentId());
+                student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentImage(), student.getStudentId());
     }
 
     // Diep search student 25/10

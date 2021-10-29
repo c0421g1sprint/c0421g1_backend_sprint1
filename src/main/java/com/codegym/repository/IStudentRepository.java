@@ -42,19 +42,19 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     //LamNT do create function
     @Modifying
     @Query(value = "insert into `sprint1`.`student` (delete_flag,student_address, student_date_of_birth, student_ethnicity," +
-            "student_father_name, student_gender, student_mother_name, student_name, student_parent_phone, student_religion) " +
-            "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10)", nativeQuery = true)
+            "student_father_name, student_gender, student_mother_name, student_name, student_parent_phone, student_religion,student_image) " +
+            "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11)", nativeQuery = true)
     void saveStudent(boolean delete_flag, String student_address, String student_date_of_birth, String student_ethnicity, String student_father_name,
-                     String student_gender, String student_mother_name, String student_name, String student_parent_phone, String student_religion);
+                     String student_gender, String student_mother_name, String student_name, String student_parent_phone, String student_religion,String student_image);
 
     //LamNT do update function
     @Modifying
     @Query(value = "update `sprint1`.`student` set student_address = ?1, student_date_of_birth = ?2, student_ethnicity = ?3," +
             " student_father_name = ?4, student_gender = ?5, student_mother_name = ?6, student_name = ?7," +
-            " student_parent_phone = ?8, student_religion = ?9 where (student_id = ?10)", nativeQuery = true)
+            " student_parent_phone = ?8, student_religion = ?9,student_image = ?10 where (student_id = ?11)", nativeQuery = true)
     void editStudent(String student_address, String student_date_of_birth, String student_ethnicity, String student_father_name,
                      String student_gender, String student_mother_name, String student_name, String student_parent_phone,
-                     String student_religion, Integer student_id);
+                     String student_religion,String student_image, Integer student_id);
 
      // Diep: search student 5h12 ngày 25/10
     @Query(value="select s.student_id, s.student_gender, s.student_father_name, " +
