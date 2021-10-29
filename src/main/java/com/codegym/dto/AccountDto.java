@@ -2,15 +2,12 @@ package com.codegym.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
-@ToString
 public class AccountDto {
     @NotBlank
     @NotNull

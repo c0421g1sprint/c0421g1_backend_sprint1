@@ -1,9 +1,9 @@
 package com.codegym.entity.about_account;
 import com.codegym.entity.about_teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -27,8 +27,8 @@ public  class  Account implements Serializable {
     @JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @JsonBackReference(value = "teacher_account")
     @OneToOne(mappedBy = "account")
-    @JsonBackReference
     private Teacher teacher;
 
 }

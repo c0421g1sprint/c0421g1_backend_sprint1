@@ -33,11 +33,12 @@ public class Student implements Serializable {
     private String studentParentPhone;
     private boolean deleteFlag;
 
-    @JsonBackReference(value = "classroom_student")
+//    @JsonBackReference(value = "classroom_student")
     @ManyToOne(targetEntity = Classroom.class)
     @JoinColumn(name = "classroom_id", referencedColumnName = "classroomId")
     private Classroom classroom;
 
+//    @JsonBackReference
     @JsonBackReference(value = "student_mark")
     @OneToMany(mappedBy = "student")
     private Set<Mark> marks;

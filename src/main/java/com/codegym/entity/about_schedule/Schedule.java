@@ -21,13 +21,14 @@ public class Schedule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer scheduleId;
 
-    @OneToOne(cascade = CascadeType.ALL)
     @JsonBackReference
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "classroom_id", referencedColumnName = "classroomId")
     private Classroom classroom;
 
     private boolean deleteFlag;
 
     @OneToMany(mappedBy = "schedule")
+    @JsonBackReference(value = "scheduleDetail_schedule")
     private Set<ScheduleDetail> scheduleDetails;
 }

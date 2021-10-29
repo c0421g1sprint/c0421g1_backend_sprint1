@@ -1,5 +1,4 @@
 package com.codegym.entity.about_account;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
@@ -13,8 +12,8 @@ public class Role implements Serializable {
     private Integer roleId;
     private String roleName;
 
+    @JsonBackReference(value = "role_account")
     @ManyToMany(mappedBy = "roles")
-    @JsonBackReference
     private Set<Account> accounts;
 
     public Integer getRoleId() {

@@ -21,6 +21,7 @@ public class Degree implements Serializable {
     private Integer degreeId;
     private String degreeName;
 
+//    @JsonBackReference
     @JsonBackReference(value = "teacher_degree")
     @OneToMany(mappedBy = "degree")
     private Set<Teacher> teachers;

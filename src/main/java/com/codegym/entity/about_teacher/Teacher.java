@@ -29,6 +29,7 @@ public class Teacher implements Serializable {
     private String teacherPhone;
     private String teacherImage;
 
+//    @JsonManagedReference
     @ManyToOne(targetEntity = Degree.class)
     @JoinColumn(name = "degree_id", referencedColumnName = "degreeId")
     private Degree degree;
@@ -41,7 +42,7 @@ public class Teacher implements Serializable {
     @JoinColumn(name = "account_id", referencedColumnName = "accountId")
     private Account account;
 
-    @JsonBackReference(value = "")
+//    @JsonBackReference(value = "teacher_classroom")
     @OneToOne(mappedBy = "teacher")
     private Classroom classroom;
 
