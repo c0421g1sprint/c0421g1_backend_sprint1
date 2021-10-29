@@ -39,6 +39,10 @@ public class AccountServiceImpl implements IAccountService {
     public void signUp(Account account){
         Account registerAccount = this.accountRepository.findAccountByUsername(account.getAccountUsername());
         if (registerAccount != null){
+            throw new IllegalStateException("username haved already exist");
+        }
+        registerAccount = this.accountRepository.findAccountByEmail(account.getEmail());
+        if (registerAccount != null){
             throw new IllegalStateException("email haved already exist");
         }
         String encode = passwordEncoder.encode(account.getAccountPassword());

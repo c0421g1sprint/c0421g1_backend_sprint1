@@ -108,7 +108,7 @@ public class AccountController {
             BeanUtils.copyProperties(accountDto, account);
             this.accountService.signUp(account);
         }catch (Exception ex){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ex.getMessage() ,HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
