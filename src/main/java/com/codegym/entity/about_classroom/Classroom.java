@@ -3,6 +3,7 @@ import com.codegym.entity.about_schedule.Schedule;
 import com.codegym.entity.about_student.Student;
 import com.codegym.entity.about_teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,6 @@ public class Classroom {
 
     private boolean deleteFlag;
 
-
-    @JsonBackReference(value = "teacher_classroom")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacherId")
     private Teacher teacher;

@@ -11,73 +11,53 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.function.Function;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/students")
 public class StudentController {
     @Autowired
     private IStudentService studentService;
-    
+
     @Autowired
     private IGradeService gradeService;
-    
+
     @Autowired
     private IClassroomService classroomService;
 
     //DungNM - Lấy danh sách học sinh của 1 lớp
     @GetMapping("/get-students-by-classroom-id")
-    public ResponseEntity<Page<StudentDto>> getStudentsOfClassroom(@RequestParam String classId, @RequestParam String index, @RequestParam String size) {
-        try {
-            int pageIndex = Integer.parseInt(index);
-            int pageSize = Integer.parseInt(size);
-            int classroomID = Integer.parseInt(classId);
-            Pageable pageable = PageRequest.of(pageIndex, pageSize);
-            Page<Student> students = studentService.findStudentsByClassroomId(classroomID, pageable);
-            if (students.getContent().size() == 0) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            Page<StudentDto> StudentDtoPage = students.map(new Function<Student, StudentDto>() {
-                @Override
-                public StudentDto apply(Student entity) {
-                    StudentDto dto = new StudentDto();
-                    BeanUtils.copyProperties(entity, dto);
-                    return dto;
-                }
-            });
-            return new ResponseEntity<>(StudentDtoPage, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Page<StudentDto>> getStudentsOfClassroom(@RequestParam int classId, @RequestParam int index, @RequestParam int size) {
+        Pageable pageable = PageRequest.of(index, size);
+        Page<Student> students = studentService.findStudentsByClassroomId(classId, pageable);
+        if (students.getContent().size() == 0) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        Page<StudentDto> StudentDtoPage = students.map(entity -> {
+            StudentDto dto = new StudentDto();
+            BeanUtils.copyProperties(entity, dto);
+            return dto;
+        });
+        return new ResponseEntity<>(StudentDtoPage, HttpStatus.OK);
     }
 
     //DungNM - Xoá học sinh theo Id của học sinh
     @PatchMapping("/{id}")
-    public ResponseEntity<StudentDto> deleteStudentById(@PathVariable String id) {
-        try {
-            int studentId = Integer.parseInt(id);
-            Student studentDelete = studentService.deleteById(studentId);
-            if (studentDelete == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            else {
-                StudentDto StudentDto = new StudentDto();
-                BeanUtils.copyProperties(studentDelete, StudentDto);
-                return new ResponseEntity<>(StudentDto, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<StudentDto> deleteStudentById(@PathVariable int id) {
+        Student studentDelete = studentService.deleteById(id);
+        if (studentDelete == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else {
+            StudentDto StudentDto = new StudentDto();
+            BeanUtils.copyProperties(studentDelete, StudentDto);
+            return new ResponseEntity<>(StudentDto, HttpStatus.OK);
         }
     }
 
@@ -98,7 +78,7 @@ public class StudentController {
         studentService.editStudent(student);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
-    
+
     //HauPT do showDetailStudent function
     @GetMapping("/detail/{id}")
     public ResponseEntity<Student> showDetailStudent(@PathVariable Integer id) {
@@ -124,7 +104,7 @@ public class StudentController {
         return (classroomList.size() == 0) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                 : new ResponseEntity<>(classroomList, HttpStatus.OK);
     }
-    
+
     // Diệp search student ngày 25/10
     @GetMapping("/searchstudent")
     public ResponseEntity<Page<Student>> getSearchStudent(@PageableDefault(value = 2) Pageable pageable,

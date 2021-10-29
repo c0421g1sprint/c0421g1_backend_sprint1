@@ -22,12 +22,17 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
 
     //DungNM - lấy danh sách học sinh theo ID lớp
     @Query(value = "SELECT " +
-            "student_id, s.delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, s.classroom_id " +
+            "student_id, s.delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, " +
+            "student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, " +
+            "student_status, s.classroom_id " +
             "FROM student s " +
             "JOIN classroom c ON s.classroom_id = c.classroom_id " +
+            "JOIN teacher t ON t.teacher_id = c.teacher_id " +
             "WHERE s.classroom_id=:id AND s.delete_flag = false ORDER BY s.student_id",
             countQuery = "SELECT count(*) " +
-                    "FROM student s JOIN classroom c ON s.classroom_id = c.classroom_id " +
+                    "FROM student s " +
+                    "JOIN classroom c ON s.classroom_id = c.classroom_id " +
+                    "JOIN teacher t ON t.teacher_id = c.teacher_id " +
                     "WHERE s.classroom_id=:id AND s.delete_flag = false ORDER BY s.student_id",
             nativeQuery = true)
     Page<Student> findStudentsByClassroomId(int id, Pageable pageable);
