@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import javax.transaction.Transactional;
+import java.util.List;
 
 
 @Repository
@@ -47,20 +49,20 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
 
     //LamNT do create function
     @Modifying
-    @Query(value = "insert into `sprint1`.`student` (delete_flag,student_address, student_date_of_birth, student_ethnicity," +
-            "student_father_name, student_gender, student_mother_name, student_name, student_parent_phone, student_religion) " +
-            "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10)", nativeQuery = true)
+    @Query(value = "insert into `student` (delete_flag,student_address, student_date_of_birth, student_ethnicity," +
+            "student_father_name, student_gender, student_mother_name, student_name, student_parent_phone, student_religion, student_image) " +
+            "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11)", nativeQuery = true)
     void saveStudent(boolean delete_flag, String student_address, String student_date_of_birth, String student_ethnicity, String student_father_name,
-                     String student_gender, String student_mother_name, String student_name, String student_parent_phone, String student_religion);
+                     String student_gender, String student_mother_name, String student_name, String student_parent_phone, String student_religion, String student_image);
 
     //LamNT do update function
     @Modifying
-    @Query(value = "update `sprint1`.`student` set student_address = ?1, student_date_of_birth = ?2, student_ethnicity = ?3," +
+    @Query(value = "update `student` set student_address = ?1, student_date_of_birth = ?2, student_ethnicity = ?3," +
             " student_father_name = ?4, student_gender = ?5, student_mother_name = ?6, student_name = ?7," +
-            " student_parent_phone = ?8, student_religion = ?9 where (student_id = ?10)", nativeQuery = true)
+            " student_parent_phone = ?8, student_religion = ?9, student_image = ?10 where (student_id = ?11)", nativeQuery = true)
     void editStudent(String student_address, String student_date_of_birth, String student_ethnicity, String student_father_name,
                      String student_gender, String student_mother_name, String student_name, String student_parent_phone,
-                     String student_religion, Integer student_id);
+                     String student_religion, String student_image, Integer student_id);
 
     // Diep: search student 5h12 ngày 25/10
     @Query(value = "select " +
@@ -92,7 +94,7 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
         //    search Student by Nhật
     Page<Student> findSearch(Pageable pageable, @Param("name") String name, @Param("status") String status);
 
-//Phuc xem thong tin hoc sinh cua giao vien chu nhiem
+    //Phuc xem thong tin hoc sinh cua giao vien chu nhiem
     @Query(value = " select student.student_id, student.delete_flag, student.student_address, " +
             "student.student_date_of_birth, student.student_ethnicity, student.student_father_name," +
             " student.student_gender, student.student_image, student.student_mother_name, student.student_name," +
@@ -113,28 +115,27 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     @Transactional
     @Query(value = "update student\n" +
             "set classroom_id = ?1\n" +
-            "where student_id = ?2",nativeQuery = true)
-    void updateClassForStudent(Integer classId,Integer studentId);
-
+            "where student_id = ?2", nativeQuery = true)
+    void updateClassForStudent(Integer classId, Integer studentId);
 
 
     //creator: HaNTT, date: 23/10/2021 (khi nhấn nút chọn student có sẵn: checkbox)
-    @Query(value="SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity," +
+    @Query(value = "SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity," +
             " student_father_name, student_gender, student_image, student_mother_name, student_name, " +
             "student_parent_phone, student_religion, student_status, classroom_id\n" +
             "FROM student\n" +
-            "WHERE classroom_id is null",
-            countQuery="SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id\n" +
+            "WHERE classroom_id is null and student_status ='lưu ban'",
+            countQuery = "SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id\n" +
                     "FROM student\n" +
                     "WHERE classroom_id is null;",
             nativeQuery = true)
-    Page<Student> findWhereClassroomIdNull(Pageable pageable);
+    List<Student> findWhereClassroomIdNull();
 
     //creator: HaNTT, date: 23/10/2021 (khi nhấn button tạo mới student: find one --> add to list student)
-    @Query(value= "SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, " +
+    @Query(value = "SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, " +
             "student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id\n" +
             "FROM student\n" +
-            "WHERE student_id = ?;",
+            "WHERE student_id = ? ;",
             nativeQuery = true)
     Student findStudentWhereId(Integer id);
 
@@ -142,4 +143,16 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
 //    @Query(value = "select * from student where student_id=?1", nativeQuery = true)
 //    Optional<Student> getListStudentDetail(@Param("id") Integer id);
 
+    //creator: DanhNT
+    @Modifying
+    @Query(value = "update student\n" +
+            "set classroom_id = null\n" +
+            "where student_id = ?1", nativeQuery = true)
+    void deleteStudentFromClass(Integer id);
+
+    //DanhNT
+    @Query(value = "select student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id " +
+            "from student " +
+            "where classroom_id = ?1", nativeQuery = true)
+    List<Student> findListStudentByClassroomId(Integer id);
 }

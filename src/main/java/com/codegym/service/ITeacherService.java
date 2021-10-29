@@ -1,6 +1,7 @@
 package com.codegym.service;
 
 import com.codegym.dto.TeacherUpdateDto;
+import com.codegym.entity.about_teacher.Degree;
 import com.codegym.entity.about_teacher.Division;
 import com.codegym.entity.about_teacher.Teacher;
 import org.springframework.data.domain.Page;
@@ -32,4 +33,5 @@ public interface ITeacherService {
     Page<Teacher> searchTeacher(Pageable pageable, String search);
 
     List<Teacher> findTeacherWhereTeacherIdNull();
+    List<Degree> findAllDegreeByQuery();
 }

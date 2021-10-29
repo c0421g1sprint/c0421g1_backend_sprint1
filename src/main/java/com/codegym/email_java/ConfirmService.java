@@ -1,4 +1,4 @@
-package com.codegym.emailJava;
+package com.codegym.email_java;
 
 import com.codegym.repository.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;

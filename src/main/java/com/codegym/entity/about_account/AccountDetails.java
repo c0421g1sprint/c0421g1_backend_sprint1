@@ -41,7 +41,7 @@ public class AccountDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return this.account.isLock_flag();
+        return this.account.isNotBlock();
     }
 
     @Override
@@ -51,6 +51,6 @@ public class AccountDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.account.isActivated_flag();
+        return this.account.isActive();
     }
 }

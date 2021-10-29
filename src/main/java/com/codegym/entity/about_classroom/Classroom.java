@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -15,7 +16,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Classroom {
+public class Classroom implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer classroomId;
@@ -29,7 +30,6 @@ public class Classroom {
     private boolean deleteFlag;
 
 
-    @JsonBackReference(value = "teacher_classroom")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacherId")
     private Teacher teacher;

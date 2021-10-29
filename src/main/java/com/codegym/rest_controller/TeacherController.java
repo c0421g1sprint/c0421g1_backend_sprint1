@@ -1,5 +1,6 @@
 package com.codegym.rest_controller;
 
+import com.codegym.entity.about_teacher.Degree;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -182,6 +183,16 @@ public class TeacherController {
     public ResponseEntity<List<Division>> getDivisionList
             () {
         List<Division> divisionList = teacherService.findAllDivisionByQuery();
+        if (divisionList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(divisionList, HttpStatus.OK);
+        }
+    }
+    // BaoHG
+    @GetMapping("/listDegree")
+    public ResponseEntity<List<Degree>> getDegreeList() {
+        List<Degree> divisionList = this.teacherService.findAllDegreeByQuery();
         if (divisionList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

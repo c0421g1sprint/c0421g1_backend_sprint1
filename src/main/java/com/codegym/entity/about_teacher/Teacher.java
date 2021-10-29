@@ -2,19 +2,22 @@ package com.codegym.entity.about_teacher;
 
 import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_classroom.Classroom;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
+import java.io.Serializable;
+
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Teacher {
+public class Teacher implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer teacherId;
@@ -40,7 +43,7 @@ public class Teacher {
     @JoinColumn(name = "account_id", referencedColumnName = "accountId")
     private Account account;
 
-//    @JsonBackReference(value = "teacher_classroom")
+    @JsonBackReference(value = "teacher_classroom")
     @OneToOne(mappedBy = "teacher")
     private Classroom classroom;
 

@@ -1,8 +1,8 @@
 package com.codegym.service.impl;
 
-import com.codegym.emailJava.ConfirmService;
-import com.codegym.emailJava.VerifyEmail;
-import com.codegym.emailJava.email.EmailSender;
+import com.codegym.email_java.ConfirmService;
+import com.codegym.email_java.VerifyEmail;
+import com.codegym.email_java.email.EmailSender;
 import com.codegym.entity.about_account.Account;
 import com.codegym.repository.IAccountRepository;
 import com.codegym.service.IAccountService;
@@ -39,6 +39,10 @@ public class AccountServiceImpl implements IAccountService {
     public void signUp(Account account){
         Account registerAccount = this.accountRepository.findAccountByUsername(account.getAccountUsername());
         if (registerAccount != null){
+            throw new IllegalStateException("username haved already exist");
+        }
+        registerAccount = this.accountRepository.findAccountByEmail(account.getEmail());
+        if (registerAccount != null){
             throw new IllegalStateException("email haved already exist");
         }
         String encode = passwordEncoder.encode(account.getAccountPassword());
@@ -59,6 +63,7 @@ public class AccountServiceImpl implements IAccountService {
     //HauPT do editPassword function
     @Override
     public void editPassword(Integer id , String password ) {
+        password = passwordEncoder.encode(password);
        accountRepository.editPassword(id, password);
     }
 

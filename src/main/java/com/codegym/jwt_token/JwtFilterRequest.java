@@ -1,6 +1,9 @@
-package com.codegym.jwtToken;
+package com.codegym.jwt_token;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,8 +24,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 //Kiet login 23/10 Filter to verify token or refresh token if expire
+@Slf4j
 @Component
 public class JwtFilterRequest extends OncePerRequestFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtFilterRequest.class);
+
     @Autowired
     private JwtProvider jwtProvider;
 
@@ -35,7 +41,7 @@ public class JwtFilterRequest extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } else {
             String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-            System.out.println(authorization);
+            LOGGER.info(authorization);
             if (authorization != null && authorization.startsWith("KIET ")) {
                 try {
                     authorization = authorization.substring(5);
@@ -46,7 +52,7 @@ public class JwtFilterRequest extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage() + " JwtFilter");
+                    LOGGER.info(ex.getMessage());
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     Map<String , String> errorsLog = new HashMap<>();
                     errorsLog.put("errors", ex.getMessage());

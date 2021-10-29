@@ -1,4 +1,4 @@
-package com.codegym.emailJava;
+package com.codegym.email_java;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

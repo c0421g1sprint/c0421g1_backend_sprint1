@@ -1,5 +1,8 @@
-package com.codegym.emailJava.email;
+package com.codegym.email_java.email;
 
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -9,8 +12,11 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+@Slf4j
 @Service
 public class EmailSenderImpl implements EmailSender {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailSenderImpl.class);
+
     @Autowired
     private JavaMailSender mailSender;
     @Override
@@ -25,7 +31,7 @@ public class EmailSenderImpl implements EmailSender {
             messageHelper.setTo(toEmail);
             mailSender.send(mimeMessage);
         }catch (MessagingException exception){
-            System.err.println(exception.getMessage());
+            LOGGER.error(exception.getMessage());
         }
     }
 

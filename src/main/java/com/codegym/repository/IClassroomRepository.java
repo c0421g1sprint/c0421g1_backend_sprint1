@@ -63,9 +63,9 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Integer> 
     @Modifying
     @Transactional
     @Query(value = "update classroom\n" +
-            "set classroom_name = ?1\n" +
-            "where classroom_id = ?2" , nativeQuery = true)
-    void updateClassNameAfterPromote(String newName, Integer classId);
+            "set classroom_name = ?1, grade_id = ?2\n" +
+            "where classroom_id = ?3" , nativeQuery = true)
+    void updateClassNameAfterPromote(String newName, Integer gradeId, Integer classId);
 
     //creator: HaNTT, date: 23/10/2021  (tạp lớp mới)
     @Modifying

@@ -1,5 +1,6 @@
 package com.codegym.rest_controller;
 
+
 import com.codegym.dto.StudentDto;
 import com.codegym.entity.about_classroom.Classroom;
 import com.codegym.entity.about_classroom.Grade;
@@ -148,8 +149,8 @@ public class StudentController {
 
     //create: HaNTT, date: 23/10/2021
     @GetMapping("/find-student") //OK  (checkbox)
-    public ResponseEntity<Page<Student>> getStudentNotHaveClass(@PageableDefault(size = 5) Pageable pageable) {
-        Page<Student> studentList = this.studentService.findWhereClassroomIdNull(pageable);
+    public ResponseEntity<List<Student>> getStudentNotHaveClass() {
+        List<Student> studentList = this.studentService.findWhereClassroomIdNull();
 
         if (studentList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

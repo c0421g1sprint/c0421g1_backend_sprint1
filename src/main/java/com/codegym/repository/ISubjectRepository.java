@@ -1,7 +1,6 @@
 package com.codegym.repository;
 
 import com.codegym.entity.about_schedule.Subject;
-import com.codegym.entity.about_student.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

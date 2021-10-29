@@ -56,8 +56,8 @@ public class ClassroomServiceImpl implements IClassroomService {
 
     //Danh coding 10:PM - 25-10-2021
     @Override
-    public void updateClassNameAfterPromote(String newName, Integer classId) {
-        this.classroomRepository.updateClassNameAfterPromote(newName, classId);
+    public void updateClassNameAfterPromote(String newName,Integer gradeId, Integer classId) {
+        this.classroomRepository.updateClassNameAfterPromote(newName,gradeId, classId);
     }
 
     //creator: HaNTT, date: 23/10/2021  (tạo mới)

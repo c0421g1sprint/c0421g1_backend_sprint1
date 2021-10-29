@@ -1,4 +1,4 @@
-package com.codegym.jwtToken;
+package com.codegym.jwt_token;
 import java.util.List;
 
 //Kiet login 23/10 this class use to response data(token, username, role) for angular which save on localStorage

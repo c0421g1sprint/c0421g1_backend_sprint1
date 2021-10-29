@@ -1,13 +1,12 @@
 package com.codegym.entity.about_schedule;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"study_day_time_id", "subject_id", "schedule_id"})})
@@ -15,7 +14,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScheduleDetail {
+public class ScheduleDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer scheduleDetailId;

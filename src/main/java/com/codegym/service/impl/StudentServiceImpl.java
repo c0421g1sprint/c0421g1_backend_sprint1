@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 
@@ -14,13 +16,15 @@ import java.util.Optional;
 public class StudentServiceImpl implements IStudentService {
     @Autowired
     private IStudentRepository studentRepository;
+
     //Phuc
     @Override
     public Page<Student> getListStudent(Pageable pageable, Integer id) {
-        return studentRepository.getListStudent(pageable,id);
+        return studentRepository.getListStudent(pageable, id);
 
 
     }
+
     //Phuc
     @Override
     public Student getListStudentDetail(Integer id) {
@@ -42,8 +46,8 @@ public class StudentServiceImpl implements IStudentService {
 
     //creator: HaNTT, date: 23/10/2021
     @Override
-    public Page<Student> findWhereClassroomIdNull(Pageable pageable) {
-        return studentRepository.findWhereClassroomIdNull(pageable);
+    public List<Student> findWhereClassroomIdNull() {
+        return studentRepository.findWhereClassroomIdNull();
     }
 
     //creator: HaNTT, date: 23/10/2021
@@ -63,7 +67,7 @@ public class StudentServiceImpl implements IStudentService {
         if (student != null) {
             studentRepository.deleteStudentById(id);
             return student;
-        }else return null;
+        } else return null;
     }
 
     //DungNM - Tìm danh sách học sinh theo ID của classroom
@@ -77,15 +81,16 @@ public class StudentServiceImpl implements IStudentService {
     public void saveStudent(Student student) {
         studentRepository.saveStudent(student.isDeleteFlag(), student.getStudentAddress(), student.getStudentDateOfBirth(),
                 student.getStudentEthnicity(), student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(),
-                student.getStudentName(), student.getStudentParentPhone(), student.getStudentReligion());
+                student.getStudentName(), student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentImage());
     }
+
 
     //LamNT editStudent function
     @Override
     public void editStudent(Student student) {
         studentRepository.editStudent(student.getStudentAddress(), student.getStudentDateOfBirth(), student.getStudentEthnicity(),
                 student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(), student.getStudentName(),
-                student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentId());
+                student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentImage(), student.getStudentId());
     }
 
     // Diep search student 25/10
@@ -96,6 +101,16 @@ public class StudentServiceImpl implements IStudentService {
 
     //    search Student by Nhật
     public Page<Student> findSearch(Pageable pageable, String name, String status) {
-        return studentRepository.findSearch(pageable,"%"+name+"%","%"+status+"%");
+        return studentRepository.findSearch(pageable, "%" + name + "%", "%" + status + "%");
+    }
+
+    @Override
+    public void deleteStudentFromClass(Integer id) {
+        this.studentRepository.deleteStudentFromClass(id);
+    }
+
+    @Override
+    public List<Student> findListStudentByClassroomId(Integer id) {
+        return this.studentRepository.findListStudentByClassroomId(id);
     }
 }

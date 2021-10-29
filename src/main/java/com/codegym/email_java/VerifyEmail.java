@@ -1,4 +1,4 @@
-package com.codegym.emailJava;
+package com.codegym.email_java;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
