@@ -23,4 +23,12 @@ public interface IStudentService{
     //creator: HaNTT, date: 23/10/2021
     void deleteStudentFromClass(Integer id);
 
+    //LamNT
+    void saveStudent(Student student);
+
+    //LamNT
+    void editStudent(Student student);
+
+
+
 }

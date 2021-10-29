@@ -128,26 +128,31 @@ public class ClassroomController {
                 }
                 Double avgMark = avgArray(avgList);
                 // demote student
-                if (avgMark < 3.5 && !student.getStudentStatus().equals(student.getClassroom().getClassroomName())) {
+                if (avgMark < 3.5 ) {
                     student.setStudentStatus(student.getClassroom().getClassroomName());
                     if (student.getClassroom().getGrade().getGradeId() == 1) {
                         student.setClassroom(null);
+                        student.setStudentStatus("Lưu ban");
+                    } else {
+                        demoteName[0] = String.valueOf(Integer.parseInt(demoteName[0]) - 1);
+                        String rejoinName = String.join("", demoteName);
+                        String year = String.valueOf(Integer.parseInt(newClassroom.getClassroomSchoolYear()) + 1);
+                        Classroom promoteClass = this.classroomService.
+                                findClassByNameAndSchoolYear(currentName, rejoinName, year);
+                        student.setClassroom(promoteClass);
+                        // rejoin student to database
+                        this.studentService.
+                                updateClassForStudent(student.getClassroom().getClassroomId(), student.getStudentId());
                     }
-                    demoteName[0] = String.valueOf(Integer.parseInt(demoteName[0]) - 1);
-                    String rejoinName = String.join("", demoteName);
-                    String year = String.valueOf(Integer.parseInt(newClassroom.getClassroomSchoolYear()) + 1);
-                    Classroom promoteClass = this.classroomService.
-                            findClassByNameAndSchoolYear(currentName, rejoinName, year);
-                    student.setClassroom(promoteClass);
-                    // rejoin student to database
-                    this.studentService.
-                            updateClassForStudent(student.getClassroom().getClassroomId(), student.getStudentId());
                 }
             }
-            this.classroomService.
-                    updateClassNameAfterPromote(newClassroom.getClassroomName(),
-                            newClassroom.getGrade().getGradeId(),
-                            newClassroom.getClassroomId());
+            if (newClassroom.getGrade().getGradeId() !=5 ){
+                this.classroomService.
+                        updateClassNameAfterPromote(newClassroom.getClassroomName(),
+                                newClassroom.getGrade().getGradeId()+1,
+                                newClassroom.getClassroomId());
+            }
+
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

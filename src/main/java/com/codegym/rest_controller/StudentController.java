@@ -1,7 +1,10 @@
 package com.codegym.rest_controller;
 
+import com.codegym.dto.StudentDto;
 import com.codegym.entity.about_classroom.Classroom;
 import com.codegym.entity.about_student.Student;
+import org.springframework.beans.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,5 +48,21 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
+    //LamNT do createStudent function
+    @PostMapping("/add")
+    public ResponseEntity<Integer> addStudent(@RequestBody @Validated StudentDto studentDto) {
+        Student student = new Student();
+        BeanUtils.copyProperties(studentDto, student);
+        studentService.saveStudent(student);
+        return new ResponseEntity<>(student.getStudentId(), HttpStatus.CREATED);
+    }
 
+    //LamNT do editStudent function
+    @PatchMapping("/edit")
+    public ResponseEntity<StudentDto> editStudent(@RequestBody @Validated StudentDto studentDto) {
+        Student student = new Student();
+        BeanUtils.copyProperties(studentDto, student);
+        studentService.editStudent(student);
+        return new ResponseEntity<StudentDto>(studentDto, HttpStatus.OK);
+    }
 }

@@ -31,9 +31,5 @@ public class StudentDto {
     private String studentImage;
     private String studentStatus;
     private String studentParentPhone;
-    private boolean deleteFlag;
 
-    private Classroom classroom;
-
-    private Set<Mark> marks;
 }

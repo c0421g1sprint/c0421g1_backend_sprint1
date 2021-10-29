@@ -1,4 +1,5 @@
 package com.codegym.service.impl;
+
 import com.codegym.entity.about_student.Student;
 import com.codegym.repository.IStudentRepository;
 import com.codegym.service.IStudentService;
@@ -54,9 +55,23 @@ public class StudentServiceImpl implements IStudentService {
     //creator: HaNTT, date: 23/10/2021
     @Override
     public void deleteStudentFromClass(Integer id) {
-       this.studentRepository.deleteStudentFromClass(id);
+        this.studentRepository.deleteStudentFromClass(id);
     }
 
+    //LamNT saveStudent function
+    @Override
+    public void saveStudent(Student student) {
+        studentRepository.saveStudent(student.isDeleteFlag(), student.getStudentAddress(), student.getStudentDateOfBirth(),
+                student.getStudentEthnicity(), student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(),
+                student.getStudentName(), student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentImage());
+    }
 
+    //LamNT editStudent function
+    @Override
+    public void editStudent(Student student) {
+        studentRepository.editStudent(student.getStudentAddress(), student.getStudentDateOfBirth(), student.getStudentEthnicity(),
+                student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(), student.getStudentName(),
+                student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentImage(), student.getStudentId());
+    }
 
 }
