@@ -10,6 +10,7 @@ import com.codegym.service.ITeacherService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -33,8 +34,9 @@ public class TeacherController {
 
     // diep search teacher 25/10
     @GetMapping("/search")
-    public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 2) Pageable pageable,
+    public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 5) Pageable pageable,
                                                           @RequestParam(required = false) String search) {
+
         Page<Teacher> teachers = teacherService.searchTeacher(pageable, search);
 
         if (teachers.isEmpty()) {
