@@ -41,4 +41,10 @@ public class EmailSenderImpl implements EmailSender {
                 "<p>C0421G1 xin gửi lời chào vì đã đăng ký trở thành một giáo viên ở Trường THPT Mầm Non</p>\n" +
                 "<p>Hãy click vào link "+ link  +"  để active account của bạn</p>";
     }
+
+    @Override
+    public String buildForgetPassword(String randomPass) {
+        return "<h3 style=\"text-align: center\">Welcome</h3>\n" +
+                "<p>Mật khẩu của bạn là:  "+ randomPass ;
+    }
 }

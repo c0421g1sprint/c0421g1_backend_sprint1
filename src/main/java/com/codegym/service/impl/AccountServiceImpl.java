@@ -28,6 +28,7 @@ public class AccountServiceImpl implements IAccountService {
     @Autowired
     private EmailSender emailSender;
 
+
     //    Kiet login 23/10 UserDetailService use this function
     @Override
     public Account findByUsername(String username) {
@@ -60,10 +61,17 @@ public class AccountServiceImpl implements IAccountService {
         emailSender.send(registerAccount.getEmail(), contentEmail);
     }
 
+//    Kiet login this function to query account by email
+    @Override
+    public Account findAccountByEmail(String email) {
+        return this.accountRepository.findAccountByEmail(email);
+    }
+
     //HauPT do editPassword function
     @Override
     public void editPassword(Integer id , String password ) {
-       accountRepository.editPassword(id, password);
+        String passwordAfterEncode = this.passwordEncoder.encode(password);
+       accountRepository.editPassword(id, passwordAfterEncode);
     }
 
     //HauPT do getAccountById function

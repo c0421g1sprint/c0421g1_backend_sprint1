@@ -4,6 +4,7 @@ import com.codegym.dto.AccountDto;
 import com.codegym.dto.EditPasswordAccountDto;
 import com.codegym.dto.LoginRequestDto;
 import com.codegym.email_java.ConfirmService;
+import com.codegym.email_java.email.EmailSender;
 import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_account.AccountDetails;
 import com.codegym.jwt_token.JwtProvider;
@@ -55,6 +56,9 @@ public class AccountController {
 
     @Autowired
     private ConfirmService confirmService;
+
+    @Autowired
+    private EmailSender emailSender;
 
     @GetMapping("/info")
     public ResponseEntity<String> test() {
@@ -113,6 +117,7 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //    Kiet login API use to active Account 23/10
     @GetMapping("/confirm")
     public ResponseEntity<String> confirm(@RequestParam(value = "token") String token) {
         try {
@@ -123,16 +128,34 @@ public class AccountController {
         return new ResponseEntity<>("Chức mừng bạn đã kích hoạt tài khoản", HttpStatus.OK);
     }
 
-    //HauPT do editPassword function
-    @PatchMapping("/editPass")
-    public ResponseEntity editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
-        Account account = accountService.getAccountById(editPasswordAccountDto.getAccountId());
-        if (!account.getAccountPassword().equals(editPasswordAccountDto.getOldPassword()) || bindingResult.hasFieldErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            accountService.editPassword(editPasswordAccountDto.getAccountId(), editPasswordAccountDto.getAccountPassword());
-            return new ResponseEntity<>(HttpStatus.OK);
+//    Kiet login API use to refresh password if client forget password
+    @GetMapping("/refreshPassword")
+    public ResponseEntity<String> refreshPassword(@RequestParam(required = false) String email){
+        Account account = this.accountService.findAccountByEmail(email);
+        if (account != null){
+            try {
+                String randomPass = String.valueOf((int)(Math.random()*1000+1));
+                this.accountService.editPassword(account.getAccountId(), randomPass);
+                String contentEmail  =  this.emailSender.buildForgetPassword(randomPass);
+                this.emailSender.send(account.getEmail(), contentEmail);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }catch (Exception ex){
+                return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+//HauPT do editPassword function
+//    @PatchMapping("/editPass")
+//    public ResponseEntity editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
+//        Account account = accountService.getAccountById(editPasswordAccountDto.getAccountId());
+//        if (!account.getAccountPassword().equals(editPasswordAccountDto.getOldPassword()) || bindingResult.hasFieldErrors()) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        } else {
+//            accountService.editPassword(editPasswordAccountDto.getAccountId(), editPasswordAccountDto.getAccountPassword());
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }
+//    }
 }
 
