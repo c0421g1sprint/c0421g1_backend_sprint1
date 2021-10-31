@@ -30,10 +30,10 @@ import java.util.function.Function;
 public class StudentController {
     @Autowired
     private IStudentService studentService;
-    
+
     @Autowired
     private IGradeService gradeService;
-    
+
     @Autowired
     private IClassroomService classroomService;
 
@@ -99,7 +99,7 @@ public class StudentController {
         studentService.editStudent(student);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
-    
+
     //HauPT do showDetailStudent function
     @GetMapping("/detail/{id}")
     public ResponseEntity<Student> showDetailStudent(@PathVariable Integer id) {
@@ -125,7 +125,7 @@ public class StudentController {
         return (classroomList.size() == 0) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                 : new ResponseEntity<>(classroomList, HttpStatus.OK);
     }
-    
+
     // Diệp search student ngày 25/10
     @GetMapping("/searchstudent")
     public ResponseEntity<Page<Student>> getSearchStudent(@PageableDefault(value = 2) Pageable pageable,
@@ -139,7 +139,9 @@ public class StudentController {
 
     // Hàm search by Nhật
     @GetMapping("/search")
-    public ResponseEntity<Page<Student>> searchByName(@PageableDefault(value = 1) Pageable pageable, @RequestParam String name, @RequestParam String status) {
+    public ResponseEntity<Page<Student>> searchByName(@RequestParam Integer index, @RequestParam Integer size
+            , @RequestParam String name, @RequestParam String status) {
+        Pageable pageable = PageRequest.of(index, size);
         Page<Student> studentList = studentService.findSearch(pageable, name, status);
         if (studentList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
