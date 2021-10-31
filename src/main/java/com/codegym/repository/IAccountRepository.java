@@ -17,7 +17,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
             " where a.account_username= ?1", nativeQuery = true)
     Account findAccountByUsername(String username);
 
-
+//  Kiet login 31/10 Query account with email
     @Query(value ="select  account_id, email, account_password, account_username, is_active, is_delete, is_not_block  from account a" +
             " where a.email = ?1", nativeQuery = true )
     Account findAccountByEmail(@Param("account_email") String email);

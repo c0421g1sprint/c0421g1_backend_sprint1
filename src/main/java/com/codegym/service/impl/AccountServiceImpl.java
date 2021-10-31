@@ -56,8 +56,14 @@ public class AccountServiceImpl implements IAccountService {
                 LocalDateTime.now(), LocalDateTime.now().plusMinutes(15));
         this.confirmService.saveTokenSendByEmail(verifyEmail);
         String link = "http://localhost:8080/api/public/confirm?token=" + token;
-        String contentEmail = emailSender.buildEmail(link);
+        String contentEmail = emailSender.buildRegisterEmail(link);
         emailSender.send(registerAccount.getEmail(), contentEmail);
+    }
+
+//    Kiet 31/10 findAccount By email
+    @Override
+    public Account findAccountByEmail(String email) {
+        return this.accountRepository.findAccountByEmail(email);
     }
 
     //HauPT do editPassword function

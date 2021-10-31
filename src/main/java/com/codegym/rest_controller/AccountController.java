@@ -4,6 +4,7 @@ import com.codegym.dto.AccountDto;
 import com.codegym.dto.EditPasswordAccountDto;
 import com.codegym.dto.LoginRequestDto;
 import com.codegym.email_java.ConfirmService;
+import com.codegym.email_java.email.EmailSender;
 import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_account.AccountDetails;
 import com.codegym.jwt_token.JwtProvider;
@@ -59,6 +60,9 @@ public class AccountController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EmailSender emailSender;
 
     @GetMapping("/info")
     public ResponseEntity<String> test() {
@@ -117,6 +121,7 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
     @GetMapping("/confirm")
     public ResponseEntity<String> confirm(@RequestParam(value = "token") String token) {
         try {
@@ -127,12 +132,28 @@ public class AccountController {
         return new ResponseEntity<>("Chức mừng bạn đã kích hoạt tài khoản", HttpStatus.OK);
     }
 
+    @GetMapping("/refreshPassword")
+    public ResponseEntity<String> refreshPassword(@RequestParam(required = false) String email){
+        Account account = this.accountService.findAccountByEmail(email);
+        if (account != null){
+            try {
+                String randomPass = String.valueOf((int)(Math.random()*1000+1));
+                this.accountService.editPassword(account.getAccountId(), randomPass);
+                String contentEmail  =  this.emailSender.buildForgetPassEmail(randomPass);
+                this.emailSender.send(account.getEmail(), contentEmail);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }catch (Exception ex){
+                return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     //HauPT do editPassword function
     @PatchMapping("/editPass")
     public ResponseEntity<String> editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
         Account account = accountService.getAccountById(editPasswordAccountDto.getAccountId());
         if (!passwordEncoder.matches(editPasswordAccountDto.getOldPassword(), account.getAccountPassword()) || bindingResult.hasFieldErrors())  {
-            System.out.println("123");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             accountService.editPassword(editPasswordAccountDto.getAccountId(), editPasswordAccountDto.getAccountPassword());
