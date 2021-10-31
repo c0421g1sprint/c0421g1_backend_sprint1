@@ -50,8 +50,8 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     //LamNT do create function
     @Modifying
     @Query(value = "insert into `student` (delete_flag,student_address, student_date_of_birth, student_ethnicity," +
-            "student_father_name, student_gender, student_mother_name, student_name, student_parent_phone, student_religion, student_image) " +
-            "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11)", nativeQuery = true)
+            "student_father_name, student_gender, student_mother_name, student_name, student_parent_phone, student_religion, student_image, student_status) " +
+            "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11, 'Chờ phân lớp')", nativeQuery = true)
     void saveStudent(boolean delete_flag, String student_address, String student_date_of_birth, String student_ethnicity, String student_father_name,
                      String student_gender, String student_mother_name, String student_name, String student_parent_phone, String student_religion, String student_image);
 
