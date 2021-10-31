@@ -155,4 +155,8 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
             "from student " +
             "where classroom_id = ?1", nativeQuery = true)
     List<Student> findListStudentByClassroomId(Integer id);
+
+    //LamNT
+    @Query(value = "SELECT MAX(student_id) AS max FROM student",nativeQuery = true)
+    int findNewIdStudent();
 }

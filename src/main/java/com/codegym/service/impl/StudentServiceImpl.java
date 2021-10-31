@@ -113,4 +113,9 @@ public class StudentServiceImpl implements IStudentService {
     public List<Student> findListStudentByClassroomId(Integer id) {
         return this.studentRepository.findListStudentByClassroomId(id);
     }
+
+    @Override
+    public int findNewIdStudent() {
+        return this.studentRepository.findNewIdStudent();
+    }
 }

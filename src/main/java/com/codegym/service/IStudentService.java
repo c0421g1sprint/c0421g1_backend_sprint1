@@ -48,4 +48,7 @@ public interface IStudentService{
 
     //DanhNT
     List<Student> findListStudentByClassroomId(Integer id);
+
+    //LamNT
+    int findNewIdStudent();
 }
