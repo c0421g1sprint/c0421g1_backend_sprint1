@@ -121,15 +121,29 @@ public class AccountController {
         return new ResponseEntity<>("Chức mừng bạn đã kích hoạt tài khoản", HttpStatus.OK);
     }
 
+    //HauPT do getAccountById function
+
+    @GetMapping(value = "/editPass/{id}")
+    public ResponseEntity<Account> editPassword (@PathVariable int id ) {
+        Account account = accountService.getAccountById(id);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>( account,HttpStatus.OK);
+        }
+    }
+
     //HauPT do editPassword function
     @PatchMapping(value = "/editPass", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
+    public ResponseEntity<Map<String,String>> editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
         Integer id = editPasswordAccountDto.getAccountId();
         Account account = accountService.getAccountById(id);
         if (!account.getAccountPassword().equals(editPasswordAccountDto.getOldPassword())
                 || bindingResult.hasFieldErrors()
                 || !editPasswordAccountDto.getAccountPassword().equals(editPasswordAccountDto.getConfirmPassword())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            Map<String,String> messageError = new HashMap<>();
+            messageError.put("messageError" , "Lỗi sai mật khẩu cũ");
+            return new ResponseEntity<>(messageError,HttpStatus.BAD_REQUEST);
         } else {
             accountService.editPassword(editPasswordAccountDto.getAccountId(), editPasswordAccountDto.getAccountPassword());
             return new ResponseEntity<>(HttpStatus.OK);
