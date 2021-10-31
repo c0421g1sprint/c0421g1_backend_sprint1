@@ -42,8 +42,8 @@ public class StudentServiceImpl implements IStudentService {
 
     //creator: HaNTT, date: 23/10/2021
     @Override
-    public Page<Student> findWhereClassroomIdNull(Pageable pageable) {
-        return studentRepository.findWhereClassroomIdNull(pageable);
+    public List<Student> findWhereClassroomIdNull() {
+        return studentRepository.findWhereClassroomIdNull();
     }
 
     //creator: HaNTT, date: 23/10/2021
@@ -61,7 +61,7 @@ public class StudentServiceImpl implements IStudentService {
     //LamNT saveStudent function
     @Override
     public void saveStudent(Student student) {
-        studentRepository.saveStudent(student.isDeleteFlag(), student.getStudentAddress(), student.getStudentDateOfBirth(),
+        this.studentRepository.saveStudent(student.isDeleteFlag(), student.getStudentAddress(), student.getStudentDateOfBirth(),
                 student.getStudentEthnicity(), student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(),
                 student.getStudentName(), student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentImage());
     }
@@ -72,6 +72,11 @@ public class StudentServiceImpl implements IStudentService {
         studentRepository.editStudent(student.getStudentAddress(), student.getStudentDateOfBirth(), student.getStudentEthnicity(),
                 student.getStudentFatherName(), String.valueOf(student.getStudentGender()), student.getStudentMotherName(), student.getStudentName(),
                 student.getStudentParentPhone(), student.getStudentReligion(), student.getStudentImage(), student.getStudentId());
+    }
+
+    @Override
+    public int findNewIdStudent() {
+        return this.studentRepository.findNewIdStudent();
     }
 
 }

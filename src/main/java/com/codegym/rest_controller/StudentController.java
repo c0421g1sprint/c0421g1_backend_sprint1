@@ -28,14 +28,15 @@ public class StudentController {
 
     //create: HaNTT, date: 23/10/2021
     @GetMapping("/find-student") //OK  (checkbox)
-    public ResponseEntity<Page<Student>> getStudentNotHaveClass(@PageableDefault(size = 5) Pageable pageable) {
-        Page<Student> studentList = this.studentService.findWhereClassroomIdNull(pageable);
+    public ResponseEntity<List<Student>> getStudentNotHaveClass() {
+        List<Student> studentList = this.studentService.findWhereClassroomIdNull();
 
         if (studentList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(studentList, HttpStatus.OK);
     }
+
 
     //*Note : CẦN CHECK LẠI PHƯƠNG THỨC
     //create: HaNTT, date: 23/10/2021 (add student to List)
@@ -54,7 +55,8 @@ public class StudentController {
         Student student = new Student();
         BeanUtils.copyProperties(studentDto, student);
         studentService.saveStudent(student);
-        return new ResponseEntity<>(student.getStudentId(), HttpStatus.CREATED);
+        int id = this.studentService.findNewIdStudent();
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     //LamNT do editStudent function

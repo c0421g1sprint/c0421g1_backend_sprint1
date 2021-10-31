@@ -15,7 +15,7 @@ public interface IStudentService{
     Page<Student> findByClassroom(int classroomId, Pageable pageable);
 
     //creator: HaNTT, date: 23/10/2021
-    Page<Student> findWhereClassroomIdNull(Pageable pageable);
+    List<Student> findWhereClassroomIdNull();
 
     //creator: HaNTT, date: 23/10/2021
     Student findStudentById(Integer id);
@@ -29,6 +29,7 @@ public interface IStudentService{
     //LamNT
     void editStudent(Student student);
 
-
+    //LamNT
+    int findNewIdStudent();
 
 }

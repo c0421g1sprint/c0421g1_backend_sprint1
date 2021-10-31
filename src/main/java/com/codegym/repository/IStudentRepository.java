@@ -33,12 +33,9 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
             " student_father_name, student_gender, student_image, student_mother_name, student_name, " +
             "student_parent_phone, student_religion, student_status, classroom_id\n" +
             "FROM sprint1.student\n" +
-            "WHERE classroom_id is null",
-            countQuery="SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id\n" +
-                    "FROM sprint1.student\n" +
-                    "WHERE classroom_id is null;",
+            "WHERE classroom_id is null and student_status = 'lưu ban'",
             nativeQuery = true)
-    Page<Student> findWhereClassroomIdNull(Pageable pageable);
+    List<Student> findWhereClassroomIdNull();
 
     //creator: HaNTT, date: 23/10/2021 (khi nhấn button tạo mới student: find one --> add to list student)
     @Query(value= "SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, " +
@@ -78,4 +75,9 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     void editStudent(String student_address, String student_date_of_birth, String student_ethnicity, String student_father_name,
                      String student_gender, String student_mother_name, String student_name, String student_parent_phone,
                      String student_religion,String student_image, Integer student_id);
+
+
+    //LamNT
+    @Query(value = "SELECT MAX(student_id) AS max FROM student",nativeQuery = true)
+    int findNewIdStudent();
 }
