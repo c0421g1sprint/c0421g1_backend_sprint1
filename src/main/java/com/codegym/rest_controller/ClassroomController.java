@@ -56,8 +56,8 @@ public class ClassroomController {
     }
 
     //DanhNT coding controller find by id
-//check ok 9:00 AM - ok
-//check ok : 27/10 - 9:55
+    //check ok 9:00 AM - ok
+    //check ok : 27/10 - 9:55
     @GetMapping("/get-classroom/{id}")
     public ResponseEntity<Classroom> findById(@PathVariable int id) {
         Classroom classroom = this.classroomService.getById(id);

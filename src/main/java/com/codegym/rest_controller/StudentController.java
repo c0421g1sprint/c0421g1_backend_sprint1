@@ -84,11 +84,12 @@ public class StudentController {
 
     //LamNT do createStudent function
     @PostMapping("/add")
-    public ResponseEntity<Integer> addStudent(@RequestBody @Validated StudentDto StudentDto) {
+    public ResponseEntity<Integer> addStudent(@RequestBody @Validated StudentDto studentDto) {
         Student student = new Student();
-        BeanUtils.copyProperties(StudentDto, student);
+        BeanUtils.copyProperties(studentDto, student);
         studentService.saveStudent(student);
-        return new ResponseEntity<>(student.getStudentId(), HttpStatus.CREATED);
+        int id = this.studentService.findNewIdStudent();
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     //LamNT do editStudent function
