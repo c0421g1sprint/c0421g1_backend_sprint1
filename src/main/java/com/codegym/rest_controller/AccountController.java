@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -121,7 +122,7 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    //    Kiet login confirm account after register account 26/10
     @GetMapping("/confirm")
     public ResponseEntity<String> confirm(@RequestParam(value = "token") String token) {
         try {
@@ -132,12 +133,16 @@ public class AccountController {
         return new ResponseEntity<>("Chức mừng bạn đã kích hoạt tài khoản", HttpStatus.OK);
     }
 
-    @GetMapping("/refreshPassword")
+    //    Kiet login refresh password if client forget
+    @GetMapping(value = "/refreshPassword")
     public ResponseEntity<String> refreshPassword(@RequestParam(required = false) String email){
+        if (!email.matches("^[a-zA-Z0-9]+\\@[a-z]+\\.[a-z]+$")){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Account account = this.accountService.findAccountByEmail(email);
         if (account != null){
             try {
-                String randomPass = String.valueOf((int)(Math.random()*1000+1));
+                String randomPass = String.valueOf((int)((Math.random()+1)*100000));
                 this.accountService.editPassword(account.getAccountId(), randomPass);
                 String contentEmail  =  this.emailSender.buildForgetPassEmail(randomPass);
                 this.emailSender.send(account.getEmail(), contentEmail);
