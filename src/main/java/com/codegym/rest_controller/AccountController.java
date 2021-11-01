@@ -3,7 +3,6 @@ package com.codegym.rest_controller;
 
 import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_account.AccountDto;
-import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.IAccountService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class AccountController {
 
     @GetMapping(value = "/detailAccount/{id}")
     public ResponseEntity<Account> findById(@PathVariable Long id) {
-        Account account = this.accountService.findById(id).get();
+        Account account = this.accountService.findById(id).orElse(null);
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -45,6 +44,5 @@ public class AccountController {
         this.accountService.updateIdAccountTeacher(accountDto.getTeacherId(),accountDto.getAccountId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
 

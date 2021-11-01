@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AccountRestController_createAccount {
+public class AccountRestControllerCreateAccount {
     @Autowired
     private MockMvc mockMvc;
 
@@ -22,7 +22,7 @@ public class AccountRestController_createAccount {
     private ObjectMapper objectMapper;
 
     @Test
-    public void createAccount_accountName_13() throws Exception {
+     void createAccount_accountName_13() throws Exception {
         AccountDto accountDto = new AccountDto();
         accountDto.setAccountUsername(null);
         accountDto.setAccountPassword("123123");
@@ -34,7 +34,7 @@ public class AccountRestController_createAccount {
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void createAccount_accountName_14() throws Exception {
+     void createAccount_accountName_14() throws Exception {
         AccountDto accountDto = new AccountDto();
         accountDto.setAccountUsername("");
         accountDto.setAccountPassword("123123");
@@ -48,11 +48,11 @@ public class AccountRestController_createAccount {
 
 
     @Test
-    public void createAccount_accountName_18() throws Exception {
+     void createAccount_accountName_18() throws Exception {
         AccountDto accountDto = new AccountDto();
-        accountDto.setAccountUsername("Hà");
+        accountDto.setAccountUsername("Ha1233421");
 
-        accountDto.setAccountPassword("12345");
+        accountDto.setAccountPassword("12345aav");
         accountDto.setAccountEmail("Duc@gmail.com");
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/createAccount")

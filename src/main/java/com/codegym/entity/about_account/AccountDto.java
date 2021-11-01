@@ -1,6 +1,5 @@
 package com.codegym.entity.about_account;
 
-import com.codegym.entity.about_teacher.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

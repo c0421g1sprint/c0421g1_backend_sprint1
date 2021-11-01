@@ -11,19 +11,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class Config extends WebSecurityConfigurerAdapter {
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.csrf().disable();
-
-        // Các trang không yêu cầu login
         http.authorizeRequests().antMatchers("/", "/createAccount").permitAll();
-
     }
 }

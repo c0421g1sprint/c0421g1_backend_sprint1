@@ -13,12 +13,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AccountRestController_getInfoAccount {
+public class AccountRestControllerGetInfoAccount {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void getInfoAccount_1() throws Exception {
+     void getInfoAccount_1() throws Exception {
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(
@@ -27,7 +27,7 @@ public class AccountRestController_getInfoAccount {
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void getInfoAccount_2() throws Exception {
+     void getInfoAccount_2() throws Exception {
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(
@@ -36,7 +36,7 @@ public class AccountRestController_getInfoAccount {
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void getInfoStudent_4() throws Exception {
+     void getInfoStudent_4() throws Exception {
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(
