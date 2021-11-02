@@ -1,4 +1,4 @@
-package com.codegym.dto;
+package com.codegym.DTO;
 
 import com.codegym.entity.about_teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
