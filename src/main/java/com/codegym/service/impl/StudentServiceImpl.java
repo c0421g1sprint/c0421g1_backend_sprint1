@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 
 @Service
@@ -41,8 +40,13 @@ public class StudentServiceImpl implements IStudentService {
 
     //creator: HaNTT, date: 23/10/2021
     @Override
+
+    public Student getStudentDetail(Integer id) {
+        return studentRepository.getLStudentDetail(id);
+
     public Page<Student> findWhereClassroomIdNull(Pageable pageable) {
         return studentRepository.findWhereClassroomIdNull(pageable);
+
     }
 
     //creator: HaNTT, date: 23/10/2021

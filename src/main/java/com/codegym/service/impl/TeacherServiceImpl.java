@@ -27,6 +27,11 @@ public class TeacherServiceImpl implements ITeacherService {
     }
     //BaoHG
     @Override
+    public Teacher findTeacherAccountUserName(String userName) {
+        return teacherRepository.findTeacherAccountUserName(userName);
+    }
+
+    @Override
     public void update(Teacher teacher) {
         this.teacherRepository.updateTeacher(teacher.isDeleteFlag(), teacher.getTeacherAddress(), teacher.getTeacherDateOfBirth(), teacher.getTeacherEmail(), teacher.getTeacherGender(), teacher.getTeacherImage(), teacher.getTeacherName(), teacher.getTeacherPhone(), teacher.getTeacherUniversity(),teacher.getDivision().getDivisionId(), teacher.getDegree().getDegreeId(),teacher.getTeacherId());
     }

@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id "org.sonarqube" version "2.7"
 }
 
 group = 'com.codegym'
@@ -30,9 +31,18 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'com.auth0:java-jwt:3.18.2'
-
 }
 
 test {
     useJUnitPlatform()
+}
+
+
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'http://18.217.47.135:9000/'
+        property 'sonar.login', 'f4570cffe1dd5bf39ecbeed0ef04eef921709b5a'
+        property 'sonar.projectKey', 'C0421g1_ReviewCodeShedule_PhucNK'
+        property 'sonar.projectName', 'C0421g1_ReviewCodeShedule_PhucNK'
+    }
 }

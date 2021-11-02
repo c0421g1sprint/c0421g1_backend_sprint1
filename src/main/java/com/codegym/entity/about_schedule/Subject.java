@@ -26,6 +26,7 @@ public class Subject {
     private Set<Mark> marks;
     
 
+
     @JsonBackReference
     @OneToMany(mappedBy = "subject")
 //    @JsonBackReference(value = "scheduleDetail_subject")

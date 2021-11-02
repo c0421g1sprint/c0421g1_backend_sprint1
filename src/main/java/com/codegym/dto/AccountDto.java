@@ -1,5 +1,18 @@
-
 package com.codegym.dto;
+import com.codegym.entity.about_account.Role;
+import com.codegym.entity.about_teacher.Teacher;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Set;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
