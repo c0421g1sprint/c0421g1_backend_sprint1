@@ -1,8 +1,6 @@
 package com.codegym.rest_controller;
-
-
 import com.codegym.dto.TeacherDto;
-
+import com.codegym.dto.TeacherUpdateDto;
 import com.codegym.entity.about_schedule.ScheduleDetail;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.IScheduleDetailService;
@@ -12,9 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import com.codegym.entity.about_student.Student;
 import com.codegym.service.IStudentService;
 import org.springframework.data.domain.Page;
@@ -24,6 +20,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 
 @RestController
@@ -32,7 +33,14 @@ import org.springframework.validation.annotation.Validated;
 public class TeacherController {
 
     @Autowired
+    private ITeacherService teacherService;
+
+    @Autowired
+    private IStudentService iStudentService;
+
+    @Autowired
     private IScheduleDetailService iScheduleDetailService;
+
 
     @Autowired
     private ITeacherService teacherService;
@@ -45,7 +53,6 @@ public class TeacherController {
         Teacher teacher = teacherService.findTeacherAccountUserName(userName);
 
         List<ScheduleDetail> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(teacher.getTeacherId());
-
         if (scheduleDetailList.isEmpty()) {
             System.out.println("233346365");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -54,9 +61,6 @@ public class TeacherController {
         }
     }
 
-
-    @Autowired
-    private IStudentService iStudentService;
 
     //PhucNK danh sach hoc sinh ma giao vien chu nhiem
 
@@ -71,7 +75,6 @@ public class TeacherController {
         }
         Page<Student> studentList = iStudentService.getListStudent(pageable, teacher.getTeacherId());
         if (studentList.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(studentList, HttpStatus.OK);
@@ -80,17 +83,16 @@ public class TeacherController {
 
     //PhucNK xem chi tiet hoc sinh
     @GetMapping(value = "/detail/{id}")
-    public ResponseEntity<Student> getListStudentDetail(@PathVariable(required = false) Integer id) {
-        Student studentDetail = iStudentService.getStudentDetail(id);
+
+    public ResponseEntity<Student> getListStudentDetail( @PathVariable(required = false) Integer id) {
+        Student studentDetail = iStudentService.getListStudentDetail(id);
+
         if (studentDetail == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(studentDetail, HttpStatus.OK);
         }
     }
-
-
-
     // diep search teacher 25/10
     @GetMapping("/search")
     public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 2) Pageable pageable,
@@ -162,17 +164,14 @@ public class TeacherController {
         }
     }
 
-
     //    MinhNN 24/10 update infor teacherg
     @PatchMapping("/updateInFor")
-    public ResponseEntity<?> updateInforTeacher(@RequestBody @Validated TeacherDto teacherDto, BindingResult
+    public ResponseEntity<?> updateInforTeacher(@RequestBody @Validated TeacherUpdateDto teacherDto, BindingResult
             bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            Teacher teacher = new Teacher();
-            BeanUtils.copyProperties(teacherDto, teacher);
-            this.teacherService.updateInFor(teacher);
+            this.teacherService.updateInFor(teacherDto);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
@@ -215,6 +214,19 @@ public class TeacherController {
 
         }
     }
+
+    //*Note : CẦN CHECK LẠI PHƯƠNG THỨC
+    //create: HaNTT, date: 23/10/2021 (select-option)
+    @GetMapping("/find-teacher") //OK
+    public ResponseEntity<List<Teacher>> getListTeacherNotHaveChairedClass() {
+        List<Teacher> teacherList = this.teacherService.findTeacherWhereTeacherIdNull();
+
+        if (teacherList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(teacherList, HttpStatus.OK);
+    }
+
 }
 
 

@@ -20,6 +20,7 @@ public class Mark {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer markId;
 
+//    @JsonManagedReference
     @ManyToOne(targetEntity = Student.class)
     @JoinColumn(name = "student_id",referencedColumnName = "studentId")
     private Student student;

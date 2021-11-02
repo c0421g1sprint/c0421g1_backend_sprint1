@@ -19,6 +19,7 @@ public class Division {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer divisionId;
     private String divisionName;
+
     @JsonBackReference(value = "teacher_division")
     @OneToMany(mappedBy = "division")
     private Set<Teacher> teachers;
