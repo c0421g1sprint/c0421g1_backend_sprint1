@@ -18,5 +18,5 @@ public interface IMarkService  {
 
     void delete(int id);
 
-    Page<Mark> search(Pageable pageable, String nameStudent, String subject);
+    Page<Mark> search(Pageable pageable, String nameStudent, Integer subjectId, String className);
 }
