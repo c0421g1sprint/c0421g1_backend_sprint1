@@ -1,6 +1,8 @@
 package com.codegym.rest_controller;
 
+
 import com.codegym.dto.TeacherDto;
+
 import com.codegym.entity.about_schedule.ScheduleDetail;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.IScheduleDetailService;
@@ -32,10 +34,18 @@ public class TeacherController {
     @Autowired
     private IScheduleDetailService iScheduleDetailService;
 
-    //Phuc lich day giao vien
-    @GetMapping("/schedule/{id}")
-    public ResponseEntity<List<ScheduleDetail>> showScheduleTeacher(@PathVariable Integer id) {
-        List<ScheduleDetail> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(id);
+    @Autowired
+    private ITeacherService teacherService;
+
+
+//Phuc lich day giao vien
+    @GetMapping("/schedule")
+    public ResponseEntity<List<ScheduleDetail>> showScheduleTeacher(@RequestParam String userName) {
+
+        Teacher teacher = teacherService.findTeacherAccountUserName(userName);
+
+        List<ScheduleDetail> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(teacher.getTeacherId());
+
         if (scheduleDetailList.isEmpty()) {
             System.out.println("233346365");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,12 +59,17 @@ public class TeacherController {
     private IStudentService iStudentService;
 
     //PhucNK danh sach hoc sinh ma giao vien chu nhiem
-    @GetMapping(value = "/list/{id}")
-    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 1) Pageable pageable, @PathVariable Integer id) {
-        if (id == null) {
+
+    @GetMapping(value = "/listStudentByTeacher")
+    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 2) Pageable pageable, @RequestParam String userName) {
+
+
+        Teacher teacher = teacherService.findTeacherAccountUserName(userName);
+
+        if(teacher.getTeacherId() == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Page<Student> studentList = iStudentService.getListStudent(pageable, id);
+        Page<Student> studentList = iStudentService.getListStudent(pageable, teacher.getTeacherId());
         if (studentList.isEmpty()) {
 //            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -75,8 +90,6 @@ public class TeacherController {
     }
 
 
-    @Autowired
-    private ITeacherService teacherService;
 
     // diep search teacher 25/10
     @GetMapping("/search")

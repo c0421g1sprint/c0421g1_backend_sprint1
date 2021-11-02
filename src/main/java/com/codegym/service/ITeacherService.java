@@ -24,4 +24,8 @@ public interface ITeacherService {
     List<Division> findAllDivisionByQuery();
     Page<Teacher> findAllTeacherByQueryWithNameAndDivision(Pageable pageable,String name, Integer id);
     Page<Teacher> searchTeacher(Pageable pageable, String search);
+
+
+    //    PhucNk liên kết với account của kiệt
+    Teacher findTeacherAccountUserName(String userName);
 }
