@@ -34,4 +34,10 @@ public interface ITeacherService {
 
     List<Teacher> findTeacherWhereTeacherIdNull();
     List<Degree> findAllDegreeByQuery();
+
+    Teacher findTeacherByAccountName(String name);
+    void updateInForByAccountName(TeacherUpdateDto teacher);
+
+    //    PhucNk liên kết với account của kiệt
+    Teacher findTeacherAccountUserName(String userName);
 }

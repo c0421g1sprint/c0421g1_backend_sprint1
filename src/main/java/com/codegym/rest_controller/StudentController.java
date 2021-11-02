@@ -84,11 +84,12 @@ public class StudentController {
 
     //LamNT do createStudent function
     @PostMapping("/add")
-    public ResponseEntity<Integer> addStudent(@RequestBody @Validated StudentDto StudentDto) {
+    public ResponseEntity<Integer> addStudent(@RequestBody @Validated StudentDto studentDto) {
         Student student = new Student();
-        BeanUtils.copyProperties(StudentDto, student);
+        BeanUtils.copyProperties(studentDto, student);
         studentService.saveStudent(student);
-        return new ResponseEntity<>(student.getStudentId(), HttpStatus.CREATED);
+        int id = this.studentService.findNewIdStudent();
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     //LamNT do editStudent function
@@ -139,7 +140,9 @@ public class StudentController {
 
     // Hàm search by Nhật
     @GetMapping("/search")
-    public ResponseEntity<Page<Student>> searchByName(@PageableDefault(value = 1) Pageable pageable, @RequestParam String name, @RequestParam String status) {
+    public ResponseEntity<Page<Student>> searchByName(@RequestParam Integer index, @RequestParam Integer size
+            , @RequestParam String name, @RequestParam String status) {
+        Pageable pageable = PageRequest.of(index, size);
         Page<Student> studentList = studentService.findSearch(pageable, name, status);
         if (studentList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -1,10 +1,22 @@
 package com.codegym.dto;
 
+
+import com.codegym.entity.about_account.Account;
+
 public class TeacherUpdateDto {
     private String teacherAddress;
     private String teacherEmail;
     private String teacherPhone;
     private Integer teacherId;
+    private Account account;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
     public Integer getTeacherId() {
         return teacherId;
@@ -37,4 +49,5 @@ public class TeacherUpdateDto {
     public void setTeacherPhone(String teacherPhone) {
         this.teacherPhone = teacherPhone;
     }
+
 }

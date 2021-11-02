@@ -107,4 +107,19 @@ public class TeacherServiceImpl implements ITeacherService {
         return this.iDegreeRepository.findAllDegreeByQuery();
     }
 
+    //    MinhNN
+    @Override
+    public Teacher findTeacherByAccountName(String name) {
+        return teacherRepository.findTeacherByAccountName(name);
+    }
+    //  MinhNN
+    @Override
+    public void updateInForByAccountName(TeacherUpdateDto teacher) {
+        teacherRepository.editPersonInforByAccountName(teacher.getTeacherPhone(),teacher.getTeacherAddress(),teacher.getTeacherEmail(),teacher.getAccount().getAccountUsername());
+    }
+
+    @Override
+    public Teacher findTeacherAccountUserName(String userName) {
+        return teacherRepository.findTeacherAccountUserName(userName);
+    }
 }

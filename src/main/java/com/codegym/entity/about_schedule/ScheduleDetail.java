@@ -1,5 +1,7 @@
 package com.codegym.entity.about_schedule;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +11,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"study_day_time_id", "subject_id", "schedule_id"})})
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "scheduleDetailId")
 public class ScheduleDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

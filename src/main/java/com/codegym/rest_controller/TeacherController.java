@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/teachers")
 public class TeacherController {
 
@@ -43,27 +43,32 @@ public class TeacherController {
     @Autowired
     private IScheduleDetailService iScheduleDetailService;
 
+
+
     //Phuc lich day giao vien
-    @GetMapping("/schedule/{id}")
-    public ResponseEntity<List<ScheduleDetail>> showScheduleTeacher(@PathVariable Integer id) {
-        List<ScheduleDetail> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(id);
+    @GetMapping("/schedule")
+    public ResponseEntity<List<ScheduleDetail>> showScheduleTeacher(@RequestParam String userName) {
+        Teacher teacher = teacherService.findTeacherAccountUserName(userName);
+        List<ScheduleDetail> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(teacher.getTeacherId());
+
         if (scheduleDetailList.isEmpty()) {
-            System.out.println("233346365");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(scheduleDetailList, HttpStatus.OK);
         }
     }
 
+
+
     //PhucNK danh sach hoc sinh ma giao vien chu nhiem
-    @GetMapping(value = "/list/{id}")
-    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 1) Pageable pageable, @PathVariable Optional<Integer> id) {
-        if(id == null){
+    @GetMapping(value = "/listStudentByTeacher")
+    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 5) Pageable pageable, @RequestParam String userName) {
+        Teacher teacher = teacherService.findTeacherAccountUserName(userName);
+        if(teacher.getTeacherId() == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Page<Student> studentList = iStudentService.getListStudent(pageable, id.get());
+        Page<Student> studentList = iStudentService.getListStudent(pageable, teacher.getTeacherId());
         if (studentList.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(studentList, HttpStatus.OK);
@@ -223,6 +228,30 @@ public class TeacherController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(teacherList, HttpStatus.OK);
+    }
+
+
+    //    MinhNN
+    @GetMapping("/")
+    public ResponseEntity<Teacher> findTeacherByAccountName(@RequestParam String name) {
+        Teacher teacher = teacherService.findTeacherByAccountName(name);
+        if (teacher != null) {
+            return new ResponseEntity<>(teacher, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+//    MinhNN
+    @PatchMapping("/updateInFor/account")
+    public ResponseEntity<Teacher> updateInforTeacherByAccountName(@RequestBody @Validated TeacherUpdateDto teacherDto, BindingResult
+            bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            this.teacherService.updateInForByAccountName(teacherDto);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
 }

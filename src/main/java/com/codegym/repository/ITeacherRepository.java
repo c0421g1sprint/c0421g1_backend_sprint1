@@ -96,4 +96,26 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
             nativeQuery = true)
     List<Teacher> findTeacherWhereTeacherIdNull();
 
+    //    MinhNN update by account name
+    @Modifying
+    @Query(value = "UPDATE teacher as c \n" +
+            "JOIN `account` as a ON a.account_id = c.account_id\n" +
+            "SET c.teacher_phone = ?1, c.teacher_address = ?2, c.teacher_email = ?3\n" +
+            "WHERE a.account_username =  ?4", nativeQuery = true)
+    void editPersonInforByAccountName(String phone, String address, String email, String name);
+
+    //    MinhNN
+    @Query(value = "select c.teacher_id, c.delete_flag, c.teacher_address, c.teacher_date_of_birth, c.teacher_email, c.teacher_gender, c.teacher_image, c.teacher_name, c.teacher_phone, c.teacher_university, c.account_id, c.degree_id, c.division_id\n" +
+            "from teacher as c\n" +
+            "JOIN `account` as a ON a.account_id = c.account_id\n" +
+            "where a.account_username = ?1", nativeQuery = true)
+    Teacher findTeacherByAccountName(String name);
+
+    //    PhucNk liên kết với account của kiệt
+    @Query(value="select t.teacher_id, t.delete_flag, t.teacher_address, t.teacher_date_of_birth," +
+            " t.teacher_email, t.teacher_gender, t.teacher_image, t.teacher_name, t.teacher_phone," +
+            " t.teacher_university, t.account_id, t.degree_id, t.division_id from teacher as t" +
+            " join account on t.account_id = account.account_id where account.account_username = ?1",
+            nativeQuery = true)
+    Teacher findTeacherAccountUserName(String userName);
 }

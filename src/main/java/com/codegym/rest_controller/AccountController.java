@@ -154,13 +154,28 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    //HauPT do editPassword function
-    @PatchMapping("/editPass")
-    public ResponseEntity<String> editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
-        Account account = accountService.getAccountById(editPasswordAccountDto.getAccountId());
-        if (!passwordEncoder.matches(editPasswordAccountDto.getOldPassword(), account.getAccountPassword()) || bindingResult.hasFieldErrors())  {
+//    HauPT do getAccountById function
+    @GetMapping(value = "/editPass")
+    public ResponseEntity<Account> editPassword (@RequestParam String accountUsername ) {
+        Account account = accountService.findByUsername(accountUsername);
+        if (account == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
+            return new ResponseEntity<>( account,HttpStatus.OK);
+        }
+    }
+
+    //HauPT do editPassword function
+    @PatchMapping( value = "/editPass" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> editPassword (@RequestBody @Valid EditPasswordAccountDto editPasswordAccountDto , BindingResult bindingResult) {
+        Integer id = editPasswordAccountDto.getAccountId();
+        Account account = accountService.getAccountById(id);
+        if (!passwordEncoder.matches(editPasswordAccountDto.getOldPassword(), account.getAccountPassword())
+                || bindingResult.hasFieldErrors()
+                ||!editPasswordAccountDto.getConfirmPassword().equals(editPasswordAccountDto.getAccountPassword()))  {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+
             accountService.editPassword(editPasswordAccountDto.getAccountId(), editPasswordAccountDto.getAccountPassword());
             return new ResponseEntity<>(HttpStatus.OK);
         }

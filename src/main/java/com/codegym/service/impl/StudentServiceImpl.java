@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -28,14 +27,14 @@ public class StudentServiceImpl implements IStudentService {
     //Phuc
     @Override
     public Student getListStudentDetail(Integer id) {
-        return studentRepository.findStudentWhereId(id);
+        return studentRepository.getStudentById(id);
     }
 
     //Trùng code với chị Hà
     //Danh coding 2:00PM - 23-10-2021
     @Override
-    public void updateClassForStudent(Integer classId, Integer studentId) {
-        this.studentRepository.updateClassForStudent(classId, studentId);
+    public void updateClassForStudent(Integer classId,String status, Integer studentId) {
+        this.studentRepository.updateClassForStudent(classId, status, studentId);
     }
 
     //creator: HaNTT, date: 23/10/2021
@@ -53,7 +52,7 @@ public class StudentServiceImpl implements IStudentService {
     //creator: HaNTT, date: 23/10/2021
     @Override
     public Student findStudentById(Integer id) {
-        return studentRepository.findStudentWhereId(id);
+        return studentRepository.getStudentById(id);
     }
 
     @Override
@@ -112,5 +111,10 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public List<Student> findListStudentByClassroomId(Integer id) {
         return this.studentRepository.findListStudentByClassroomId(id);
+    }
+
+    @Override
+    public int findNewIdStudent() {
+        return this.studentRepository.findNewIdStudent();
     }
 }

@@ -28,7 +28,7 @@ public interface IStudentService{
 
     //Trùng với chị Hà nhưng khác kiểu trả về
     //Danh coding 2:00PM - 23-10-2021
-    void updateClassForStudent(Integer classId, Integer studentId);
+    void updateClassForStudent(Integer classId,String status, Integer studentId);
 
     Student getById(int id);
 
@@ -48,4 +48,7 @@ public interface IStudentService{
 
     //DanhNT
     List<Student> findListStudentByClassroomId(Integer id);
+
+    //LamNT
+    int findNewIdStudent();
 }

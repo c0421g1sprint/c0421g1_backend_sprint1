@@ -92,7 +92,7 @@ public class ClassroomController {
 
         if (studentList != null) {
             for (Student student : studentList) {
-                this.studentService.updateClassForStudent(classroomDto.getClassroomId(), student.getStudentId());
+                this.studentService.updateClassForStudent(classroomDto.getClassroomId(),student.getStudentStatus(), student.getStudentId());
             }
         }
 
@@ -129,10 +129,13 @@ public class ClassroomController {
                 Double avgMark = avgArray(avgList);
                 // demote student
                 if (avgMark < 3.5) {
-                    student.setStudentStatus(student.getClassroom().getClassroomName());
                     if (student.getClassroom().getGrade().getGradeId() == 1) {
                         student.setClassroom(null);
                         student.setStudentStatus("Lưu ban");
+                        this.studentService.
+                                updateClassForStudent
+                                        (null,
+                                                student.getStudentStatus(),student.getStudentId());
                     } else {
                         demoteName[0] = String.valueOf(Integer.parseInt(demoteName[0]) - 1);
                         String rejoinName = String.join("", demoteName);
@@ -142,14 +145,14 @@ public class ClassroomController {
                         student.setClassroom(promoteClass);
                         // rejoin student to database
                         this.studentService.
-                                updateClassForStudent(student.getClassroom().getClassroomId(), student.getStudentId());
+                                updateClassForStudent(student.getClassroom().getClassroomId(),"Đang học" ,student.getStudentId());
                     }
                 }
             }
             if (newClassroom.getGrade().getGradeId() != 5) {
                 this.classroomService.
                         updateClassNameAfterPromote(newClassroom.getClassroomName(),
-                                newClassroom.getGrade().getGradeId() + 1,
+                                newClassroom.getGrade().getGradeId(),
                                 newClassroom.getClassroomId());
             }
 
@@ -209,7 +212,7 @@ public class ClassroomController {
             System.err.println("classId khi lưu class: " + classroomId);
             //set class cho List student đã chọn
             for (Student student : studentSet) {
-                this.studentService.updateClassForStudent(classroomId, student.getStudentId());
+                this.studentService.updateClassForStudent(classroomId, "Đang học",student.getStudentId());
             }
             return new ResponseEntity<>(HttpStatus.OK);
         }

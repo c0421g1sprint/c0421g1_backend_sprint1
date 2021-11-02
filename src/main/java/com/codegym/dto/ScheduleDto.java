@@ -20,6 +20,5 @@ public class ScheduleDto {
     private Integer scheduleId;
     private Classroom classroom;
     private boolean deleteFlag;
-
     private Set<ScheduleDetail> scheduleDetails;
 }

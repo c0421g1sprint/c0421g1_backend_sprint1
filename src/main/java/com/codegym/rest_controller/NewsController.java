@@ -29,7 +29,7 @@ public class NewsController {
     private ITypeService iTypeService;
 
     @GetMapping
-    public ResponseEntity<Page<News>> findAllNews(@PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity<Page<News>> findAllNews(@PageableDefault(size = 3) Pageable pageable) {
         Page<News> newsList = this.iNewsService.findAll(pageable);
 
         if (newsList.isEmpty()) {

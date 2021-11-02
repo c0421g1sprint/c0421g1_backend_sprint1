@@ -36,7 +36,9 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
 
     //DungNM - lấy đối tượng học sinh theo ID của học sinh
     @Query(value = "select " +
-            "student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id " +
+            "student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name," +
+            " student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion," +
+            " student_status, classroom_id " +
             "from student s where s.student_id = :id", nativeQuery = true)
     Student getStudentById(int id);
 
@@ -114,9 +116,9 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     @Modifying
     @Transactional
     @Query(value = "update student\n" +
-            "set classroom_id = ?1\n" +
-            "where student_id = ?2", nativeQuery = true)
-    void updateClassForStudent(Integer classId, Integer studentId);
+            "set classroom_id = ?1, student_status = ?2\n" +
+            "where student_id = ?3", nativeQuery = true)
+    void updateClassForStudent(Integer classId,String status, Integer studentId);
 
 
     //creator: HaNTT, date: 23/10/2021 (khi nhấn nút chọn student có sẵn: checkbox)
@@ -132,12 +134,14 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     List<Student> findWhereClassroomIdNull();
 
     //creator: HaNTT, date: 23/10/2021 (khi nhấn button tạo mới student: find one --> add to list student)
-    @Query(value = "SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, " +
-            "student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id\n" +
-            "FROM student\n" +
-            "WHERE student_id = ? ;",
-            nativeQuery = true)
-    Student findStudentWhereId(Integer id);
+//    @Query(value = "SELECT student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, " +
+//            "student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id\n" +
+//            "FROM student\n" +
+//            "WHERE student_id = ? ;",
+//            nativeQuery = true)
+//    Student getStudentById(Integer id);
+    
+    
 
 //    //Phuc xem chi tiet hoc sinh
 //    @Query(value = "select * from student where student_id=?1", nativeQuery = true)
@@ -153,6 +157,11 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     //DanhNT
     @Query(value = "select student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id " +
             "from student " +
-            "where classroom_id = ?1", nativeQuery = true)
+            "where classroom_id = ?1 and delete_flag = false", nativeQuery = true)
     List<Student> findListStudentByClassroomId(Integer id);
+
+    //LamNT
+    @Query(value = "SELECT MAX(student_id) AS max FROM student",nativeQuery = true)
+    int findNewIdStudent();
+
 }

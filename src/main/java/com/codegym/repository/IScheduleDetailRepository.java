@@ -19,4 +19,6 @@ public interface IScheduleDetailRepository extends JpaRepository<ScheduleDetail,
             "join teacher t on cl.teacher_id = t.teacher_id where t.teacher_id =?1",nativeQuery=true)
     List<ScheduleDetail> getScheduleTeacher(@Param("id") Integer id);
 
+
+
 }
