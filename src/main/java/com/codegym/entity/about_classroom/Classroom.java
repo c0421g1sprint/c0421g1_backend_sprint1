@@ -36,7 +36,7 @@ public class Classroom {
     @JoinColumn(name = "teacher_id",referencedColumnName = "teacherId")
     private Teacher teacher;
 
-
+    @JsonBackReference(value = "classroom_student")
     @OneToMany(mappedBy = "classroom")
     private Set<Student> students;
 
