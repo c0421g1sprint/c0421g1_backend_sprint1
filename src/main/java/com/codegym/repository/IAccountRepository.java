@@ -22,7 +22,9 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     @Query(value = "INSERT into account (account_username,account_password,activated_flag,lock_flag,delete_flag) values (?1,?2,0,1,0) ", nativeQuery = true)
     void saveQuery(String accountUsername, String accountPassword);
 
-    @Query(value = "select * from account where account.account_id = ?1", nativeQuery = true)
+    @Query(value = "select ac.account_username,ac.account_password,tc.teacher_name" +
+            " from `account` ac"+
+            " join  teacher tc on ac.account_id= tc.account_id", nativeQuery = true)
     Optional<Account> findByIdQuery(Long id);
 
     @Transactional
