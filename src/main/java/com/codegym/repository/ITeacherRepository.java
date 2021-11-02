@@ -40,7 +40,6 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
             " from teacher where delete_flag = false ", nativeQuery = true, countQuery = "select count(*)  from teacher where delete_flag = false;")
     Page<Teacher> findAllTeacherByQuery(Pageable pageable);
 
-
     @Query(value = "select" +
             " teacher_id, delete_flag, teacher_address, teacher_date_of_birth, teacher_email, teacher_gender, teacher_image, teacher_name, teacher_phone, teacher_university, account_id, degree_id, division_id " +
             "from teacher where teacher_id = :id", nativeQuery = true)
@@ -95,4 +94,12 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
     void saveDeleteTeacher(int id);
 
 
+
+//    PhucNk liên kết với account của kiệt
+    @Query(value="select t.teacher_id, t.delete_flag, t.teacher_address, t.teacher_date_of_birth," +
+            " t.teacher_email, t.teacher_gender, t.teacher_image, t.teacher_name, t.teacher_phone," +
+            " t.teacher_university, t.account_id, t.degree_id, t.division_id from teacher as t" +
+            " join account on t.account_id = account.account_id where account.account_username = ?1",
+            nativeQuery = true)
+    Teacher findTeacherAccountUserName(String userName);
 }

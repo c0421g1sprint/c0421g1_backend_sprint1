@@ -1,5 +1,6 @@
 package com.codegym.rest_controller;
 import com.codegym.DTO.TeacherDto;
+import com.codegym.entity.about_account.Account;
 import com.codegym.entity.about_schedule.ScheduleDetail;
 import com.codegym.entity.about_teacher.Teacher;
 import com.codegym.service.IScheduleDetailService;
@@ -10,6 +11,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
 import com.codegym.entity.about_student.Student;
 import com.codegym.service.IStudentService;
@@ -35,9 +38,12 @@ public class TeacherController {
     private IScheduleDetailService iScheduleDetailService;
 
 //Phuc lich day giao vien
-    @GetMapping("/schedule/{id}")
-    public ResponseEntity<List<ScheduleDetail>> showScheduleTeacher(@PathVariable Integer id) {
-        List<ScheduleDetail> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(id);
+    @GetMapping("/schedule/{userName}")
+    public ResponseEntity<List<ScheduleDetail>> showScheduleTeacher(@PathVariable String userName) {
+
+        Teacher teacher = teacherService.findTeacherAccountUserName(userName);
+
+        List<ScheduleDetail> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(teacher.getTeacherId());
         if (scheduleDetailList.isEmpty()) {
             System.out.println("233346365");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -52,12 +58,16 @@ public class TeacherController {
     private IStudentService iStudentService;
 
     //PhucNK danh sach hoc sinh ma giao vien chu nhiem
-    @GetMapping(value = "/list/{id}")
-    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 1) Pageable pageable, @PathVariable Optional<Integer> id) {
-        if(id == null){
+    @GetMapping(value = "/list/{userName}")
+    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 2) Pageable pageable, @PathVariable String userName) {
+
+
+        Teacher teacher = teacherService.findTeacherAccountUserName(userName);
+
+        if(teacher.getTeacherId() == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Page<Student> studentList = iStudentService.getListStudent(pageable, id.get());
+        Page<Student> studentList = iStudentService.getListStudent(pageable, teacher.getTeacherId());
         if (studentList.isEmpty()) {
 //            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

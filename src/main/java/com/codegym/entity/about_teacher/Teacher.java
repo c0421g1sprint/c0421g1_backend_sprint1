@@ -30,14 +30,17 @@ public class Teacher {
     private String teacherPhone;
     private String teacherImage;
 
+    @JsonManagedReference
     @ManyToOne(targetEntity = Degree.class)
     @JoinColumn(name = "degree_id", referencedColumnName = "degreeId")
     private Degree degree;
 
+    @JsonManagedReference
     @ManyToOne(targetEntity = Division.class)
     @JoinColumn(name = "division_id", referencedColumnName = "divisionId")
     private Division division;
 
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", referencedColumnName = "accountId")
     private Account account;
