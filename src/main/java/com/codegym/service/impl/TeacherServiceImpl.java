@@ -28,11 +28,7 @@ public class TeacherServiceImpl implements ITeacherService {
     @Autowired
     private IDegreeRepository iDegreeRepository;
 
-    //DiepLV
-    @Override
-    public Page<Teacher> searchTeacher(Pageable pageable, String search) {
-        return teacherRepository.searchTeacher(pageable, "%" + search + "%");
-    }
+
     //BaoHG
     @Override
     public void update(Teacher teacher) {
@@ -122,4 +118,11 @@ public class TeacherServiceImpl implements ITeacherService {
     public Teacher findTeacherAccountUserName(String userName) {
         return teacherRepository.findTeacherAccountUserName(userName);
     }
+
+    //DiepLV SERVICE IMPL
+    @Override
+    public Page<Teacher> searchTeacher(Pageable pageable, String search) {
+        return teacherRepository.searchTeacher(pageable, "%" + search + "%");
+    }
+
 }

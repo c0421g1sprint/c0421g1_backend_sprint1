@@ -26,7 +26,7 @@ public class JwtProvider {
                 .withIssuedAt(new Date())
                 .withSubject(userDetail.getUsername())
                 .withArrayClaim("authorization", authorizationAccount)
-                .withExpiresAt(new Date(System.currentTimeMillis()+ 30*60*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+ 60*60*1000))
                 .sign(Algorithm.HMAC512(SECRET_KEY));
     }
 

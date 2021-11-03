@@ -101,6 +101,8 @@ public class ClassroomController {
 
     //DanhNT - coding controller for promote
     //check ok : 27/10 - 9:55
+    //DanhNT - coding controller for promote
+    //check ok : 27/10 - 9:55
     @PutMapping(value = "/promote")
     public ResponseEntity<?> promoteClass(@RequestBody ClassroomDto classroomDto) {
         Classroom newClassroom = null;
@@ -116,7 +118,7 @@ public class ClassroomController {
                 String rejoinName = String.join("", promoteName);
                 newClassroom.setClassroomName(rejoinName);
                 int number = classroomDto.getGrade().getGradeId() + 1;
-                classroomDto.setGrade(this.gradeService.findGradeById(number));
+                newClassroom.setGrade(this.gradeService.findGradeById(number));
             }
             Set<Student> studentSet = newClassroom.getStudents();
             for (Student student : studentSet) {
@@ -149,13 +151,16 @@ public class ClassroomController {
                     }
                 }
             }
-            if (newClassroom.getGrade().getGradeId() != 5) {
-                this.classroomService.
-                        updateClassNameAfterPromote(newClassroom.getClassroomName(),
-                                newClassroom.getGrade().getGradeId(),
-                                newClassroom.getClassroomId());
-            }
-
+//            if (newClassroom.getGrade().getGradeId() != 5) {
+//                this.classroomService.
+//                        updateClassNameAfterPromote(newClassroom.getClassroomName(),
+//                                newClassroom.getGrade().getGradeId(),
+//                                newClassroom.getClassroomId());
+//            }
+            this.classroomService.
+                    updateClassNameAfterPromote(newClassroom.getClassroomName(),
+                            newClassroom.getGrade().getGradeId(),
+                            newClassroom.getClassroomId());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

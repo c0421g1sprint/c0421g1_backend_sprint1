@@ -2,6 +2,7 @@ package com.codegym.repository;
 
 import com.codegym.entity.about_schedule.ScheduleDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
@@ -19,8 +20,7 @@ public interface IScheduleRepository extends JpaRepository<ScheduleDetail, Integ
     List<ScheduleDetail> findScheduleDetailByClassroomId(Integer classroomId);
 
     // QuanTA && TaiNP
-    @Query(value = "UPDATE schedule_detail\n" +
-            "SET subject_id=?1\n" +
-            "WHERE schedule_id=?2;", nativeQuery = true)
-    void updateSchedule(int updateValue, int idScheduleDetail);
+    @Modifying
+    @Query(value = "UPDATE schedule_detail SET subject_id=?1 WHERE schedule_id=?2", nativeQuery = true)
+    void updateSchedule(Integer updateValue, Integer idScheduleDetail);
 }

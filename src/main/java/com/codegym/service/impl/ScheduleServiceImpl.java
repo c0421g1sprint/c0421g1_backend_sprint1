@@ -13,11 +13,6 @@ public class ScheduleServiceImpl implements IScheduleService {
     @Autowired
     private IScheduleRepository scheduleRepository;
 
-    //TaiNP && QuanTA
-    @Override
-    public ScheduleDetail save(ScheduleDetail scheduleDetail) {
-        return null;
-    }
 
     //TaiNP && QuanTA
     @Override
@@ -27,7 +22,7 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     //TaiNP && QuanTA
     @Override
-    public void updateSchedule(int updateValue, int idScheduleDetail) {
+    public void updateSchedule(Integer updateValue, Integer idScheduleDetail) {
         this.scheduleRepository.updateSchedule(updateValue,idScheduleDetail);
     }
 }

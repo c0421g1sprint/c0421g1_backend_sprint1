@@ -16,10 +16,9 @@ import java.util.Optional;
 @Transactional
 public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
 
-
-    // Diep search teacher 26/10
-    @Query(value = "select * from teacher\n" +
-            "where  teacher.teacher_name like %:search% or " +
+    //repository   // Diep search teacher 26/10
+    @Query(value = "select * from teacher join division on teacher.division_id = division.division_id join degree on teacher.degree_id = degree.degree_id join classroom on teacher.classroom_id = classroom.classroom_id " +
+            "where division_name like %:search% or degree_name like %:search% or classroom_name like %:search% or teacher.teacher_id like %:search% or teacher.teacher_name like %:search% or " +
             "teacher.teacher_gender like %:search% or teacher.teacher_date_of_birth like %:search% or " +
             "teacher.teacher_phone like %:search% or teacher.teacher_address like %:search%",
             nativeQuery = true)

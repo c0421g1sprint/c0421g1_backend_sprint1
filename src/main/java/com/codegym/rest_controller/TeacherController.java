@@ -19,7 +19,6 @@ import java.util.List;
 import com.codegym.entity.about_student.Student;
 import com.codegym.service.IStudentService;
 import org.springframework.data.domain.Page;
-import java.util.Optional;
 import com.codegym.entity.about_teacher.Division;
 import com.codegym.service.ITeacherService;
 import org.springframework.beans.BeanUtils;
@@ -85,19 +84,17 @@ public class TeacherController {
             return new ResponseEntity<>(studentDetail, HttpStatus.OK);
         }
     }
-
     // diep search teacher 25/10
     @GetMapping("/search")
-    public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 2) Pageable pageable,
+    public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 5) Pageable pageable,
                                                           @RequestParam(required = false) String search) {
-//        Page<Teacher> teachers = teacherService.searchTeacher(pageable, teacherId, teacherName, teacherGender, teacherDateOfBirth, teacherPhone, teacherAddress);
         Page<Teacher> teachers = teacherService.searchTeacher(pageable, search);
-
         if (teachers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(teachers, HttpStatus.OK);
     }
+
 
 
     @GetMapping("/{id}")
@@ -253,6 +250,8 @@ public class TeacherController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
+
 
 }
 

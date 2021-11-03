@@ -33,19 +33,21 @@ public class WebConfigure extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().formLogin().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and().authorizeRequests().antMatchers("/api/public/**").permitAll()
-            .and().authorizeRequests().anyRequest().permitAll();
+                .and().authorizeRequests().antMatchers("/api/public/**", "/api/schedules/**", "/api/students/search").permitAll()
+                .and().authorizeRequests().antMatchers("api/classroom/**").access("hasRole('ROLE_ADMIN')")
+                .anyRequest().authenticated().
+                and().cors();
         http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
     @Bean
-    protected AuthenticationManager authenticationManager () throws Exception {
+    protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

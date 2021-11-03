@@ -15,8 +15,6 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "scheduleDetailId")
 public class ScheduleDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
