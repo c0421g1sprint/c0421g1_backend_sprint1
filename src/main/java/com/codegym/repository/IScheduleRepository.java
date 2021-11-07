@@ -21,6 +21,6 @@ public interface IScheduleRepository extends JpaRepository<ScheduleDetail, Integ
 
     // QuanTA && TaiNP
     @Modifying
-    @Query(value = "UPDATE schedule_detail SET subject_id=?1 WHERE schedule_id=?2", nativeQuery = true)
+    @Query(value = "UPDATE schedule_detail SET subject_id=?1 WHERE schedule_detail_id=?2", nativeQuery = true)
     void updateSchedule(Integer updateValue, Integer idScheduleDetail);
 }

@@ -1,5 +1,6 @@
 package com.codegym.service.impl;
 
+import com.codegym.dto.StudentListFromTeacher;
 import com.codegym.entity.about_student.Student;
 import com.codegym.repository.IStudentRepository;
 import com.codegym.service.IStudentService;
@@ -17,11 +18,11 @@ public class StudentServiceImpl implements IStudentService {
     private IStudentRepository studentRepository;
 
     //Phuc
+
+    //Phuc sửa lại
     @Override
-    public Page<Student> getListStudent(Pageable pageable, Integer id) {
+    public Page<StudentListFromTeacher> getListStudent(Pageable pageable, Integer id) {
         return studentRepository.getListStudent(pageable, id);
-
-
     }
 
     //Phuc

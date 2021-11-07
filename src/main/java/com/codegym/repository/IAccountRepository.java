@@ -49,4 +49,25 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
     @Query(value = "update account set account_password = ?2 where (account_id = ?1);", nativeQuery = true)
     void editPassword(Integer id ,String password);
 
+    //DucLVH thêm mới account
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT into account (account_username,account_password,email,is_active,is_delete,is_not_block) values (?1,?2,?3,1,0,1)", nativeQuery = true)
+    void saveQuery(String accountUsername, String accountPassword,String email);
+
+    //Duc do uppdate acc function
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE teacher set account_id = ?1 where teacher_id = ?2 ", nativeQuery = true)
+    void updateIdAccountTeacher(Integer accountId,Integer teacherId );
+
+    //DucLVH max id
+    @Query(value = "SELECT MAX(account_id) FROM account",nativeQuery = true)
+    Integer maxIdAccount();
+
+
+    //DucLVH check nameAccount
+    @Query(value ="SELECT * FROM account WHERE account_username = ?1",nativeQuery = true)
+    String checkUsername(String userName);
+
 }

@@ -28,6 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -85,6 +86,25 @@ public class AccountController {
         }
         String token = tokenProvider.generateToken(user);
         return new ResponseEntity<>(new ResponseToken(token, user.getUsername(), roles), HttpStatus.OK);
+    }
+
+    //Duc AccountController
+    @PostMapping(value = "/add/{id}")
+    public ResponseEntity<List<FieldError>> createAccount(@RequestBody AccountDto accountDto, @PathVariable Integer id) {
+
+        System.out.println(id);
+        String userName = accountService.checkUsername(accountDto.getAccountUsername());
+        if (userName!=null) {
+            return new ResponseEntity<>(
+                    HttpStatus.NOT_ACCEPTABLE);
+        }
+        Account account = new Account();
+        BeanUtils.copyProperties(accountDto, account);
+        this.accountService.saveAccount(accountDto.getAccountUsername(), accountDto.getAccountPassword(),accountDto.getEmail());
+        Integer maxIdAccount= this.accountService.maxIdAccount();
+        System.out.println(maxIdAccount);
+        this.accountService.updateIdAccountTeacher(maxIdAccount,id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 //    Kiet login API use to refreshToken 23/10

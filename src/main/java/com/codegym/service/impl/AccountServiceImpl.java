@@ -79,4 +79,27 @@ public class AccountServiceImpl implements IAccountService {
         return accountRepository.getAccountById(id);
     }
 
+    //Duc do saveAccount function
+    @Override
+    public void saveAccount(String accountUsername, String accountPassword,String email) {
+        String passwordEncode = passwordEncoder.encode(accountPassword);
+        accountRepository.saveQuery(accountUsername, passwordEncode,email);
+    }
+    //Duc do updateIdAccountTeacher function
+    @Override
+    public void updateIdAccountTeacher(Integer accountId,Integer teacherId) {
+        this.accountRepository.updateIdAccountTeacher(accountId,teacherId);
+    }
+
+    @Override
+    public Integer maxIdAccount() {
+        return this.accountRepository.maxIdAccount();
+    }
+
+    //Duc do checkUsername function
+    @Override
+    public String checkUsername(String userName) {
+        return accountRepository.checkUsername(userName);
+    }
+
 }

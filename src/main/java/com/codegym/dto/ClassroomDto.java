@@ -30,7 +30,7 @@ public class ClassroomDto {
 
     private boolean deleteFlag;
 
-    private Teacher teacher;
+    private TeacherDto teacher;
 
     private Set<Student> students;
 

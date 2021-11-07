@@ -13,4 +13,12 @@ public interface IAccountService {
     //HauPT do getAccountById function
     Account getAccountById(int id);
 
+    //Duc
+    void saveAccount(String accountUsername, String accountPassword,String email);
+    //Duc
+    void updateIdAccountTeacher(Integer accountId,Integer teacherId);
+
+    Integer maxIdAccount();
+    //Duc
+    String checkUsername(String userName);
 }

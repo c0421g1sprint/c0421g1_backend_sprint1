@@ -1,5 +1,7 @@
 package com.codegym.rest_controller;
 
+import com.codegym.dto.IScheduleTeacher;
+import com.codegym.dto.StudentListFromTeacher;
 import com.codegym.entity.about_teacher.Degree;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,12 +45,11 @@ public class TeacherController {
     private IScheduleDetailService iScheduleDetailService;
 
 
-
-    //Phuc lich day giao vien
+    //Phuc lich day giao vien chỉnh lại giáo viên
     @GetMapping("/schedule")
-    public ResponseEntity<List<ScheduleDetail>> showScheduleTeacher(@RequestParam String userName) {
+    public ResponseEntity<List<IScheduleTeacher>> showScheduleTeacher(@RequestParam String userName) {
         Teacher teacher = teacherService.findTeacherAccountUserName(userName);
-        List<ScheduleDetail> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(teacher.getTeacherId());
+        List<IScheduleTeacher> scheduleDetailList = iScheduleDetailService.getScheduleTeacher(teacher.getTeacherId());
 
         if (scheduleDetailList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -57,22 +58,22 @@ public class TeacherController {
         }
     }
 
-
-
-    //PhucNK danh sach hoc sinh ma giao vien chu nhiem
+    //PhucNK danh sach hoc sinh ma giao vien chu nhiem sửa lại
     @GetMapping(value = "/listStudentByTeacher")
-    public ResponseEntity<Page<Student>> showListStudentByIdTeacher(@PageableDefault(size = 5) Pageable pageable, @RequestParam String userName) {
+    public ResponseEntity<Page<StudentListFromTeacher>> showListStudentByIdTeacher(@PageableDefault(size = 5) Pageable pageable, @RequestParam String userName) {
         Teacher teacher = teacherService.findTeacherAccountUserName(userName);
         if(teacher.getTeacherId() == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Page<Student> studentList = iStudentService.getListStudent(pageable, teacher.getTeacherId());
+        Page<StudentListFromTeacher> studentList = iStudentService.getListStudent(pageable, teacher.getTeacherId());
         if (studentList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(studentList, HttpStatus.OK);
         }
     }
+
+
 
     //PhucNK xem chi tiet hoc sinh
     @GetMapping(value = "/detail/{id}")
@@ -85,10 +86,22 @@ public class TeacherController {
         }
     }
     // diep search teacher 25/10
+//    @GetMapping("/search")
+//    public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 5) Pageable pageable,
+//                                                          @RequestParam(required = false) String search) {
+//        Page<Teacher> teachers = teacherService.searchTeacher(pageable, search);
+//        if (teachers.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(teachers, HttpStatus.OK);
+//    }
+
+    // diep search teacher 25/10 CONTROLLER
     @GetMapping("/search")
     public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 5) Pageable pageable,
-                                                          @RequestParam(required = false) String search) {
-        Page<Teacher> teachers = teacherService.searchTeacher(pageable, search);
+                                                          @RequestParam(required = false) String search,
+                                                          @RequestParam(required = false) String division) {
+        Page<Teacher> teachers = teacherService.searchTeacher(pageable, search, division);
         if (teachers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

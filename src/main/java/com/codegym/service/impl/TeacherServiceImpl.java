@@ -120,9 +120,15 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     //DiepLV SERVICE IMPL
+//    @Override
+//    public Page<Teacher> searchTeacher(Pageable pageable, String search) {
+//        return teacherRepository.searchTeacher(pageable, "%" + search + "%");
+//    }
+
+    //DiepLV SERVICE IMPL
     @Override
-    public Page<Teacher> searchTeacher(Pageable pageable, String search) {
-        return teacherRepository.searchTeacher(pageable, "%" + search + "%");
+    public Page<Teacher> searchTeacher(Pageable pageable, String search, String division) {
+        return teacherRepository.searchTeacher(pageable, "%" + search + "%", "%" + division + "%");
     }
 
 }

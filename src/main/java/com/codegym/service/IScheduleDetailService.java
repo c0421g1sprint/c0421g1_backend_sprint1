@@ -1,12 +1,10 @@
 package com.codegym.service;
 
-import com.codegym.entity.about_schedule.ScheduleDetail;
-import org.springframework.stereotype.Service;
-
+import com.codegym.dto.IScheduleTeacher;
 import java.util.List;
 
 public interface IScheduleDetailService {
 
     //Phuc
-    List<ScheduleDetail> getScheduleTeacher(Integer id);
+    List<IScheduleTeacher> getScheduleTeacher(Integer id);
 }

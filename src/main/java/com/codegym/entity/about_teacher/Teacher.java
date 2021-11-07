@@ -19,8 +19,6 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "teacherId")
 public class Teacher implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

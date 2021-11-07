@@ -30,7 +30,7 @@ public interface ITeacherService {
 
     Page<Teacher> findAllTeacherByQueryWithNameAndDivision(Pageable pageable, String name, Integer id);
 
-    Page<Teacher> searchTeacher(Pageable pageable, String search);
+//    Page<Teacher> searchTeacher(Pageable pageable, String search);
 
     List<Teacher> findTeacherWhereTeacherIdNull();
     List<Degree> findAllDegreeByQuery();
@@ -40,5 +40,7 @@ public interface ITeacherService {
 
     //    PhucNk liên kết với account của kiệt
     Teacher findTeacherAccountUserName(String userName);
+
+    Page<Teacher> searchTeacher(Pageable pageable, String search, String division);
 
 }

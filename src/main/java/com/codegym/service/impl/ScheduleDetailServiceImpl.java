@@ -1,6 +1,6 @@
 package com.codegym.service.impl;
 
-import com.codegym.entity.about_schedule.ScheduleDetail;
+import com.codegym.dto.IScheduleTeacher;
 import com.codegym.repository.IScheduleDetailRepository;
 import com.codegym.service.IScheduleDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,8 @@ public class ScheduleDetailServiceImpl  implements IScheduleDetailService {
 
     //Phuc
     @Override
-    public List<ScheduleDetail> getScheduleTeacher(Integer id) {
+    public List<IScheduleTeacher> getScheduleTeacher(Integer id) {
         return iScheduleDetailRepository.getScheduleTeacher(id);
     }
+
 }

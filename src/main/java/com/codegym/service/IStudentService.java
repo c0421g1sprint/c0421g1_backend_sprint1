@@ -1,5 +1,6 @@
 package com.codegym.service;
 
+import com.codegym.dto.StudentListFromTeacher;
 import com.codegym.entity.about_student.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +9,10 @@ import java.util.List;
 
 
 public interface IStudentService{
+
+    //    Phuc sưa lại
+    Page<StudentListFromTeacher> getListStudent(Pageable pageable, Integer id);
+
     //    Dung Nm find student flow id class
     Page<Student> findStudentsByClassroomId(int classroomId, Pageable pageable);
 
@@ -20,8 +25,6 @@ public interface IStudentService{
     //creator: HaNTT, date: 23/10/2021
     Student findStudentById(Integer id);
 
-
-    Page<Student> getListStudent(Pageable pageable, Integer id);
 
 
     Student getListStudentDetail(Integer id);
