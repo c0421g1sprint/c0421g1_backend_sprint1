@@ -33,7 +33,7 @@ public class WebConfigure extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().formLogin().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests().antMatchers("/api/public/**", "/api/teachers/search", "/api/teachers/listDivision", "/api/schedules/**", "/api/students/search").permitAll()
+                .and().authorizeRequests().antMatchers("/api/public/**", "/api/teachers/search", "/api/teachers/listDivision", "/api/schedules/**", "/api/students/search", "/api/news/**").permitAll()
                 .and().authorizeRequests().antMatchers("api/classroom/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated().
                 and().cors();

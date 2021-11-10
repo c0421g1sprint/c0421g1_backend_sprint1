@@ -47,7 +47,7 @@ public class ClassroomController {
     //check ok 9:00 AM
     //check ok : 27/10 - 9:55
     @GetMapping
-    public ResponseEntity<Page<Classroom>> showList(@PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity<Page<Classroom>> showList(@PageableDefault(size = 10) Pageable pageable) {
         Page<Classroom> classroomList = this.classroomService.findAllPage(pageable);
         if (classroomList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -92,7 +92,7 @@ public class ClassroomController {
 
         if (studentList != null) {
             for (Student student : studentList) {
-                this.studentService.updateClassForStudent(classroomDto.getClassroomId(),student.getStudentStatus(), student.getStudentId());
+                this.studentService.updateClassForStudent(classroomDto.getClassroomId(), student.getStudentStatus(), student.getStudentId());
             }
         }
 
@@ -111,15 +111,6 @@ public class ClassroomController {
             String currentName = newClassroom.getClassroomName();
             String[] promoteName = newClassroom.getClassroomName().split("");
             String[] demoteName = newClassroom.getClassroomName().split("");
-            if (promoteName[0].equals("5")) {
-                newClassroom.setDeleteFlag(true);
-            } else {
-                promoteName[0] = String.valueOf(Integer.parseInt(promoteName[0]) + 1);
-                String rejoinName = String.join("", promoteName);
-                newClassroom.setClassroomName(rejoinName);
-                int number = classroomDto.getGrade().getGradeId() + 1;
-                newClassroom.setGrade(this.gradeService.findGradeById(number));
-            }
             Set<Student> studentSet = newClassroom.getStudents();
             for (Student student : studentSet) {
                 Set<Mark> mark = student.getMarks();
@@ -137,7 +128,7 @@ public class ClassroomController {
                         this.studentService.
                                 updateClassForStudent
                                         (null,
-                                                student.getStudentStatus(),student.getStudentId());
+                                                student.getStudentStatus(), student.getStudentId());
                     } else {
                         demoteName[0] = String.valueOf(Integer.parseInt(demoteName[0]) - 1);
                         String rejoinName = String.join("", demoteName);
@@ -147,16 +138,19 @@ public class ClassroomController {
                         student.setClassroom(promoteClass);
                         // rejoin student to database
                         this.studentService.
-                                updateClassForStudent(student.getClassroom().getClassroomId(),"Đang học" ,student.getStudentId());
+                                updateClassForStudent(student.getClassroom().getClassroomId(), "Đang học", student.getStudentId());
                     }
                 }
             }
-//            if (newClassroom.getGrade().getGradeId() != 5) {
-//                this.classroomService.
-//                        updateClassNameAfterPromote(newClassroom.getClassroomName(),
-//                                newClassroom.getGrade().getGradeId(),
-//                                newClassroom.getClassroomId());
-//            }
+            if (promoteName[0].equals("5")) {
+                newClassroom.setDeleteFlag(true);
+            } else {
+                promoteName[0] = String.valueOf(Integer.parseInt(promoteName[0]) + 1);
+                String rejoinName = String.join("", promoteName);
+                newClassroom.setClassroomName(rejoinName);
+                int number = classroomDto.getGrade().getGradeId() + 1;
+                newClassroom.setGrade(this.gradeService.findGradeById(number));
+            }
             this.classroomService.
                     updateClassNameAfterPromote(newClassroom.getClassroomName(),
                             newClassroom.getGrade().getGradeId(),
@@ -164,7 +158,6 @@ public class ClassroomController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
     }
 
     //DanhNT - coding
@@ -217,7 +210,7 @@ public class ClassroomController {
             System.err.println("classId khi lưu class: " + classroomId);
             //set class cho List student đã chọn
             for (Student student : studentSet) {
-                this.studentService.updateClassForStudent(classroomId, "Đang học",student.getStudentId());
+                this.studentService.updateClassForStudent(classroomId, "Đang học", student.getStudentId());
             }
             return new ResponseEntity<>(HttpStatus.OK);
         }

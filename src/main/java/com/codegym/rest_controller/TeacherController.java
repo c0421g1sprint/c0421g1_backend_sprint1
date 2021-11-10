@@ -60,7 +60,7 @@ public class TeacherController {
 
     //PhucNK danh sach hoc sinh ma giao vien chu nhiem sửa lại
     @GetMapping(value = "/listStudentByTeacher")
-    public ResponseEntity<Page<StudentListFromTeacher>> showListStudentByIdTeacher(@PageableDefault(size = 5) Pageable pageable, @RequestParam String userName) {
+    public ResponseEntity<Page<StudentListFromTeacher>> showListStudentByIdTeacher(@PageableDefault(size = 10) Pageable pageable, @RequestParam String userName) {
         Teacher teacher = teacherService.findTeacherAccountUserName(userName);
         if(teacher.getTeacherId() == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -98,7 +98,7 @@ public class TeacherController {
 
     // diep search teacher 25/10 CONTROLLER
     @GetMapping("/search")
-    public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 5) Pageable pageable,
+    public ResponseEntity<Page<Teacher>> getSearchTeacher(@PageableDefault(value = 10) Pageable pageable,
                                                           @RequestParam(required = false) String search,
                                                           @RequestParam(required = false) String division) {
         Page<Teacher> teachers = teacherService.searchTeacher(pageable, search, division);

@@ -89,10 +89,10 @@ public interface IStudentRepository extends JpaRepository<Student, Integer> {
     @Query(value = "select " +
             "student_id, delete_flag, student_address, student_date_of_birth, student_ethnicity, student_father_name, student_gender, student_image, student_mother_name, student_name, student_parent_phone, student_religion, student_status, classroom_id " +
             "from student s " +
-            "where s.student_name like :name and s.student_status like :status",
+            "where s.student_name like :name and s.student_status like :status and s.delete_flag = false ",
             countQuery = "SELECT count(*) " +
                     "FROM student s " +
-                    "where s.student_name like :name and s.student_status like :status",
+                    "where s.student_name like :name and s.student_status like :status and s.delete_flag = false ",
             nativeQuery = true)
         //    search Student by Nhật
     Page<Student> findSearch(Pageable pageable, @Param("name") String name, @Param("status") String status);
