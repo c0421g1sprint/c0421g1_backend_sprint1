@@ -19,6 +19,14 @@ public class MarkController {
     @Autowired
     private IMarkService iMarkService;
     //    MinhNN 27/10
+    @GetMapping("/list")
+    public ResponseEntity<Page<Mark>> getAll(@PageableDefault(size = 10) Pageable pageable) {
+        Page<Mark> markList = this.iMarkService.findAll(pageable);
+        if (markList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(markList, HttpStatus.OK);
+    }
 
     //    MinhNN 27/10
     @GetMapping("/{id}")
@@ -44,6 +52,7 @@ public class MarkController {
     @GetMapping("/search")
     public ResponseEntity<Page<Mark>> searchNameStudent(@PageableDefault(size = 10) Pageable pageable, @RequestParam(required = false) String nameStudent, @RequestParam(required = false) Integer subjectId, @RequestParam(required = false) Integer classId) {
         Page<Mark> marks = this.iMarkService.search(pageable, nameStudent, subjectId, classId);
+        if (marks.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(marks, HttpStatus.OK);
     }
 }
